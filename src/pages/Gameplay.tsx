@@ -1,4 +1,5 @@
 import { Splitter, Menu, ConfigProvider } from 'antd';
+import type { MenuProps } from 'antd';
 import { useState } from "react";
 import { AppstoreOutlined, ContainerOutlined, DesktopOutlined, MailOutlined, PieChartOutlined } from '@ant-design/icons';
 import './Gameplay.css';
@@ -10,6 +11,7 @@ import Blacksmith from '../components/game/Locations/City/Blacksmith';
 import DungeonView from '../components/game/Locations/Dungeon/DungeonView';
 import { useNavigate, useRoutes } from 'react-router-dom';
 import Market from '../components/game/Locations/City/Market';
+import type { MenuInfo } from 'rc-menu/lib/interface';
 
 const gameRoutes = [
     { path: '/', element: <CityView /> },
@@ -35,7 +37,7 @@ export default function Gameplay() {
         setCollapsed(!collapsed);
     };
 
-    const handleMenuClick = (e) => {
+    const handleMenuClick: MenuProps['onClick'] = (e: MenuInfo): void => {
         e.domEvent.stopPropagation();
     };
 
@@ -85,7 +87,7 @@ export default function Gameplay() {
                     onClick={handleMenuClick}
                 />
             </div>
-            <ConfigProvider theme={{ token: { Splitter: { colorPrimary: '#000103', colorFill: 'white', controlItemBgActiveHover: 'rgb(0,0,0)', controlItemBgActive: 'rgb(0,0,0)', } } }}>
+            <ConfigProvider theme={{ components: { Splitter: { colorPrimary: '#000103', colorFill: 'white', controlItemBgActiveHover: 'rgb(0,0,0)', controlItemBgActive: 'rgb(0,0,0)', } } }}>
                 <Splitter style={{ minHeight: '90vh', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                     <Splitter.Panel resizable={true} className="gameplay-splitter">
                         <div className="splitter-content-wrapper">

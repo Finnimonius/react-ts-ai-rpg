@@ -9,7 +9,7 @@ export default function Forest() {
 
     return (
         <div className="forest-container">
-            <NavigationButton onClick={startGame} descr={'Изучить локацию'} style={{ width: 200 }} disabled={gameHistory.length > 0} />
+            <NavigationButton onClick={startGame} descr={'Изучить локацию'} disabled={gameHistory.length > 0} />
             <div style={{ width: '100%' }} className="forest-messages-container">
                 <button onClick={backToCity}>Сбросить</button>
                 {gameHistory.map(history => (

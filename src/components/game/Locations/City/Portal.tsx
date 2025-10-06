@@ -2,13 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { NavigationButton } from "../../Game-UI/ActionButtons";
 import LocationHeader from "../../Game-UI/LocationHeader";
 import './Portal.css'
-import { useGameStore } from "../../../../stores/gameStore";
+import { useGameStore, type CurrentLocation } from "../../../../stores/gameStore";
 
 export default function Portal() {
     const navigate = useNavigate()
     const { enterLocation } = useGameStore()
 
-    const handleLocation = (location) => {
+    const handleLocation = (location: CurrentLocation) => {
         enterLocation(location)
         navigate('/play/game/dungeon')
     }

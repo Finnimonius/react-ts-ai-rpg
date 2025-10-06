@@ -8,7 +8,7 @@ type GameHistory = {
     directions: string[],
 }
 
-type CurrentLocation = 'city' | 'forest' | 'desert'
+export type CurrentLocation = 'city' | 'forest' | 'desert'
 
 interface GameStore {
     currentLocation: CurrentLocation,
