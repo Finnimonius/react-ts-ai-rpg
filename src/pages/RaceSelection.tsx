@@ -1,11 +1,16 @@
 import { RACES } from '../utils/characterData/races'
 import { useCharacterStore } from '../stores/characterStore'
 import './RaceSelection.css'
+import type { Race } from '../types/character.types'
 
-export default function RaceSelection({ onNext }) {
+type RaceSelectionProps = {
+    onNext: () => void,
+}
+
+export default function RaceSelection({ onNext }: RaceSelectionProps) {
     const { selectRace } = useCharacterStore()
 
-    const handleSelectRace = (dataRace) => {
+    const handleSelectRace = (dataRace: Race) => {
         selectRace(dataRace)
         onNext()
     }

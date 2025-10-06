@@ -11,7 +11,7 @@ export default function Game() {
     const { step } = useParams()
     const { hasCharacter } = useCharacterStore()
 
-    const goToStep = (stepName) => navigate(`/play/${stepName}`)
+    const goToStep = (stepName: string) => navigate(`/play/${stepName}`)
 
     const getCurrentScreen = () => {
         switch (step) {

@@ -1,11 +1,16 @@
 import { useCharacterStore } from '../stores/characterStore'
+import type { Class } from '../types/character.types';
 import { CLASSES } from "../utils/characterData/classes";
 import './ClassSelection.css'
 
-export default function ClassSelection({ onNext }) {
+type ClassSelectionProps = {
+    onNext: () => void,
+}
+
+export default function ClassSelection({ onNext }: ClassSelectionProps) {
     const { selectClass } = useCharacterStore()
 
-    const handleSelectClass = (classData) => {
+    const handleSelectClass = (classData: Class) => {
         selectClass(classData)
         onNext()
     }
