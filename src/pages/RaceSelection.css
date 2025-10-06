@@ -1,0 +1,11 @@
+.race-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    width: 100%;
+    padding: 50px 100px 100px 100px;
+    background-image: url('/src/assets/images/backgrounds/class-back.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}

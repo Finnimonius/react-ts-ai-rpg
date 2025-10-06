@@ -1,0 +1,163 @@
+.not-found-container {
+    min-height: 100vh;
+    background-image: url('/src/assets/images/backgrounds/notfound-background.webp');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.parchment {
+    background: linear-gradient(45deg, #f5f0e6, #e6d6b2);
+    padding: 3rem 4rem;
+    border-radius: 8px;
+    box-shadow: 
+        0 0 50px rgba(237, 28, 36, 0.3),
+        inset 0 0 50px rgba(139, 69, 19, 0.1);
+    border: 12px solid transparent;
+    border-image: linear-gradient(45deg, var(--primary-brown), var(--primary-red)) 1;
+    max-width: 600px;
+    position: relative;
+    text-align: center;
+}
+
+.ink-stain {
+    position: absolute;
+    top: 15px;
+    right: 10px;
+    width: 120px;
+    height: 120px;
+    background-image: url('/src/assets/images/backgrounds/blood-404.png');
+    background-size: contain;
+    border-radius: 50%;
+}
+
+.error-title {
+    font-family: 'MedievalEnglish', cursive;
+    font-size: 6rem;
+    color: var(--primary-red);
+    margin: 0;
+    text-shadow: 
+        3px 3px 0px var(--primary-brown),
+        6px 6px 0px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+}
+
+.error-subtitle {
+    font-family: 'MedievalEnglish', cursive;
+    font-size: 1.8rem;
+    color: var(--primary-brown);
+    margin: 1rem 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.error-description {
+    font-family: 'MedievalEnglish', serif;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    color: var(--brown-dark);
+    margin: 2rem 0;
+    font-style: italic;
+}
+
+.error-stats {
+    background: linear-gradient(45deg, rgba(139, 69, 19, 0.1), rgba(237, 28, 36, 0.1));
+    border: 2px solid var(--primary-brown);
+    border-radius: 5px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.8rem 0;
+    font-family: 'Cormorant', serif;
+    font-size: 1.1rem;
+}
+
+.stat-label {
+    color: var(--primary-brown);
+    font-weight: bold;
+}
+
+.stat-value {
+    color: var(--primary-red);
+    font-family: 'MedievalSharp', cursive;
+}
+
+.return-button {
+    display: inline-block;
+    background: linear-gradient(45deg, var(--primary-red), var(--red-dark));
+    color: var(--primary-yellow);
+    padding: 15px 35px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 1.2rem;
+    border: 3px solid var(--primary-brown);
+    transition: all 0.4s ease;
+    margin-top: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.return-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.return-button:hover {
+    background: linear-gradient(45deg, var(--red-dark), var(--primary-red));
+    transform: translateY(-3px);
+    color: #fff;
+    box-shadow: 
+        0 10px 25px rgba(237, 28, 36, 0.4),
+        0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.return-button:hover::before {
+    left: 100%;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.15; transform: scale(1.1); }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .parchment {
+        padding: 2rem;
+        margin: 1rem;
+    }
+    
+    .error-title {
+        font-size: 4rem;
+    }
+    
+    .error-subtitle {
+        font-size: 1.4rem;
+    }
+    
+    .error-description {
+        font-size: 1.1rem;
+    }
+    
+    .stat {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+}

@@ -1,0 +1,86 @@
+.game-main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    width: 100%;
+    padding: 50px 100px 100px 100px;
+    background-image: url('/src/assets/images/backgrounds/game-main-back.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.hero-btn {
+    padding: 25px 60px;
+    font-size: 1.3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #5c3713;
+    text-shadow: 2px 2px 4px rgba(92, 55, 19, 0.3);
+
+    background: linear-gradient(135deg, #f4e4c1 0%, #e6d2a5 25%, #d4bc87 50%, #c9af77 75%, #b8945f 100%);
+
+    border: 12px double #8b5a2b;
+    border-radius: 3px;
+    box-shadow:
+        inset 0 0 30px rgba(139, 90, 43, 0.4),
+        0 10px 30px rgba(0, 0, 0, 0.7),
+        0 0 40px rgba(212, 188, 135, 0.5);
+
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transform: translateY(0) scale(1);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(circle at 20% 30%, rgba(212, 188, 135, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(184, 148, 95, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(139, 90, 43, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.hero-btn:hover {
+    transform: translateY(-8px) scale(1.05);
+    color: #8b4513;
+    text-shadow: 3px 3px 6px rgba(139, 69, 19, 0.5);
+    box-shadow:
+        inset 0 0 40px rgba(139, 90, 43, 0.5),
+        0 15px 40px rgba(0, 0, 0, 0.9),
+        0 0 60px rgba(212, 188, 135, 0.7);
+}
+
+.hero-btn:active {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow:
+        inset 0 0 25px rgba(139, 90, 43, 0.6),
+        0 8px 20px rgba(0, 0, 0, 0.6),
+        0 0 30px rgba(212, 188, 135, 0.4);
+}
+
+@media (max-width: 800px) {
+    .game-main-container{
+        padding: 50px 50px 100px 50px;
+    }
+}
+
+@media (max-width: 500px) {
+    .game-main-container {
+        padding: 50px 15px 100px 15px;
+    }
+
+    .hero-btn {
+        padding: 10px 25px;
+        font-size: 1rem;
+    }
+}
+

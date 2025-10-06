@@ -1,0 +1,137 @@
+.class-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    width: 100%;
+    padding: 50px 100px 100px 100px;
+    background-image: url('/src/assets/images/backgrounds/class-back.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.class-list {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.class-list-item {
+    display: flex;
+    position: relative;
+    padding: 20px 10px;
+    width: calc((100% / 5) - (30px * 4 / 5));
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    isolation: isolate;
+    transition: all .3s ease;
+
+    border: 6px double #8b5a2b;
+    box-shadow:
+        inset 0 0 20px rgba(139, 90, 43, 0.3),
+        0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.class-list-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    z-index: -1;
+}
+
+.class-list-item:hover {
+    transform: translateY(-20px) scale(1.03);
+}
+
+.class-img {
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.class-title {
+    font-size: 26px;
+    margin-bottom: 15px;
+}
+
+.class-descr {
+    text-align: center;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+@media (max-width: 1800px) {
+    .class-list {
+        gap: 20px;
+    }
+
+    .class-list-item {
+        width: calc((100% / 4) - (20px * 3 / 4));
+    }
+}
+
+@media (max-width: 1500px) {
+    .class-list {
+        gap: 20px;
+    }
+
+    .class-list-item {
+        width: calc((100% / 3) - (20px * 2 / 3));
+    }
+}
+
+@media (max-width: 1100px) {
+    .class-img {
+        height: 200px;
+        margin-bottom: 10px;
+    }
+
+    .class-title {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .class-descr {
+        font-size: 13px;
+    }
+
+    .class-list {
+        gap: 10px;
+    }
+
+    .class-list-item {
+        width: calc((100% / 3) - (10px * 2 / 3));
+    }
+}
+
+@media (max-width: 800px) {
+    .class-container {
+        padding: 50px 50px 100px 50px;
+    }
+
+        .class-list-item {
+        width: calc((100% / 2) - (10px * 1 / 2));
+    }
+}
+
+@media (max-width: 500px) {
+            .class-list-item {
+        width: 100%;
+    }
+
+    .class-container {
+        padding: 50px 15px 100px 15px;
+    }
+}

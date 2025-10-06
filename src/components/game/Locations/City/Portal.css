@@ -1,0 +1,15 @@
+.portal-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    padding: 100px 20px;
+    gap: 320px;
+    background-image: url('../../../../assets/images/backgrounds/portal-back.jpg');
+    background-size: cover;
+}
+
+.portal-buttons-container {
+    display: flex;
+    gap: 30px;
+}

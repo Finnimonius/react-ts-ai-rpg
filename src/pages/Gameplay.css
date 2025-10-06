@@ -1,0 +1,27 @@
+.gameplay-menu-container {
+    cursor: pointer;
+}
+
+.gameplay-menu {
+    max-width: 200px;
+    padding-top: 100px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.gameplay-container {
+    display: flex;
+    width: 100%;
+}
+
+.gameplay-layout {
+    height: 80vh; 
+}
+
+.gameplay-layout .splitter-content-wrapper {
+    height: 100%;
+    overflow-y: auto;
+}
+

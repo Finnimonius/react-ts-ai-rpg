@@ -1,0 +1,49 @@
+h1, h2, h3 {
+  font-family: 'AngelusMedieval', cursive;
+  color: #8B4513;
+}
+
+p {
+  font-family: 'Cormorant', cursive;
+}
+
+button {
+  font-family: 'Cormorant', cursive;
+}
+
+:root {
+  --primary-red: rgb(237, 28, 36);
+  --primary-yellow: #ffd700;
+  --primary-brown: #8B4513;
+  --primary-black: #000000;
+  --primary-dark: #1a1003;
+  
+  --red-light: rgba(237, 28, 36, 0.8);
+  --red-dark: rgb(200, 20, 30);
+  --yellow-light: #fff5a5;
+  --brown-light: #a0522d;
+  --brown-dark: #5d4037;
+  
+  --text-light: #e6d6b2;
+  --text-dark: #2d1b07;
+}
+
+/* Скролл */
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--primary-red);
+  border-radius: 20px;
+  transition: background-color 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #ff6d6d; 
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary-black);
+}

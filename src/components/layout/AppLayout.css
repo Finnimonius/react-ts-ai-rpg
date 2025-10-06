@@ -1,0 +1,14 @@
+.app-layout {
+  font-family: 'Cormorant', serif;
+  font-size: 18px;
+  font-weight: 400;
+  min-height: 100vh;
+  background-color: #fff;
+  color: #333;
+}
+
+/* Ключевое исправление */
+.app-layout .ant-layout-content {
+  height: 100%;
+}
+

@@ -1,0 +1,16 @@
+.location-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    width: 40%;
+    background-image: url('../../../assets/images/backgrounds/header-back.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.location-header-title {
+    font-size: 38px;
+    color: var(--brown-light);
+}
