@@ -6,8 +6,12 @@ import './AppHeader.css'
 import { useCharacterStore } from "../../stores/characterStore";
 import { useState } from "react";
 
-const setActive = ({ isActive }) => isActive ? 'active-link' : 'nav-link';
-const setActivePlay = ({ isActive }) => isActive ? 'active-link' : 'nav-link-play';
+type IsActive = {
+    isActive: boolean
+}
+
+const setActive = ({isActive}: IsActive) => isActive ? 'active-link' : 'nav-link';
+const setActivePlay = ({isActive}: IsActive) => isActive ? 'active-link' : 'nav-link-play';
 
 
 export default function AppHeader() {

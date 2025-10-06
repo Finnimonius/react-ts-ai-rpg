@@ -1,4 +1,4 @@
-import './GameMain.css'
+import './GameStart.css'
 
 export default function GameMain({ onStartCreation }) {
     return (

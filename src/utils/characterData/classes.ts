@@ -66,4 +66,4 @@ export const CLASSES = [
   ],
   img: warlord
 }
-]
+] as const;

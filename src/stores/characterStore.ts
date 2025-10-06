@@ -1,7 +1,19 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type { Class } from '../types/character.types'
+import type { Race } from '../types/character.types'
 
-export const useCharacterStore = create(
+interface CharacterStore {
+  selectedClass: Class | null,
+  selectedRace: Race | null,
+  selectClass: (classData: Class) => void,
+  selectRace: (raceData: Race) => void,
+  getCharacter: () => {class: Class, race: Race, name: string, level: number} | null,
+  hasCharacter: () => boolean,
+  reset: () => void,
+}
+
+export const useCharacterStore = create<CharacterStore>()(
   persist(
     (set, get) => ({
       selectedClass: null,

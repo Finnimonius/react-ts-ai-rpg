@@ -5,12 +5,13 @@ import './Forest.css'
 import { NavigationButton } from "../../Game-UI/ActionButtons";
 
 export default function Forest() {
-    const { isLoading, startGame, gameHistory } = useGameStore()
+    const { isLoading, startGame, gameHistory, backToCity } = useGameStore()
 
     return (
         <div className="forest-container">
             <NavigationButton onClick={startGame} descr={'Изучить локацию'} style={{ width: 200 }} disabled={gameHistory.length > 0} />
             <div style={{ width: '100%' }} className="forest-messages-container">
+                <button onClick={backToCity}>Сбросить</button>
                 {gameHistory.map(history => (
                     <div className="forest-message-block">
                         {isLoading ?
@@ -22,7 +23,6 @@ export default function Forest() {
                                     {history.directions.map(derection => <button>{derection}</button>)}
                                 </div>
                             </div>
-
                         }
                     </div>
                 ))}

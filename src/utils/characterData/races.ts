@@ -31,4 +31,4 @@ export const RACES = [
     speed: 25,
     features: ['Удачливый', 'Храбрый']
   }
-]
+] as const;

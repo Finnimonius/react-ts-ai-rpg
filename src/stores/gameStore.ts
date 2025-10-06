@@ -76,7 +76,7 @@ export const useGameStore = create<GameStore>()(
                 set({
                     currentLocation: 'city',
                     currentDungeon: null,
-                    gameHistory: [],
+                    // gameHistory: [],
                 })
             }
 

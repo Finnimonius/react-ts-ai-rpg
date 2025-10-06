@@ -1,4 +1,4 @@
-import GameMain from './GameMain'
+import GameMain from './GameStart'
 import ClassSelection from "./ClassSelection"
 import RaceSelection from "./RaceSelection"
 import Gameplay from './Gameplay'
