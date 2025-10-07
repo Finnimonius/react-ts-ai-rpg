@@ -11,4 +11,4 @@ export const treasureEvents = [
     description: 'В дупле старого дуба спрятан мешок с сокровищами.',
     container: ['bag', 'gold_coins']
   }
-] as const;
+];

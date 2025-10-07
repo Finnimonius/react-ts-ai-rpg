@@ -2,14 +2,14 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import queryAI from "../services/api";
 import { DUNGEONS } from "../utils/data/locations/locations";
-import { generateEvent, getRandomEvent } from "../utils/generators/event-generator";
+import { generateEvent, getRandomEvent, type EventType } from "../utils/generators/event-generator";
 
 const EVENTS = ['treasure']
 
 type Directions = 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast';
-type DirectionName = 'Юг' | 'Юго-восток' | 'Юго-запад' |
+export type DirectionName = 'Юг' | 'Юго-восток' | 'Юго-запад' |
     'Запад' | 'Север' | 'Северо-запад' | 'Северо-восток';
-type TargetLocation = string;
+export type TargetLocation = string;
 
 type Path = {
     direction: Directions,
@@ -17,10 +17,21 @@ type Path = {
     targetLocationId: TargetLocation,
 }
 
+type CurrentEvent = {
+    eventType: EventType,
+    id: string,
+    title: string,
+    description: string,
+    container: string[]
+    gold: number,
+    items: string[],
+}
+
 export type GameHistory = {
     type: 'location' | 'travel_event',
     aiText: string,
     directions?: Path[],
+    currentEvent?: CurrentEvent,
 }
 
 export type CurrentLocation = 'city' | 'forest' | 'desert';
@@ -32,12 +43,10 @@ interface GameStore {
     currentStep: number,
     gameHistory: Array<GameHistory>,
     isLoading: boolean,
-    isAddingHistory: boolean,
     error: string | null,
-    aiText: string,
     enterLocation: (location: CurrentLocation) => void,
     startGame: () => void,
-    movingToLocation: (targetLocation: TargetLocation) => void,
+    movingToLocation: (targetLocation: TargetLocation, directionName: DirectionName) => void,
     backToCity: () => void,
 }
 
@@ -50,9 +59,7 @@ export const useGameStore = create<GameStore>()(
             currentStep: 0,
             gameHistory: [],
             isLoading: false,
-            isAddingHistory: false,
             error: null,
-            aiText: '',
 
             enterLocation: (location) => {
                 set({
@@ -64,7 +71,6 @@ export const useGameStore = create<GameStore>()(
                 set({
                     isLoading: true,
                     currentDungeon: 'wind_gorge',
-                    isAddingHistory: true,
                 })
 
                 const dungeon = getDungeon(DUNGEONS, get().currentDungeon)
@@ -76,7 +82,7 @@ export const useGameStore = create<GameStore>()(
 
                 try {
                     const { gameHistory } = get()
-                    const data = await queryAI(`Начни рассказ истории в стиле D&D.
+                    const data = await queryAI(`Начни рассказ истории в стиле RPG.
                         Мы сейчас находимся в локации ${dungeon.name}.
                         И в конце предложи пойти на выбор ${directions}`)
 
@@ -87,9 +93,7 @@ export const useGameStore = create<GameStore>()(
                     }
 
                     set({
-                        aiText: data,
                         isLoading: false,
-                        isAddingHistory: false,
                         gameHistory: [...gameHistory, historyEntry]
                     })
                 } catch (error) {
@@ -99,7 +103,7 @@ export const useGameStore = create<GameStore>()(
                 }
             },
 
-            movingToLocation: (targetLocationId) => {
+            movingToLocation: async (targetLocationId, directionName) => {
                 const { currentStep } = get();
                 set({
                     isLoading: true,
@@ -109,12 +113,44 @@ export const useGameStore = create<GameStore>()(
 
                 const randomEvent = getRandomEvent(EVENTS);
                 const currentEvent = generateEvent(randomEvent)
+                if (!currentEvent) {
+                    set({ error: "Событие не найдено", isLoading: false });
+                    return;
+                }
+                //    id: 'forgotten_chest',
+                //     title: 'Забытый сундук',
+                //     description: 'Вы нашли старый сундук, спрятанный в руинах.',
+                //     container: ['chest', 'gemstones']
+                //     gold: 80,
+                //     items: ['diamond', 'emerald', 'sapphire', 'ruby'],
+                //   }
+
+                try {
+                    const { gameHistory } = get()
+                    const data = await queryAI(`Игрок направляется на ${directionName}. 
+                        На пути у нас событие ${currentEvent.title}. Описание события: ${currentEvent.description}. 
+                        Напиши описание в стиле RPG`);
+
+                    const historyEntry: GameHistory = {
+                        type: 'travel_event',
+                        aiText: data,
+                        currentEvent: currentEvent,
+                    }
+
+                    set({
+                        isLoading: false,
+                        gameHistory: [...gameHistory, historyEntry]
+                    })
+                } catch (error) {
+                    console.log(error);
+
+                }
 
             },
 
             backToCity: () => {
                 set({
-                    currentLocation: 'city',
+                    // currentLocation: 'city',
                     currentDungeon: null,
                     gameHistory: [],
                 })

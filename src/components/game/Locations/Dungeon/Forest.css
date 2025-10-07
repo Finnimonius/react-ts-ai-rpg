@@ -26,15 +26,11 @@
     flex-direction: column;
     padding: 20px 20px;
     font-size: 19px;
+    text-align: center;
+    font-weight: 600;
     background-color: var(--primary-black);
     border-radius: 20px;
     min-height: 300px;
-}
-
-.forest-button-wrapper {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
 }
 
 .forest-message-descr {

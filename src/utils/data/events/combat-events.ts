@@ -11,4 +11,4 @@ export const combatEvents = [
     description: 'Пещера кишит гигантскими пауками!',
     enemyType: 'spiders'
   }
-] as const;
+];

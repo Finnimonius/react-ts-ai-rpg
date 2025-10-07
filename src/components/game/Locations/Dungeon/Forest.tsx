@@ -3,33 +3,33 @@ import { Spin } from "antd"
 import { LoadingOutlined } from '@ant-design/icons';
 import './Forest.css'
 import { NavigationButton } from "../../Game-UI/ActionButtons";
-import Location from "../../Event/Location";
-import TravelEvent from "../../Event/TravelEvent";
+import Location from "../../Events/Location";
+import TravelEvent from "../../Events/TravelEvent";
 
 export default function Forest() {
-    const { isLoading, isAddingHistory, startGame, gameHistory, backToCity } = useGameStore()
+    const { isLoading, startGame, gameHistory, backToCity } = useGameStore()
 
     return (
         <div className="forest-container">
             <NavigationButton
                 onClick={startGame}
                 descr={'Изучить локацию'}
-                disabled={isLoading}
+                disabled={gameHistory.length > 0}
             />
             <div style={{ width: '100%' }} className="forest-messages-container">
                 <button onClick={backToCity}>Сбросить</button>
 
-                {gameHistory.map((entry, index) => (
+                {gameHistory.map((history, index) => (
                     <div key={index} className="forest-message-block">
-                        {entry.type === 'location' && <Location />}
-                        {entry.type === 'travel_event' && <TravelEvent />}
+                        {history.type === 'location' && <Location history={history}/>}
+                        {history.type === 'travel_event' && <TravelEvent history={history}/>}
                     </div>
                 ))}
 
-                {isAddingHistory && (
+                {isLoading && (
                     <div className="forest-message-block">
                         <Spin indicator={<LoadingOutlined spin />} />
-                        <div>Мастер рассказывает историю...</div>
+                        <p>Мастер рассказывает историю...</p>
                     </div>
                 )}
             </div>

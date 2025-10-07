@@ -1,7 +1,7 @@
 import { treasures } from "../data/treasures/treasures";
 import { treasureEvents } from "../data/events/treasure-events";
 
-type EventType = 'combat' | 'treasure';
+export type EventType = 'combat' | 'treasure';
 
 export function getRandomEvent(events: EventType[]): EventType {
     const arrCopy = [...events]
@@ -13,16 +13,17 @@ export function getRandomEvent(events: EventType[]): EventType {
 export function generateEvent(type: EventType) {
     switch (type) {
         case 'treasure':
-            return generateTreasureEvent()
+            return generateTreasureEvent(type)
     }
 }
 
-function generateTreasureEvent() {
+function generateTreasureEvent(type: EventType) {
     const randomTreasure = treasureEvents[Math.floor(Math.random() * treasureEvents.length)];
     const randomReward = randomTreasure.container[Math.floor(Math.random() * randomTreasure.container.length)]
 
     const treasure = treasures[randomReward]
     return {
+        eventType: type,
         ...randomTreasure,
         gold: treasure.gold,
         items: treasure.items

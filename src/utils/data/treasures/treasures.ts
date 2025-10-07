@@ -15,4 +15,4 @@ export const treasures = {
     items: ['rare_coin', 'gold_bar'],
     gold:  200
   },
-} as const;
+};
