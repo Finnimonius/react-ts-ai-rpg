@@ -1,24 +1,41 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import queryAI from "../services/api";
-import { DUNGEONS } from "../utils/data/locations";
+import { DUNGEONS } from "../utils/data/locations/locations";
+import { generateEvent, getRandomEvent } from "../utils/generators/event-generator";
+
+const EVENTS = ['treasure']
+
+type Directions = 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast';
+type DirectionName = 'Юг' | 'Юго-восток' | 'Юго-запад' |
+    'Запад' | 'Север' | 'Северо-запад' | 'Северо-восток';
+type TargetLocation = string;
+
+type Path = {
+    direction: Directions,
+    directionName: DirectionName,
+    targetLocationId: TargetLocation,
+}
 
 type GameHistory = {
     aiText: string,
-    directions: string[],
+    directions: Path[],
 }
 
-export type CurrentLocation = 'city' | 'forest' | 'desert'
+export type CurrentLocation = 'city' | 'forest' | 'desert';
 
 interface GameStore {
     currentLocation: CurrentLocation,
     currentDungeon: string | null,
+    targetLocation: string,
+    currentStep: number,
     gameHistory: Array<GameHistory>,
     isLoading: boolean,
     error: string | null,
     aiText: string,
     enterLocation: (location: CurrentLocation) => void,
     startGame: () => void,
+    movingToLocation: (targetLocation: TargetLocation) => void,
     backToCity: () => void,
 }
 
@@ -27,6 +44,8 @@ export const useGameStore = create<GameStore>()(
         (set, get) => ({
             currentLocation: 'city',
             currentDungeon: null,
+            targetLocation: '',
+            currentStep: 0,
             gameHistory: [],
             isLoading: false,
             error: null,
@@ -41,7 +60,7 @@ export const useGameStore = create<GameStore>()(
             startGame: async () => {
                 set({
                     isLoading: true,
-                    currentDungeon: 'wind_gorge', 
+                    currentDungeon: 'wind_gorge',
                 })
 
                 const dungeon = getDungeon(DUNGEONS, get().currentDungeon)
@@ -49,15 +68,17 @@ export const useGameStore = create<GameStore>()(
                     set({ error: "Данж не найден", isLoading: false });
                     return;
                 }
-                const directions = getDirections(dungeon)
+                const directions = getDirectionsName(dungeon)
 
                 try {
                     const { gameHistory } = get()
-                    const data = await queryAI(`Начни рассказ истории в стиле D&D. Мы сейчас находимся в локации ${dungeon.name}. И в конце предложи пойти на выбор ${directions}`)
+                    const data = await queryAI(`Начни рассказ истории в стиле D&D.
+                        Мы сейчас находимся в локации ${dungeon.name}.
+                        И в конце предложи пойти на выбор ${directions}`)
 
                     const historyEntry = {
                         aiText: data,
-                        directions: directions.split(' '),
+                        directions: dungeon.paths,
                     }
 
                     set({
@@ -68,6 +89,24 @@ export const useGameStore = create<GameStore>()(
                 } catch (error) {
                     set({ error: 'Мастер не смог найти историю', isLoading: false })
                     console.log(error);
+
+                }
+            },
+
+            movingToLocation: (targetLocationId) => {
+                const { currentStep } = get();
+                set({
+                    isLoading: true,
+                    targetLocation: targetLocationId,
+                    currentStep: currentStep + 1
+                })
+
+                const randomEvent = getRandomEvent(EVENTS);
+                const currentEvent = generateEvent(randomEvent)
+
+                try {
+                    const data = queryAI('')
+                } catch (error) {
                     
                 }
             },
@@ -87,12 +126,6 @@ export const useGameStore = create<GameStore>()(
     )
 )
 
-type Path = {
-    direction: 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast',
-    directionName: 'Юг' | 'Юго-восток' | 'Юго-запад' | 'Запад' | 'Север' | 'Северо-запад' | 'Северо-восток',
-    targetLocationId: string,
-}
-
 type Dungeon = {
     id: string,
     name: string,
@@ -107,7 +140,7 @@ function getDungeon(dungeons: Dungeons, dungeonKey: string | null): Dungeon | un
     return (dungeons as Record<string, Dungeon>)[dungeonKey];
 }
 
-function getDirections(dungeon: Dungeon | undefined): string {
-    if (!dungeon) return "";
+function getDirectionsName(dungeon: Dungeon | undefined): string {
+    if (!dungeon) return '';
     return dungeon.paths.map(path => path.directionName).join(' ');
 }
