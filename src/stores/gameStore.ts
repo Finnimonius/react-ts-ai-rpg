@@ -17,9 +17,10 @@ type Path = {
     targetLocationId: TargetLocation,
 }
 
-type GameHistory = {
+export type GameHistory = {
+    type: 'location' | 'travel_event',
     aiText: string,
-    directions: Path[],
+    directions?: Path[],
 }
 
 export type CurrentLocation = 'city' | 'forest' | 'desert';
@@ -31,6 +32,7 @@ interface GameStore {
     currentStep: number,
     gameHistory: Array<GameHistory>,
     isLoading: boolean,
+    isAddingHistory: boolean,
     error: string | null,
     aiText: string,
     enterLocation: (location: CurrentLocation) => void,
@@ -48,6 +50,7 @@ export const useGameStore = create<GameStore>()(
             currentStep: 0,
             gameHistory: [],
             isLoading: false,
+            isAddingHistory: false,
             error: null,
             aiText: '',
 
@@ -61,6 +64,7 @@ export const useGameStore = create<GameStore>()(
                 set({
                     isLoading: true,
                     currentDungeon: 'wind_gorge',
+                    isAddingHistory: true,
                 })
 
                 const dungeon = getDungeon(DUNGEONS, get().currentDungeon)
@@ -76,7 +80,8 @@ export const useGameStore = create<GameStore>()(
                         Мы сейчас находимся в локации ${dungeon.name}.
                         И в конце предложи пойти на выбор ${directions}`)
 
-                    const historyEntry = {
+                    const historyEntry: GameHistory = {
+                        type: 'location',
                         aiText: data,
                         directions: dungeon.paths,
                     }
@@ -84,6 +89,7 @@ export const useGameStore = create<GameStore>()(
                     set({
                         aiText: data,
                         isLoading: false,
+                        isAddingHistory: false,
                         gameHistory: [...gameHistory, historyEntry]
                     })
                 } catch (error) {
@@ -104,18 +110,13 @@ export const useGameStore = create<GameStore>()(
                 const randomEvent = getRandomEvent(EVENTS);
                 const currentEvent = generateEvent(randomEvent)
 
-                try {
-                    const data = queryAI('')
-                } catch (error) {
-                    
-                }
             },
 
             backToCity: () => {
                 set({
                     currentLocation: 'city',
                     currentDungeon: null,
-                    // gameHistory: [],
+                    gameHistory: [],
                 })
             }
 
