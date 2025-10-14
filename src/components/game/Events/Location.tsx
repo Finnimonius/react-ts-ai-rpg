@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useGameStore, type DirectionName, type GameHistory, type TargetLocation } from '../../../stores/gameStore'
 import { NavigationButton } from '../Game-UI/ActionButtons'
 import './Location.css'
