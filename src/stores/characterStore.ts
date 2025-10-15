@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { BaseStats, CharacterClass, DerivedStats } from '../types/character.types'
 import type { Race } from '../types/character.types'
+import type { CraftingMaterials, Currency } from '../types/currency.types'
 
 interface CharacterStore {
   selectedClass: CharacterClass | null,
@@ -12,6 +13,8 @@ interface CharacterStore {
   currentStats: BaseStats,
   derivedStats: DerivedStats,
   avaliableStatsPoints: number,
+  currency: Currency,
+  craftingMaterials: CraftingMaterials,
   learnedAbilities: string[],
   selectClass: (classData: CharacterClass) => void,
   selectRace: (raceData: Race) => void,
@@ -24,9 +27,42 @@ export const useCharacterStore = create<CharacterStore>()(
     (set, get) => ({
       selectedClass: null,
       level: 1,
+      experience: 0,
+
       currentStats: { strength: 0, dexterity: 0, intelligence: 0, wisdom: 0, constitution: 0, luck: 0 },
       derivedStats: {health: 0, mana: 0, attack: 0, defense: 0, critChance: 0, evasion: 0},
       avaliableStatsPoints: 0,
+
+      currency: {
+        gold: 100,
+        souls: 0,
+        fame: 0,
+      },
+
+      craftingMaterials: {
+        wood: 0,
+        ore: 0,
+        leather: 0,
+        herbs: 0,
+        crystals: 0,
+        relics: 0
+      },
+
+      inventory: [],
+
+      equipment: {
+        weapon_main: null,
+        weapon_off: null,
+        helmet: null,
+        chest: null,
+        gloves: null,
+        legs: null,
+        boots: null,
+        ring_1: null,
+        ring_2: null,
+        amulet: null
+      },
+
       learnedAbilities: [],
 
 
