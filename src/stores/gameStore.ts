@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import queryAI from "../services/api";
-import { DUNGEONS } from "../utils/data/locations/locations";
+import { DUNGEONS } from "../utils/data/locations/forest-locations";
 import { generateEvent, getRandomEvent, type EventType } from "../utils/generators/event-generator";
 
 const EVENTS = ['treasure']

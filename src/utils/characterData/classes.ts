@@ -106,4 +106,4 @@ export const CLASSES = [
   //   features: ['Боевая ярость', 'Несокрушимая стойкость', 'Щитовой удар'],
   //   img: warriorImg
   // },
-] as const;
+];
