@@ -20,6 +20,11 @@ export const CLASSES = [
       luck: 14
     },
 
+    levelUpStats: {
+      dexterity: 1,
+      luck: 0.5
+    },
+
     weponTypes: ['dagger', 'short_sword', 'crossbow'],
     armorTypes: ['light', 'cloth'],
     resource: 'leads',

@@ -1,14 +1,20 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Class } from '../types/character.types'
+import type { BaseStats, CharacterClass, DerivedStats } from '../types/character.types'
 import type { Race } from '../types/character.types'
 
 interface CharacterStore {
-  selectedClass: Class | null,
+  selectedClass: CharacterClass | null,
+  // Изменить на background
   selectedRace: Race | null,
-  selectClass: (classData: Class) => void,
+  //------------------------
+  level: number,
+  currentStats: BaseStats,
+  derivedStats: DerivedStats,
+  avaliableStatsPoints: number,
+  learnedAbilities: string[],
+  selectClass: (classData: CharacterClass) => void,
   selectRace: (raceData: Race) => void,
-  // getCharacter: () => {class: Class, race: Race, name: string, level: number} | null,
   hasCharacter: () => boolean,
   reset: () => void,
 }
@@ -17,23 +23,36 @@ export const useCharacterStore = create<CharacterStore>()(
   persist(
     (set, get) => ({
       selectedClass: null,
-      
-      selectClass: (classData) => set({ selectedClass: classData }),
+      level: 1,
+      currentStats: { strength: 0, dexterity: 0, intelligence: 0, wisdom: 0, constitution: 0, luck: 0 },
+      derivedStats: {health: 0, mana: 0, attack: 0, defense: 0, critChance: 0, evasion: 0},
+      avaliableStatsPoints: 0,
+      learnedAbilities: [],
+
+
+      selectClass: (classData) => {
+        set({
+          selectedClass: classData,
+          currentStats: classData.baseStats,
+          learnedAbilities: classData.abilities.filter(a => a.level === 1).map(a => a.id),
+        });
+      },
 
 
       // Выбор рассы переделать в background
       selectedRace: null,
       selectRace: (raceData) => set({ selectedRace: raceData }),
-      
+      //---------------------------------------------------------
+
       hasCharacter: () => {
         const { selectedClass, selectedRace } = get()
         return !!(selectedClass && selectedRace)
       },
-      
+
       reset: () => set({ selectedClass: null, selectedRace: null })
     }),
     {
-      name: 'character-storage', 
+      name: 'character-storage',
     }
   )
 )
