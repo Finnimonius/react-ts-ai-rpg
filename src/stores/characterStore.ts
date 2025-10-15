@@ -8,7 +8,7 @@ interface CharacterStore {
   selectedRace: Race | null,
   selectClass: (classData: Class) => void,
   selectRace: (raceData: Race) => void,
-  getCharacter: () => {class: Class, race: Race, name: string, level: number} | null,
+  // getCharacter: () => {class: Class, race: Race, name: string, level: number} | null,
   hasCharacter: () => boolean,
   reset: () => void,
 }
@@ -17,22 +17,13 @@ export const useCharacterStore = create<CharacterStore>()(
   persist(
     (set, get) => ({
       selectedClass: null,
-      selectedRace: null,
       
       selectClass: (classData) => set({ selectedClass: classData }),
+
+
+      // Выбор рассы переделать в background
+      selectedRace: null,
       selectRace: (raceData) => set({ selectedRace: raceData }),
-      
-      getCharacter: () => {
-        const { selectedClass, selectedRace } = get()
-        if (!selectedClass || !selectedRace) return null
-        
-        return {
-          class: selectedClass,
-          race: selectedRace,
-          name: `${selectedRace.name} ${selectedClass.name}`,
-          level: 1
-        }
-      },
       
       hasCharacter: () => {
         const { selectedClass, selectedRace } = get()

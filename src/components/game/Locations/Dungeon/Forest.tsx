@@ -4,7 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import './Forest.css'
 import { NavigationButton } from "../../Game-UI/ActionButtons";
 import Location from "../../Events/Location";
-import TravelEvent from "../../Events/TravelEvent";
+import TravelEvent from "../../Events/EventDispather";
 
 export default function Forest() {
     const { isLoading, startGame, gameHistory, backToCity } = useGameStore()

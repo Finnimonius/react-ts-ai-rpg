@@ -12,6 +12,7 @@ import DungeonView from '../components/game/Locations/Dungeon/DungeonView';
 import { useNavigate, useRoutes } from 'react-router-dom';
 import Market from '../components/game/Locations/City/Market';
 import type { MenuInfo } from 'rc-menu/lib/interface';
+import CharacterSheet from '../components/game/Character/CharacterSheet';
 
 const gameRoutes = [
     { path: '/', element: <CityView /> },
@@ -96,6 +97,7 @@ export default function Gameplay() {
                     </Splitter.Panel>
                     <Splitter.Panel min={'32%'} defaultSize={'32%'} max={'60%'} style={{ padding: '100px 20px' }} className="gameplat-splitter-character">
                         <button onClick={handleReset}>Сбросить персонажа</button>
+                        <CharacterSheet />
                     </Splitter.Panel>
                 </Splitter>
             </ConfigProvider>

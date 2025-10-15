@@ -13,8 +13,10 @@
 .class-list {
     list-style: none;
     display: flex;
+    justify-content: center;
     gap: 30px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .class-list-item {
