@@ -1,3 +1,5 @@
+import type { ClassConfig, ClassId } from "../../../types/character.types";
+
 export const STARTER_WEAPONS = {
   DAGGER: {
     id: 'starter_dagger',
@@ -87,7 +89,7 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 25,
-    effect: { type: 'HEAL', value: 50 }
+    effect: { type: 'HEAL' as const, value: 50 }
   },
 
   MANA_POTION: {
@@ -97,7 +99,7 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 30,
-    effect: { type: 'MANA_RESTORE', value: 30 }
+    effect: { type: 'MANA_RESTORE' as const, value: 30 }
   },
 
   BASIC_FOOD: {
@@ -107,6 +109,29 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 5,
-    effect: { type: 'OUT_OF_COMBAT_HEAL', value: 20 }
+    effect: { type: 'OUT_OF_COMBAT_HEAL' as const, value: 20 }
   }
+};
+
+export const classConfigs: Record<ClassId, ClassConfig> = {
+  // === СЕРЫЙ СТРАННИК ===
+  grey_wanderer: {
+    equipment: {
+      weapon_main: STARTER_WEAPONS.DAGGER,
+      weapon_off: STARTER_WEAPONS.DAGGER,
+      helmet: STARTER_ARMOR.LEATHER_CAP,
+      chest: STARTER_ARMOR.LEATHER_ARMOR,
+      gloves: STARTER_ARMOR.LEATHER_GLOVES,
+      legs: STARTER_ARMOR.LEATHER_PANTS,
+      boots: STARTER_ARMOR.LEATHER_BOOTS,
+      ring_1: null,   
+      ring_2: null,   
+      amulet: null
+    },
+    inventory: [
+      { item: STARTER_CONSUMABLES.HEALTH_POTION, quantity: 5 },
+      { item: STARTER_CONSUMABLES.MANA_POTION, quantity: 3 },
+      { item: STARTER_CONSUMABLES.BASIC_FOOD, quantity: 10 }
+    ]
+  },
 };

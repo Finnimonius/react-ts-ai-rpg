@@ -11,6 +11,11 @@ export interface InventoryItem {
     value: number,
 }
 
+export interface InventorySlot {
+    item: Weapon | Armor | Consumable; 
+    quantity: number;                 
+}
+
 export interface Weapon extends InventoryItem {
     damage: {min: number, max: number},
     stats: Partial<Record<keyof BaseStats, number>>,
@@ -26,6 +31,14 @@ export interface Armor extends InventoryItem {
 
 export interface Accessory extends InventoryItem {    // В разработке
     slot: EquipmentSlot
+}
+
+export interface Consumable extends InventoryItem {
+    type: 'consumable';
+    effect: {
+        type: 'HEAL' | 'MANA_RESTORE' | 'OUT_OF_COMBAT_HEAL';
+        value: number;
+    };
 }
 
 export interface Equipment {

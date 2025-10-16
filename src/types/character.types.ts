@@ -1,4 +1,5 @@
 import type { RACES } from "../utils/characterData/races";
+import type { Equipment, InventorySlot } from "./inventory.types";
 
 export type Race = typeof RACES[number]
 
@@ -33,8 +34,15 @@ export interface ClassAbility {
     type: 'damage' | 'utility' | 'passive'
 }
 
+export type ClassId = 'grey_wanderer';
+
+export interface ClassConfig {
+    equipment: Equipment; 
+    inventory: InventorySlot[];
+}
+
 export interface CharacterClass {
-    id: string,
+    id: ClassId,
     name: string,
     description: string,
     img: string,
