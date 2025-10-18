@@ -16,8 +16,8 @@ export const ITEM_IMAGES = {
   leather_gloves: leather_gloves,
   leather_pants: leather_pants,
   leather_boots: leather_boots,
-  health_potion: health_flask,
-  mana_potion: mana_flask,
+  health_flask: health_flask,
+  mana_flask: mana_flask,
   basic_food: basic_food
 };
 

@@ -1,3 +1,40 @@
 .characterSheet-container {
     padding: 100px 20px;
 }
+
+.equipment-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); 
+  grid-template-rows: repeat(4, 1fr);   
+  gap: 10px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.inventory-box {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--brown-dark);
+  border-radius: 10px;
+  position: relative;
+}
+
+.quantity {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-size: 12px;
+}

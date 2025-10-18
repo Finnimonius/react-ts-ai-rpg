@@ -1,0 +1,15 @@
+.equipment-slots {
+    display: flex;
+    gap: 5px;
+}
+
+.equipment-slot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    background-color: var(--brown-dark);
+    border: 2px solid var(--primary-black);
+    border-radius: 10px;
+}

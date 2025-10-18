@@ -24,6 +24,10 @@ interface CharacterStore {
   selectRace: (raceData: Race) => void,
   hasCharacter: () => boolean,
   reset: () => void,
+  unequipItem: (equipmentSlot: keyof Equipment, inventoryIndex: number) => void;
+  equipItem: (inventoryIndex: number, equipmentSlot: keyof Equipment) => void;
+  moveInventoryItem: (fromIndex: number, toIndex: number) => void;
+  swapEquipment: (fromSlot: keyof Equipment, toSlot: keyof Equipment) => void;
 }
 
 export const useCharacterStore = create<CharacterStore>()(
@@ -34,7 +38,7 @@ export const useCharacterStore = create<CharacterStore>()(
       experience: 0,
 
       currentStats: { strength: 0, dexterity: 0, intelligence: 0, wisdom: 0, constitution: 0, luck: 0 },
-      derivedStats: {health: 0, mana: 0, attack: 0, defense: 0, critChance: 0, evasion: 0},
+      derivedStats: { health: 0, mana: 0, attack: 0, defense: 0, critChance: 0, evasion: 0 },
       avaliableStatsPoints: 0,
 
       currency: {
@@ -52,7 +56,7 @@ export const useCharacterStore = create<CharacterStore>()(
         relics: 0
       },
 
-      inventory: [],
+      inventory: Array.from({ length: 20 }, () => ({ item: null, quantity: 0 })),
 
       equipment: {
         weapon_main: null,
@@ -72,14 +76,20 @@ export const useCharacterStore = create<CharacterStore>()(
 
       selectClass: (classData) => {
         const startingEquipment = getStartingEquipment(classData.id);
-        const startingInventory = getStartingInventory(classData.id)
+        const startingInventory = getStartingInventory(classData.id);
+
+        const emptyInventory = Array.from({ length: 20 }, () => ({ item: null, quantity: 0 }));
+
+        startingInventory.forEach((slot, index) => {
+          if (index < 20) emptyInventory[index] = slot;
+        });
 
         set({
           selectedClass: classData,
           currentStats: classData.baseStats,
           learnedAbilities: classData.abilities.filter(a => a.level === 1).map(a => a.id),
           equipment: startingEquipment,
-          inventory: startingInventory,
+          inventory: emptyInventory,
         });
       },
 
@@ -94,7 +104,66 @@ export const useCharacterStore = create<CharacterStore>()(
         return !!(selectedClass && selectedRace)
       },
 
-      reset: () => set({ selectedClass: null, selectedRace: null })
+      reset: () => set({ selectedClass: null, selectedRace: null }),
+
+      unequipItem: (equipmentSlot, inventoryIndex) => {
+        const { equipment, inventory } = get();
+
+        const item = equipment[equipmentSlot];
+        if (!item) return;
+
+        if (inventory[inventoryIndex].item) {
+          return;
+        }
+
+        const newEquipment = { ...equipment, [equipmentSlot]: null };
+        const newInventory = [...inventory];
+        newInventory[inventoryIndex] = { item, quantity: 1 };
+
+        set({ equipment: newEquipment, inventory: newInventory });
+      },
+
+      equipItem: (inventoryIndex, equipmentSlot) => {
+        const { equipment, inventory } = get();
+
+        const item = inventory[inventoryIndex].item;
+        if (!item) return;
+
+        const currentEquipped = equipment[equipmentSlot];
+
+        const newEquipment = { ...equipment, [equipmentSlot]: item };
+        const newInventory = [...inventory];
+
+        if (currentEquipped) {
+          newInventory[inventoryIndex] = { item: currentEquipped, quantity: 1 };
+        } else {
+          newInventory[inventoryIndex] = { item: null, quantity: 0 };
+        }
+
+        set({ equipment: newEquipment, inventory: newInventory });
+      },
+
+      moveInventoryItem: (fromIndex, toIndex) => {
+        const { inventory } = get();
+
+        const newInventory = [...inventory];
+        const temp = newInventory[fromIndex];
+        newInventory[fromIndex] = newInventory[toIndex];
+        newInventory[toIndex] = temp;
+
+        set({ inventory: newInventory });
+      },
+
+      swapEquipment: (fromSlot, toSlot) => {
+        const { equipment } = get();
+
+        const newEquipment = { ...equipment };
+        const temp = newEquipment[fromSlot];
+        newEquipment[fromSlot] = newEquipment[toSlot];
+        newEquipment[toSlot] = temp;
+
+        set({ equipment: newEquipment });
+      },
     }),
     {
       name: 'character-storage',

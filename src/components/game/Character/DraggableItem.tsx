@@ -4,8 +4,8 @@ import './DraggableItem.css'
 import { CSS } from '@dnd-kit/utilities';
 import { ITEM_IMAGES } from '../../../utils/data/items/starterGear';
 
-export default function DraggableItem({ item }: { item: Weapon | Armor | Consumable | Accessory }) {
-    const { attributes, listeners, setNodeRef, transform } = useSortable({ id: item.id });
+export default function DraggableItem({ item, location }: { item: Weapon | Armor | Consumable | Accessory; location: string }) {
+    const { attributes, listeners, setNodeRef, transform } = useSortable({ id: `${item.id}|${location}` });
 
     const style = {
         transform: CSS.Transform.toString(transform)
