@@ -3,6 +3,8 @@ import { persist } from 'zustand/middleware'
 import type { BaseStats, CharacterClass, DerivedStats } from '../types/character.types'
 import type { Race } from '../types/character.types'
 import type { CraftingMaterials, Currency } from '../types/currency.types'
+import { getStartingEquipment } from '../utils/generators/items-builder'
+import type { Equipment } from '../types/inventory.types'
 
 interface CharacterStore {
   selectedClass: CharacterClass | null,
@@ -15,6 +17,7 @@ interface CharacterStore {
   avaliableStatsPoints: number,
   currency: Currency,
   craftingMaterials: CraftingMaterials,
+  equipment: Equipment,
   learnedAbilities: string[],
   selectClass: (classData: CharacterClass) => void,
   selectRace: (raceData: Race) => void,
@@ -67,10 +70,13 @@ export const useCharacterStore = create<CharacterStore>()(
 
 
       selectClass: (classData) => {
+        const startingEquipment = getStartingEquipment(classData.id)
+
         set({
           selectedClass: classData,
           currentStats: classData.baseStats,
           learnedAbilities: classData.abilities.filter(a => a.level === 1).map(a => a.id),
+          equipment: startingEquipment
         });
       },
 

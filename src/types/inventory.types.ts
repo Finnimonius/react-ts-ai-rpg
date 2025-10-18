@@ -9,6 +9,7 @@ export interface InventoryItem {
     type: 'weapon' | 'armor' | 'consumable' | 'material' | 'quest',
     rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary',
     value: number,
+    img: string,
 }
 
 export interface InventorySlot {

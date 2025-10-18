@@ -1,4 +1,13 @@
 import type { ClassConfig, ClassId } from "../../../types/character.types";
+import starter_dagger from '../../../assets/images/items/weapons/starter_dagger.png';
+import leather_armor from '../../../assets/images/items/armor/leather_armor.png';
+import leather_cap from '../../../assets/images/items/armor/leather_cap.png';
+import leather_gloves from '../../../assets/images/items/armor/leather_gloves.png';
+import leather_pants from '../../../assets/images/items/armor/leather_pants.png';
+import leather_boots from '../../../assets/images/items/armor/leather_boots.png';
+import health_flask from '../../../assets/images/items/consumables/health_flask.png';
+import mana_flask from '../../../assets/images/items/consumables/mana_flask.png';
+import basic_food from '../../../assets/images/items/consumables/basic_food.png';
 
 export const STARTER_WEAPONS = {
   DAGGER: {
@@ -8,6 +17,7 @@ export const STARTER_WEAPONS = {
     type: 'weapon' as const,
     rarity: 'common' as const,
     value: 15,
+    img: starter_dagger,
     damage: { min: 4, max: 8 },
     stats: { dexterity: 1 },
     weaponType: 'dagger'
@@ -22,6 +32,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'common' as const,
     value: 15,
+    img: leather_cap,
     defense: 3,
     stats: { dexterity: 1 },
     armorType: 'light',
@@ -35,6 +46,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'common' as const,
     value: 35,
+    img: leather_armor,
     defense: 6,
     stats: { dexterity: 2 },
     armorType: 'light',
@@ -48,6 +60,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'common' as const,
     value: 12,
+    img: leather_gloves,
     defense: 2,
     stats: { dexterity: 1 },
     armorType: 'light',
@@ -61,6 +74,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'common' as const,
     value: 20,
+    img: leather_pants,
     defense: 3,
     stats: { dexterity: 1 },
     armorType: 'light',
@@ -74,6 +88,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'common' as const,
     value: 18,
+    img: leather_boots,
     defense: 2,
     stats: { dexterity: 1 },
     armorType: 'light',
@@ -89,6 +104,7 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 25,
+    img: health_flask,
     effect: { type: 'HEAL' as const, value: 50 }
   },
 
@@ -99,6 +115,7 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 30,
+    img: mana_flask,
     effect: { type: 'MANA_RESTORE' as const, value: 30 }
   },
 
@@ -109,6 +126,7 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 5,
+    img: basic_food,
     effect: { type: 'OUT_OF_COMBAT_HEAL' as const, value: 20 }
   }
 };
