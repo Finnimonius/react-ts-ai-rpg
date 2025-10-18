@@ -9,7 +9,7 @@ export default function InventoryBox({ slot, index }: { slot: InventorySlot, ind
             {slot.item ? (
                 <DraggableItem item={slot.item} location={`inventory-${index}`}/>
             ) : (
-                <div>Пусто</div>
+                <div className="InventoryBox-empty">Пусто</div>
             )}
             {slot.item && slot.quantity > 1 && (
                 <div className="quantity">{slot.quantity}</div>

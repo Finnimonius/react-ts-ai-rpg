@@ -6,6 +6,8 @@ import type { CraftingMaterials, Currency } from '../types/currency.types'
 import { getStartingEquipment, getStartingInventory } from '../utils/generators/items-builder'
 import type { Equipment, InventorySlot } from '../types/inventory.types'
 
+export const INVENTORY_SIZE = 14;
+
 interface CharacterStore {
   selectedClass: CharacterClass | null,
   // Изменить на background
@@ -56,7 +58,7 @@ export const useCharacterStore = create<CharacterStore>()(
         relics: 0
       },
 
-      inventory: Array.from({ length: 20 }, () => ({ item: null, quantity: 0 })),
+      inventory: Array.from({ length: INVENTORY_SIZE }, () => ({ item: null, quantity: 0 })),
 
       equipment: {
         weapon_main: null,
@@ -78,7 +80,7 @@ export const useCharacterStore = create<CharacterStore>()(
         const startingEquipment = getStartingEquipment(classData.id);
         const startingInventory = getStartingInventory(classData.id);
 
-        const emptyInventory = Array.from({ length: 20 }, () => ({ item: null, quantity: 0 }));
+        const emptyInventory = Array.from({ length: INVENTORY_SIZE }, (): InventorySlot => ({ item: null, quantity: 0 }));
 
         startingInventory.forEach((slot, index) => {
           if (index < 20) emptyInventory[index] = slot;
@@ -157,10 +159,11 @@ export const useCharacterStore = create<CharacterStore>()(
       swapEquipment: (fromSlot, toSlot) => {
         const { equipment } = get();
 
-        const newEquipment = { ...equipment };
-        const temp = newEquipment[fromSlot];
-        newEquipment[fromSlot] = newEquipment[toSlot];
-        newEquipment[toSlot] = temp;
+        const newEquipment: Equipment = {
+          ...equipment,
+          [fromSlot]: equipment[toSlot],
+          [toSlot]: equipment[fromSlot]
+        };
 
         set({ equipment: newEquipment });
       },

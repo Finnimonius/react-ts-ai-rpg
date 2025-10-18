@@ -1,15 +1,16 @@
 // import warriorImg from '../../assets/images/characters/classes/warrior.png'
-import hunterImg from '../../assets/images/characters/classes/hunter.png'
+// import hunterImg from '../../assets/images/characters/classes/hunter.png'
 // import banditImg from '../../assets/images/characters/classes/bandit.png'
 // import witchhunterImg from '../../assets/images/characters/classes/witchhunter.png'
 // import warlord from '../../assets/images/characters/classes/warlord.png'
+import grey_wanderer from '../../assets/images/characters/classes/grey-wanderer.png'
 
 export const CLASSES = [
     {
     id: 'grey_wanderer',
     name: 'Серый странник',
     description: 'Мастер скрытности и манипуляций, использующий иллюзии и хитрость',
-    img: hunterImg,
+    img: grey_wanderer,
 
     baseStats: {
       strength: 8,

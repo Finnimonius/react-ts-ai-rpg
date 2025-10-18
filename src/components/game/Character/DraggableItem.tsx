@@ -1,5 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable'
-import type { Accessory, Armor, Consumable, Weapon } from '../../../types/inventory.types'
+import type { Accessory, Armor, Consumable, Rarity, Weapon } from '../../../types/inventory.types'
 import './DraggableItem.css'
 import { CSS } from '@dnd-kit/utilities';
 import { ITEM_IMAGES } from '../../../utils/data/items/starterGear';
@@ -13,6 +13,16 @@ export default function DraggableItem({ item, location }: { item: Weapon | Armor
 
     const itemImage = ITEM_IMAGES[item.img as keyof typeof ITEM_IMAGES]
 
+    const rarityBorder: Record<Rarity, string> = {
+        common: 'common',
+        uncommon: 'uncommon',
+        rare: 'rare',
+        epic: 'epic',
+        legendary: 'legendary'
+    }
+
+    const rarity = rarityBorder[item.rarity]
+
     return (
         <div
             ref={setNodeRef}
@@ -21,7 +31,7 @@ export default function DraggableItem({ item, location }: { item: Weapon | Armor
             {...listeners}
             className='draggableItem'
         >
-            <img src={itemImage} alt={item.name} className='draggableItem-img'/>
+            <img src={itemImage} alt={item.name} className={`draggableItem-img ${rarity}`} />
         </div>
     )
 }

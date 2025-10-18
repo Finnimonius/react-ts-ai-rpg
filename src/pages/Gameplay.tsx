@@ -81,14 +81,14 @@ export default function Gameplay() {
                     onClick={handleMenuClick}
                 />
             </div>
-            <ConfigProvider theme={{ components: { Splitter: { colorPrimary: '#000103', colorFill: 'white', controlItemBgActiveHover: 'rgb(0,0,0)', controlItemBgActive: 'rgb(0,0,0)', } } }}>
+            <ConfigProvider theme={{ components: { Splitter: { colorPrimary: '#1677ff', colorFill: 'rgb(0,0,0)', controlItemBgActiveHover: 'rgb(0,0,0)', controlItemBgActive: 'rgb(0,0,0)', } } }}>
                 <Splitter style={{ minHeight: '90vh', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                     <Splitter.Panel resizable={true} className="gameplay-splitter">
                         <div className="splitter-content-wrapper">
                             {routing}
                         </div>
                     </Splitter.Panel>
-                    <Splitter.Panel min={'32%'} defaultSize={'32%'} max={'60%'} className="gameplat-splitter-character">
+                    <Splitter.Panel min={'32%'} defaultSize={'32%'} max={'45%'} className="gameplat-splitter-character">
                         <CharacterSheet />
                     </Splitter.Panel>
                 </Splitter>

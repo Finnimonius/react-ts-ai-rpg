@@ -1,16 +1,26 @@
 import { useNavigate } from "react-router-dom"
-import { useCharacterStore } from "../../../stores/characterStore"
+import { INVENTORY_SIZE, useCharacterStore } from "../../../stores/characterStore"
 import './CharacterSheet.css'
 import DraggableItem from "./DraggableItem"
 import { useState } from "react";
-import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
+import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
 import type { Accessory, Armor, Consumable, Equipment, Weapon } from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
 import InventoryBox from "./InventoryBox";
 import { ITEM_IMAGES } from "../../../utils/data/items/starterGear";
+import { canEquipItem } from "../../../utils/generators/items-builder";
+import { ConfigProvider, Progress } from 'antd';
 
 export default function CharacterSheet() {
-    const { reset, equipment, inventory } = useCharacterStore();
+    const { reset,
+        equipment,
+        inventory,
+        equipItem,
+        swapEquipment,
+        unequipItem,
+        moveInventoryItem,
+        selectedClass
+    } = useCharacterStore();
     const [activeId, setActiveId] = useState<string | null>(null);
     const navigate = useNavigate();
 
@@ -53,11 +63,11 @@ export default function CharacterSheet() {
 
     const activeItemData = activeId ? findItemWithSource(activeId) : null;
 
-    const handleDragStart = (event: any) => {
-        setActiveId(event.active.id)
+    const handleDragStart = (event: DragStartEvent) => {
+        setActiveId(event.active.id.toString())
     };
 
-    const handleDragEnd = (event: any) => {
+    const handleDragEnd = (event: DragEndEvent) => {
         const { active, over } = event;
 
         if (!over) {
@@ -65,7 +75,7 @@ export default function CharacterSheet() {
             return;
         }
 
-        const activeItemData = findItemWithSource(active.id);
+        const activeItemData = findItemWithSource(active.id.toString());
 
         if (!activeItemData) {
             setActiveId(null);
@@ -73,9 +83,7 @@ export default function CharacterSheet() {
         }
 
         const targetZone = over.id as string;
-
         handleItemMove(activeItemData, targetZone);
-
         setActiveId(null);
     };
 
@@ -99,42 +107,13 @@ export default function CharacterSheet() {
         }
     };
 
-    const canEquipItem = (item: Weapon | Armor | Accessory | Consumable, slot: keyof Equipment): boolean => {
-        if (item.type === 'consumable' || item.type === 'material' || item.type === 'quest') {
-            return false;
-        }
-
-        switch (slot) {
-            case 'weapon_main':
-            case 'weapon_off':
-                return item.type === 'weapon';
-
-            case 'helmet':
-            case 'chest':
-            case 'gloves':
-            case 'legs':
-            case 'boots':
-                return item.type === 'armor' && (item as Armor).slot === slot;
-
-            case 'ring_1':
-            case 'ring_2':
-                return item.type === 'accessory' && (item as Accessory).slot?.startsWith('ring');
-
-            case 'amulet':
-                return item.type === 'accessory' && (item as Accessory).slot === 'amulet';
-
-            default:
-                return false;
-        }
-    };
-
     const moveToEquipment = (draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetSlot: keyof Equipment) => {
         if (draggedItem.source.startsWith('inventory-')) {
             const fromIndex = parseInt(draggedItem.source.replace('inventory-', ''));
-            useCharacterStore.getState().equipItem(fromIndex, targetSlot);
+            equipItem(fromIndex, targetSlot);
         } else {
             const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
-            useCharacterStore.getState().swapEquipment(fromSlot, targetSlot);
+            swapEquipment(fromSlot, targetSlot);
         }
     };
 
@@ -143,12 +122,12 @@ export default function CharacterSheet() {
             const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
 
             if (targetIndex >= 0 && targetIndex < inventory.length && !inventory[targetIndex].item) {
-                useCharacterStore.getState().unequipItem(fromSlot, targetIndex);
+                unequipItem(fromSlot, targetIndex);
             }
         }
         else if (draggedItem.source.startsWith('inventory-')) {
             const fromIndex = parseInt(draggedItem.source.replace('inventory-', ''));
-            useCharacterStore.getState().moveInventoryItem(fromIndex, targetIndex);
+            moveInventoryItem(fromIndex, targetIndex);
         }
     };
 
@@ -169,20 +148,45 @@ export default function CharacterSheet() {
 
                 <div className="equipment-section">
                     <div className="equipment-grid">
+                        <img className="character-sheet-img" src={selectedClass?.img} alt="" draggable={false} />
                         {(Object.keys(equipment) as (keyof Equipment)[]).map((slot) => (
-                            <EquipmentSlot key={slot} slotType={slot}>
+                            <EquipmentSlot key={slot} slotType={slot} data-slot={slot}>
                                 {equipment[slot] && (
-                                    <DraggableItem item={equipment[slot]!} location={`equipment-${slot}`} />
+                                    <DraggableItem item={equipment[slot]} location={`equipment-${slot}`} />
                                 )}
                             </EquipmentSlot>
                         ))}
                     </div>
+                    <div className="character-sheet-status-wrapper">
+                        <ConfigProvider
+                            theme={{
+                                components: {
+                                    Progress: {
+                                        colorText: 'white',
+                                    },
+                                },
+                            }}
+                        >
+                            <Progress className="character-sheet-hp" size={{ height: 6 }} percent={100} strokeColor={'red'} style={{ width: '30rem', color: 'white' }} />
+                        </ConfigProvider>
+                        <ConfigProvider
+                            theme={{
+                                components: {
+                                    Progress: {
+                                        colorText: 'white',
+                                        colorSuccess: '#1677ff'
+                                    },
+                                },
+                            }}
+                        >
+                            <Progress className="character-sheet-hp" size={{ height: 6 }} percent={100} style={{ width: '30rem', color: 'white' }} />
+                        </ConfigProvider>
+                    </div>
                 </div>
 
                 <div className="inventory-section">
-                    <h3>🎒 Инвентарь</h3>
                     <div className="inventory-grid">
-                        {Array.from({ length: 20 }, (_, index) => {
+                        {Array.from({ length: INVENTORY_SIZE }, (_, index) => {
                             const slot = inventory[index];
                             return (
                                 <InventoryBox

@@ -1,15 +1,17 @@
-.equipment-slots {
+.slot-placeholder {
     display: flex;
-    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    height: 5rem;
+    text-align: center;
+    background-color: var(--brown-dark);
+    border: 2px solid var(--primary-black);
+    border-radius: 10px;
 }
 
 .equipment-slot {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 90px;
-    height: 90px;
-    background-color: var(--brown-dark);
-    border: 2px solid var(--primary-black);
-    border-radius: 10px;
 }

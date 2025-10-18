@@ -1,19 +1,20 @@
 import type { BaseStats } from "./character.types";
 
 export type EquipmentSlot = 'helmet' | 'chest' | 'gloves' | 'legs' | 'boots' | 'amulet' | 'ring'
+export type Rarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 
 export interface InventoryItem {
     id: string,
     name: string,
     description: string,
     type: 'weapon' | 'armor' | 'consumable' | 'material' | 'quest',
-    rarity: 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary',
+    rarity: Rarity,
     value: number,
     img: string,
 }
 
 export interface InventorySlot {
-    item: Weapon | Armor | Consumable | Accessory; 
+    item: Weapon | Armor | Consumable | Accessory | null; 
     quantity: number;                 
 }
 
