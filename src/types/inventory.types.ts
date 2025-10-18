@@ -13,7 +13,7 @@ export interface InventoryItem {
 }
 
 export interface InventorySlot {
-    item: Weapon | Armor | Consumable; 
+    item: Weapon | Armor | Consumable | Accessory; 
     quantity: number;                 
 }
 

@@ -1,0 +1,14 @@
+.draggableItem {
+    width: 90px;
+    height: 90px;
+}
+
+.draggableItem-img {
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 2px solid var(--primary-black);
+    background-color: var(--brown-dark);
+}

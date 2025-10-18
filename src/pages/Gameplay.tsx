@@ -3,13 +3,12 @@ import type { MenuProps } from 'antd';
 import { useState } from "react";
 import { AppstoreOutlined, ContainerOutlined, DesktopOutlined, MailOutlined, PieChartOutlined } from '@ant-design/icons';
 import './Gameplay.css';
-import { useCharacterStore } from "../stores/characterStore"
 import CityView from "../components/game/Locations/City/CityView";
 import Portal from "../components/game/Locations/City/Portal";
 import Tavern from '../components/game/Locations/City/Tavern';
 import Blacksmith from '../components/game/Locations/City/Blacksmith';
 import DungeonView from '../components/game/Locations/Dungeon/DungeonView';
-import { useNavigate, useRoutes } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import Market from '../components/game/Locations/City/Market';
 import type { MenuInfo } from 'rc-menu/lib/interface';
 import CharacterSheet from '../components/game/Character/CharacterSheet';
@@ -24,15 +23,9 @@ const gameRoutes = [
 ]
 
 export default function Gameplay() {
-    const { reset } = useCharacterStore()
     const [collapsed, setCollapsed] = useState(true);
-    const navigate = useNavigate()
     const routing = useRoutes(gameRoutes)
 
-    const handleReset = () => {
-        reset()
-        navigate('/play')
-    }
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
@@ -95,8 +88,7 @@ export default function Gameplay() {
                             {routing}
                         </div>
                     </Splitter.Panel>
-                    <Splitter.Panel min={'32%'} defaultSize={'32%'} max={'60%'} style={{ padding: '100px 20px' }} className="gameplat-splitter-character">
-                        <button onClick={handleReset}>Сбросить персонажа</button>
+                    <Splitter.Panel min={'32%'} defaultSize={'32%'} max={'60%'} className="gameplat-splitter-character">
                         <CharacterSheet />
                     </Splitter.Panel>
                 </Splitter>
