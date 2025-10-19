@@ -8,9 +8,10 @@ import type { Accessory, Armor, Consumable, Equipment, Weapon } from "../../../t
 import EquipmentSlot from "./EquipmentSlot";
 import { ITEM_IMAGES } from "../../../utils/data/items/starterGear";
 import { canEquipItem } from "../../../utils/generators/items-builder";
-import { ConfigProvider, Divider, Progress } from 'antd';
+import { Divider } from 'antd';
 import Inventory from "./Inventory";
 import Stats from "./CombatStats";
+import StatusBars from "./StatusBars";
 
 export default function CharacterSheet() {
     const { reset,
@@ -21,7 +22,7 @@ export default function CharacterSheet() {
         unequipItem,
         moveInventoryItem,
         selectedClass,
-        level
+        level,
     } = useCharacterStore();
     const [activeId, setActiveId] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -174,41 +175,13 @@ export default function CharacterSheet() {
                     </div>
                 </div>
 
-                {/* <Stats /> */}
-
-                <div className="character-sheet-status-wrapper">
-                    <ConfigProvider
-                        theme={{
-                            components: {
-                                Progress: {
-                                    colorText: 'white',
-                                },
-                            },
-                        }}
-                    >
-                        <Progress className="character-sheet-hp" showInfo={false} size={{ height: 6 }} percent={100} strokeColor={'red'} style={{ width: '30rem', color: 'white' }} />
-                    </ConfigProvider>
-                    <ConfigProvider
-                        theme={{
-                            components: {
-                                Progress: {
-                                    colorText: 'white',
-                                    colorSuccess: '#1677ff'
-                                },
-                            },
-                        }}
-                    >
-                        <Progress className="character-sheet-hp" showInfo={false} size={{ height: 6 }} percent={100} style={{ width: '30rem', color: 'white' }} />
-                    </ConfigProvider>
-                </div>
-
+                <StatusBars />
                 <Stats />
-
                 <Inventory />
 
-
-                <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: 23 }}>.</Divider>
-
+                <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: 23 }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" d="M42.65 34.75v-21.5L24 2.5L5.35 13.25v21.5L24 45.5z" /><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" d="m36.31 32.45l6.34-19.2L24 10.59L5.35 13.25l6.34 19.2L24 45.5z" /><path fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" d="M36.31 32.45H11.69L24 10.59zM24 10.59V2.5m12.31 29.95l6.34 2.3m-30.96-2.3l-6.34 2.3" /></svg>
+                </Divider>
 
                 <DragOverlay>
                     {activeItemData ? (

@@ -1,5 +1,5 @@
 .characterSheet-container {
-    padding: 2.5rem 20px;
+    padding: 2.2rem 20px;
     height: 100%;
     position: relative;
     z-index: 0;
@@ -21,20 +21,20 @@
 
 .ui-element1 {
     position: absolute;
-    top: 3vh;
+    top: 2.5vh;
     left: 0;
-    width: 50px;
-    height: 50px;
+    width: 4vh;
+    height: 4vh;
     background-image: url('../../../assets/images/icons/Ui-character.png');
     background-size: cover;
 }
 
 .ui-element2 {
     position: absolute;
-    top: 3vh;
+    top: 2.5vh;
     right: 0;
-    width: 50px;
-    height: 50px;
+    width: 4vh;
+    height: 4vh;
     background-image: url('../../../assets/images/icons/Ui-character.png');
     background-size: cover;
     transform: scaleX(-1);
@@ -42,10 +42,10 @@
 
 .ui-element3 {
     position: absolute;
-    top: 2vh;
+    top: 1.7vh;
     left: 50%;
-    width: 160px;
-    height: 20px;
+    width: 13vh;
+    height: 2vh;
     background-image: url('../../../assets/images/icons/Ui-character2.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -54,10 +54,10 @@
 
 .ui-element4 {
     position: absolute;
-    bottom: 3vh;
+    bottom: 2.5vh;
     right: 0;
-    width: 50px;
-    height: 50px;
+    width: 4vh;
+    height: 4vh;
     background-image: url('../../../assets/images/icons/Ui-character.png');
     background-size: cover;
     transform: scale(-1);
@@ -65,10 +65,10 @@
 
 .ui-element5 {
     position: absolute;
-    bottom: 3vh;
+    bottom: 2.5vh;
     left: 0;
-    width: 50px;
-    height: 50px;
+    width: 4vh;
+    height: 4vh;
     background-image: url('../../../assets/images/icons/Ui-character.png');
     background-size: cover;
     transform: scaleY(-1);
@@ -110,12 +110,16 @@
     margin-bottom: 10px;
 }
 
-.character-sheet-status-wrapper {
+.character-sheet-health-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
+    color: white;
+}
+
+.character-sheet-health-num {
+    font-family: 'Cormorant', cursive;
+    font-size: 1.5vh;
 }
 
 .equipment-grid {

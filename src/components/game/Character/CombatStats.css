@@ -9,8 +9,8 @@
 .stats-box {
     position: relative;
     padding: 10px;
-    width: 45vh;
-    border-radius: 10px;
+    width: 50vh;
+    border-radius: 20px;
     background: 
         linear-gradient(to right, rgb(143, 143, 143) 85%, transparent 20%) top,
         linear-gradient(to bottom, rgb(143, 143, 143) 80%, transparent 20%) right,
@@ -33,6 +33,11 @@
     flex-direction: column;
     align-items: center;
     gap: 5px;
+}
+
+.stats-descr-wrap {
+    display: flex;
+    gap: 0.7vh;
 }
 
 .stats-descr {

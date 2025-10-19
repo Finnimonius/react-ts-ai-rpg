@@ -106,12 +106,6 @@ export const useCharacterStore = create<CharacterStore>()(
         return !!(selectedClass && selectedRace)
       },
 
-      reset: () => set({ 
-        selectedClass: null, 
-        selectedRace: null,
-        level: 1,
-      }),
-
       unequipItem: (equipmentSlot, inventoryIndex) => {
         const { equipment, inventory } = get();
 
@@ -171,6 +165,12 @@ export const useCharacterStore = create<CharacterStore>()(
 
         set({ equipment: newEquipment });
       },
+      
+      reset: () => set({
+        selectedClass: null,
+        selectedRace: null,
+        level: 1,
+      }),
     }),
     {
       name: 'character-storage',
