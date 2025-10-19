@@ -6,7 +6,7 @@
     padding: 100px 20px;
     gap: 20px;
     background-image: url('../../../../assets/images/backgrounds/forest-back.jpg');
-    background-size: cover;
+    background-size: contain;
     background-attachment: fixed;
     background-repeat: no-repeat;
     color: white;

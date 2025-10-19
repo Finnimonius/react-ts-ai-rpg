@@ -1,6 +1,6 @@
 .draggableItem {
-    width: 5rem;
-    height: 5rem;
+    width: 6.5vh;
+    height: 6.5vh;
     cursor: pointer;
 }
 
@@ -32,13 +32,27 @@
 }
 
 .rare {
-    border-bottom: 3px solid #0c1488;
+    border-bottom: 3px solid #272bff;
 }
 
 .epic {
-    border-bottom: 3px solid #620586;
+    border-bottom: 3px solid #bf25fc;
 }
 
 .legendary {
     border-bottom: 3px solid #e67e22;
+}
+
+.draggable-box-tooltip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.draggable-tooltip-title {
+    font-size: 20px;
+    color: white;
+    font-family: 'Cormorant', cursive;
 }

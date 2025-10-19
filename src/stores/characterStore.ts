@@ -40,7 +40,7 @@ export const useCharacterStore = create<CharacterStore>()(
       experience: 0,
 
       currentStats: { strength: 0, dexterity: 0, intelligence: 0, wisdom: 0, constitution: 0, luck: 0 },
-      derivedStats: { health: 0, mana: 0, attack: 0, defense: 0, critChance: 0, evasion: 0 },
+      derivedStats: { health: 0, maxHealth: 0, mana: 0, maxMana: 0, attack: 0, defense: 0, critChance: 0, evasion: 0 },
       avaliableStatsPoints: 0,
 
       currency: {
@@ -106,7 +106,11 @@ export const useCharacterStore = create<CharacterStore>()(
         return !!(selectedClass && selectedRace)
       },
 
-      reset: () => set({ selectedClass: null, selectedRace: null }),
+      reset: () => set({ 
+        selectedClass: null, 
+        selectedRace: null,
+        level: 1,
+      }),
 
       unequipItem: (equipmentSlot, inventoryIndex) => {
         const { equipment, inventory } = get();

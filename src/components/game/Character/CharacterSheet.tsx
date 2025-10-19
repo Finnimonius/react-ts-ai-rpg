@@ -1,15 +1,16 @@
 import { useNavigate } from "react-router-dom"
-import { INVENTORY_SIZE, useCharacterStore } from "../../../stores/characterStore"
+import { useCharacterStore } from "../../../stores/characterStore"
 import './CharacterSheet.css'
 import DraggableItem from "./DraggableItem"
 import { useState } from "react";
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
 import type { Accessory, Armor, Consumable, Equipment, Weapon } from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
-import InventoryBox from "./InventoryBox";
 import { ITEM_IMAGES } from "../../../utils/data/items/starterGear";
 import { canEquipItem } from "../../../utils/generators/items-builder";
-import { ConfigProvider, Progress } from 'antd';
+import { ConfigProvider, Divider, Progress } from 'antd';
+import Inventory from "./Inventory";
+import Stats from "./CombatStats";
 
 export default function CharacterSheet() {
     const { reset,
@@ -19,7 +20,8 @@ export default function CharacterSheet() {
         swapEquipment,
         unequipItem,
         moveInventoryItem,
-        selectedClass
+        selectedClass,
+        level
     } = useCharacterStore();
     const [activeId, setActiveId] = useState<string | null>(null);
     const navigate = useNavigate();
@@ -138,13 +140,26 @@ export default function CharacterSheet() {
 
     return (
         <div className="characterSheet-container">
-            <button onClick={handleReset}>Сбросить персонажа</button>
+            <div className="ui-element1"></div>
+            <div className="ui-element2"></div>
+            <div className="ui-element3"></div>
+            <div className="ui-element4"></div>
+            <div className="ui-element5"></div>
             <DndContext
                 sensors={sensors}
                 collisionDetection={closestCenter}
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
             >
+                {/* <button onClick={handleReset} >Сбросить персонажа</button> */}
+
+                <div className="divider-wrapper">
+                    <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: '1.9vh' }}>{selectedClass?.name}</Divider>
+                    <div className="character-level-wrapper">
+                        <span>Ур: {level}</span>
+                        <div className="ui-element-level"></div>
+                    </div>
+                </div>
 
                 <div className="equipment-section">
                     <div className="equipment-grid">
@@ -157,47 +172,43 @@ export default function CharacterSheet() {
                             </EquipmentSlot>
                         ))}
                     </div>
-                    <div className="character-sheet-status-wrapper">
-                        <ConfigProvider
-                            theme={{
-                                components: {
-                                    Progress: {
-                                        colorText: 'white',
-                                    },
-                                },
-                            }}
-                        >
-                            <Progress className="character-sheet-hp" size={{ height: 6 }} percent={100} strokeColor={'red'} style={{ width: '30rem', color: 'white' }} />
-                        </ConfigProvider>
-                        <ConfigProvider
-                            theme={{
-                                components: {
-                                    Progress: {
-                                        colorText: 'white',
-                                        colorSuccess: '#1677ff'
-                                    },
-                                },
-                            }}
-                        >
-                            <Progress className="character-sheet-hp" size={{ height: 6 }} percent={100} style={{ width: '30rem', color: 'white' }} />
-                        </ConfigProvider>
-                    </div>
                 </div>
 
-                <div className="inventory-section">
-                    <div className="inventory-grid">
-                        {Array.from({ length: INVENTORY_SIZE }, (_, index) => {
-                            const slot = inventory[index];
-                            return (
-                                <InventoryBox
-                                    key={index}
-                                    slot={slot || { item: null, quantity: 0 }}
-                                    index={index}
-                                />
-                            );
-                        })}
-                    </div>
+                {/* <Stats /> */}
+
+                <div className="character-sheet-status-wrapper">
+                    <ConfigProvider
+                        theme={{
+                            components: {
+                                Progress: {
+                                    colorText: 'white',
+                                },
+                            },
+                        }}
+                    >
+                        <Progress className="character-sheet-hp" showInfo={false} size={{ height: 6 }} percent={100} strokeColor={'red'} style={{ width: '30rem', color: 'white' }} />
+                    </ConfigProvider>
+                    <ConfigProvider
+                        theme={{
+                            components: {
+                                Progress: {
+                                    colorText: 'white',
+                                    colorSuccess: '#1677ff'
+                                },
+                            },
+                        }}
+                    >
+                        <Progress className="character-sheet-hp" showInfo={false} size={{ height: 6 }} percent={100} style={{ width: '30rem', color: 'white' }} />
+                    </ConfigProvider>
                 </div>
+
+                <Stats />
+
+                <Inventory />
+
+
+                <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: 23 }}>.</Divider>
+
 
                 <DragOverlay>
                     {activeItemData ? (

@@ -2,8 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 5rem;
-    height: 5rem;
+    width: 6.5vh;
+    height: 6.5vh;
     text-align: center;
     background-color: var(--brown-dark);
     border: 2px solid var(--primary-black);
