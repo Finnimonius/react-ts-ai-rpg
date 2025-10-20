@@ -1,5 +1,6 @@
 import { useCharacterStore } from '../../../stores/characterStore'
 import './CombatStats.css'
+import MainStats from './MainStats'
 
 export default function Stats() {
     const { derivedStats } = useCharacterStore()
@@ -7,6 +8,7 @@ export default function Stats() {
     return (
         <div className="stats-container">
             <div className='stats-box'>
+                <MainStats />
                 <div className='ui-stats'></div>
                 <div className='stats-combat-wrapper'>
                     <div className='stats-combat-stat'>

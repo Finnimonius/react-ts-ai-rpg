@@ -10,7 +10,7 @@
     padding: 5px;
     object-fit: contain;
     border-radius: 10px;
-    border: 2px solid var(--primary-black);
+    border: 0.2vh solid var(--primary-black);
     background-color: var(--brown-dark);
     pointer-events: none;
     user-select: none;
@@ -27,29 +27,29 @@
         inset -3px -3px 6px rgba(0, 0, 0, 0.6),
         0 6px 12px rgba(0, 0, 0, 0.5),
         0 2px 4px rgba(0, 0, 0, 0.3);
-    border: 2px solid var(--primary-black);
+    border: 0.2vh solid var(--primary-black);
 
 }
 
 .common {
-    border-bottom: 3px solid #8a8a8a;
+    border-bottom: 0.3vh solid #8a8a8a;
     ;
 }
 
 .uncommon {
-    border-bottom: 3px solid #2ecc71;
+    border-bottom: 0.3vh solid #2ecc71;
 }
 
 .rare {
-    border-bottom: 3px solid #272bff;
+    border-bottom: 0.3vh solid #272bff;
 }
 
 .epic {
-    border-bottom: 3px solid #bf25fc;
+    border-bottom: 0.3vh solid #bf25fc;
 }
 
 .legendary {
-    border-bottom: 3px solid #e67e22;
+    border-bottom: 0.3vh solid #e67e22;
 }
 
 .draggable-box-tooltip {
@@ -70,9 +70,16 @@
     font-family: 'Cormorant', cursive;
     font-size: 1.6vh;
     line-height: 1;
+    color: var(--text-light);
 }
 
 .draggable-tooltip-descr {
     font-size: 1.4vh;
     line-height: 1;
+}
+
+.draggable-tooltip-stats {
+    font-size: 1.4vh;
+    line-height: 1;
+    color: var(--primary-yellow);
 }

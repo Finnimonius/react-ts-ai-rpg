@@ -12,9 +12,9 @@
     width: 50vh;
     border-radius: 20px;
     background: 
-        linear-gradient(to right, rgb(143, 143, 143) 85%, transparent 20%) top,
+        linear-gradient(to right, rgb(143, 143, 143) 75%, transparent 20%) top,
         linear-gradient(to bottom, rgb(143, 143, 143) 80%, transparent 20%) right,
-        linear-gradient(to left, rgb(143, 143, 143) 85%, transparent 20%) bottom,
+        linear-gradient(to left, rgb(143, 143, 143) 90%, transparent 20%) bottom,
         linear-gradient(to top, rgb(143, 143, 143) 80%, transparent 20%) left;
     background-size: 100% 2px, 2px 100%, 100% 2px, 2px 100%;
     background-repeat: no-repeat;
@@ -44,12 +44,12 @@
     font-size: 1.7vh;
     font-weight: 700;
     color: var(--text-light);
-    text-shadow: 0 0 4px var(--text-light), 0 0 6px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 3px var(--text-light), 0 0 6px rgba(255, 255, 255, 0.4);
 }
 
 .stats-combat-num {
     font-family: 'AngelusMedieval', cursive;
     font-size: 1.6vh;
     color: var(--primary-yellow);
-    text-shadow: 0 0 4px var(--primary-yellow), 0 0 6px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 3px var(--primary-yellow), 0 0 6px rgba(255, 255, 255, 0.4);
 }

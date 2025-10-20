@@ -1,0 +1,123 @@
+.main-stats-custom-popover {
+    position: absolute;
+    top: -26vh;
+    left: 0;
+    background: #000;
+    border: 0.2vh solid #5d4037;
+    border-radius: 8px;
+    padding: 1.5vh;
+    width: 20vh;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: scale(0.8) translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.main-stats-custom-popover.show {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.main-stats-custom-popover.hide {
+    opacity: 0;
+    transform: scale(0.8) translateY(-10px);
+}
+
+.main-stats-header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5vh;
+    color: white;
+    font-family: 'Cormorant', cursive;
+    text-align: center;
+    border-bottom: 0.2vh solid #5d4037;
+    padding-bottom: 0.6vh;
+    margin-bottom: 0.8vh;
+}
+
+.main-stats-title {
+    color: white;
+    font-family: 'Cormorant', cursive;
+    font-size: 1.5vh;
+    padding-bottom: 0.4vh;
+}
+
+.main-stats-container {
+    position: absolute;
+    top: -8.5vh;
+    left: 14vh;
+    z-index: 1;
+}
+
+.main-stats-box {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.3vh;
+    gap: 0.4vh;
+}
+
+.main-stats-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2vh;
+    font-size: 1.4vh;
+    font-weight: 600;
+    color: white;
+}
+
+.main-stats-value {
+    font-size: 1.6vh;
+    color: var(--text-light);
+}
+
+.main-stats-btn {
+    width: 3vh;
+    height: 3vh;
+    background: linear-gradient(145deg, #6d5040 0%, #5d4037 100%);
+    border: 0.2vh solid var(--text-light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow:
+        inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.1),
+        0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.main-stats-btn:hover {
+    border: 0.2vh solid var(--brown-dark);
+}
+
+.main-stats-btn1 {
+    width: 2vh;
+    height: 2vh;
+    display: flex;
+    border: none;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.main-stats-btn.blinking-simple svg path,
+.main-stats-btn1.blinking-simple svg path {
+    animation: blinkSimple 1s infinite;
+}
+
+@keyframes blinkSimple {
+
+    0%,
+    100% {
+        stroke: #d4af37;
+    }
+
+    50% {
+        stroke: #ffd700;
+    }
+}

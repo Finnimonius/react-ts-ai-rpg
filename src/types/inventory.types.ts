@@ -7,7 +7,7 @@ export interface InventoryItem {
     id: string,
     name: string,
     description: string,
-    type: 'weapon' | 'armor' | 'consumable' | 'material' | 'quest',
+    type: 'weapon' | 'armor' | 'accessory' | 'consumable' | 'material' | 'quest',
     rarity: Rarity,
     value: number,
     img: string,
@@ -31,7 +31,9 @@ export interface Armor extends InventoryItem {
     slot: EquipmentSlot
 }
 
-export interface Accessory extends InventoryItem {    // В разработке
+export interface Accessory extends InventoryItem {
+    damage?: {min: number, max: number},
+    stats: Partial<Record<keyof BaseStats, number>>,
     slot: EquipmentSlot
 }
 

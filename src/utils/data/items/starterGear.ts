@@ -8,6 +8,9 @@ import leather_boots from '../../../assets/images/items/armor/leather_boots.png'
 import health_flask from '../../../assets/images/items/consumables/health_flask.png';
 import mana_flask from '../../../assets/images/items/consumables/mana_flask.png';
 import basic_food from '../../../assets/images/items/consumables/basic_food.png';
+import ring_with_seal from '../../../assets/images/items/accsesories/ring_with_seal.png';
+import storm_amulet from '../../../assets/images/items/accsesories/storm_amulet.png';
+import sun_ring from '../../../assets/images/items/accsesories/sun_ring.png';
 
 export const ITEM_IMAGES = {
   starter_dagger: starter_dagger,
@@ -16,6 +19,9 @@ export const ITEM_IMAGES = {
   leather_gloves: leather_gloves,
   leather_pants: leather_pants,
   leather_boots: leather_boots,
+  storm_amulet: storm_amulet,
+  ring_with_seal: ring_with_seal,
+  sun_ring: sun_ring,
   health_flask: health_flask,
   mana_flask: mana_flask,
   basic_food: basic_food
@@ -108,6 +114,43 @@ export const STARTER_ARMOR = {
   }
 };
 
+export const STARTER_ACCSESORIES = {
+    SUN_RING: {
+      id: 'sun_ring',
+      name: 'Кольцо солнца',
+      description: 'Кольцо с камнем солнца',
+      type: 'accessory' as const,
+      rarity: 'legendary' as const,
+      value: 20,
+      img: 'sun_ring',
+      stats: {dexterity: 1, wisdom: 2, luck: 2},
+      slot: 'ring' as const,
+    },
+    RING_WITH_SEAL: {
+      id: 'ring_with_seal',
+      name: 'Кольцо с печатью',
+      description: 'Аккуратное кольцо с магическими рунами',
+      type: 'accessory' as const,
+      rarity: 'rare' as const,
+      value: 22,
+      img: 'ring_with_seal',
+      stats: {intelligence: 2, wisdom: 1},
+      slot: 'ring' as const,
+    },
+    STORM_AMULET: {
+      id: 'storm_amulet',
+      name: 'Амулет бури',
+      description: 'Внутри этого камня бушует вечная гроза',
+      type: 'accessory' as const,
+      rarity: 'epic' as const,
+      value: 22,
+      img: 'storm_amulet',
+      damage: { min: 1, max: 1 },
+      stats: {strength: 2, intelligence: 2},
+      slot: 'amulet' as const,
+    },
+}
+
 export const STARTER_CONSUMABLES = {
   HEALTH_POTION: {
     id: 'health_potion',
@@ -154,9 +197,9 @@ export const classConfigs: Record<ClassId, ClassConfig> = {
       gloves: STARTER_ARMOR.LEATHER_GLOVES,
       legs: STARTER_ARMOR.LEATHER_PANTS,
       boots: STARTER_ARMOR.LEATHER_BOOTS,
-      ring_1: null,   
-      ring_2: null,   
-      amulet: null
+      ring_1: STARTER_ACCSESORIES.SUN_RING,   
+      ring_2: STARTER_ACCSESORIES.RING_WITH_SEAL,   
+      amulet: STARTER_ACCSESORIES.STORM_AMULET
     },
     inventory: [
       { item: STARTER_CONSUMABLES.HEALTH_POTION, quantity: 5 },

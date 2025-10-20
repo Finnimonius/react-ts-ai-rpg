@@ -1,0 +1,30 @@
+.character-sheet-box-materials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.character-sheet-materials {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 50vh;
+}
+
+.character-sheet-materials-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1.2vh;
+    padding-bottom: 0.3vh;
+}
+
+.character-sheet-material {
+    display: flex;
+    align-items: center;
+    gap: 0.7vh;
+    font-family: 'AngelusMedieval', cursive;
+    color: white;
+    font-size: 1.6vh;
+    cursor: pointer;
+}

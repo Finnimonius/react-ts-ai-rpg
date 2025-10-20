@@ -285,35 +285,6 @@
     line-height: 0;
 }
 
-.character-sheet-box-materials {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.character-sheet-materials {
-    display: flex;
-    justify-content: space-between;
-    width: 50vh;
-}
-
-.character-sheet-materials-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1.2vh;
-}
-
-.character-sheet-material {
-    display: flex;
-    align-items: center;
-    gap: 0.7vh;
-    font-family: 'AngelusMedieval', cursive;
-    color: white;
-    font-size: 1.6vh;
-    cursor: pointer;
-}
-
 .character-sheet-material-span {
     padding-top: 0.3vh;
 }

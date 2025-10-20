@@ -41,8 +41,8 @@ export default function DraggableItem({ item, location }: { item: Weapon | Armor
                 <div className='draggable-box-tooltip' >
                     <h3 className='draggable-tooltip-title'>{item.name}</h3>
                     <p className='draggable-tooltip-descr'>{item.description}</p>
-                    {item.defense && <p className='draggable-tooltip-descr'>{`Защита: ${item.defense}`}</p>}
-                    {item.damage && <p className='draggable-tooltip-descr'>{`Урон: ${item.damage.min} - ${item.damage.max}`}</p>}
+                    {item.defense && <p className='draggable-tooltip-stats'>{`Защита: ${item.defense}`}</p>}
+                    {item.damage && <p className='draggable-tooltip-stats'>{`Урон: ${item.damage.min} - ${item.damage.max}`}</p>}
                 </div>
             }
             color='black' >

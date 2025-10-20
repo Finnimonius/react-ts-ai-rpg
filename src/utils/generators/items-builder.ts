@@ -56,16 +56,21 @@ export const calculateEuqipmentStats = (equipment: Equipment): EquipmentStats =>
         if (item.stats) {
             Object.entries(item.stats).forEach(([stat, value]) => {
                 const statKey = stat as keyof BaseStats;
-                if(typeof value === 'number') {
+                if (typeof value === 'number') {
                     result.stats[statKey] += value
                 }
-                
+
             })
         }
 
         if (item.type === 'weapon') {
             result.damage.min += item.damage.min;
             result.damage.max += item.damage.max;
+        }
+
+        if (item.type === 'accessory' && item.damage) {
+            result.damage.min += item.damage.min || 0;
+            result.damage.max += item.damage.max || 0;
         }
 
         if (item.type === 'armor') {
