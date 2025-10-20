@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 import type { BaseStats, CharacterClass, DerivedStats } from '../types/character.types'
 import type { Race } from '../types/character.types'
 import type { CraftingMaterials, Currency } from '../types/currency.types'
-import { getStartingEquipment, getStartingInventory } from '../utils/generators/items-builder'
+import { calculateEuqipmentStats, getStartingEquipment, getStartingInventory } from '../utils/generators/items-builder'
 import type { Equipment, InventorySlot } from '../types/inventory.types'
 
 export const INVENTORY_SIZE = 14;
@@ -24,6 +24,7 @@ interface CharacterStore {
   learnedAbilities: string[],
   selectClass: (classData: CharacterClass) => void,
   selectRace: (raceData: Race) => void,
+  calculateDerivedStats: () => void,
   hasCharacter: () => boolean,
   reset: () => void,
   unequipItem: (equipmentSlot: keyof Equipment, inventoryIndex: number) => void;
@@ -40,7 +41,7 @@ export const useCharacterStore = create<CharacterStore>()(
       experience: 0,
 
       currentStats: { strength: 0, dexterity: 0, intelligence: 0, wisdom: 0, constitution: 0, luck: 0 },
-      derivedStats: { health: 0, maxHealth: 0, mana: 0, maxMana: 0, attack: 0, defense: 0, critChance: 0, evasion: 0 },
+      derivedStats: { health: 0, maxHealth: 0, mana: 0, maxMana: 0, attackMin: 0, attackMax: 0, defense: 0, critChance: 0, evasion: 0 },
       avaliableStatsPoints: 0,
 
       currency: {
@@ -93,6 +94,37 @@ export const useCharacterStore = create<CharacterStore>()(
           equipment: startingEquipment,
           inventory: emptyInventory,
         });
+
+        get().calculateDerivedStats()
+      },
+
+      calculateDerivedStats: () => {
+        const { equipment, level, currentStats } = get();
+
+        const equipmentStats = calculateEuqipmentStats(equipment);
+
+        const totalStats: BaseStats = {
+          strength: currentStats.strength + (equipmentStats.stats.strength || 0),
+          dexterity: currentStats.dexterity + (equipmentStats.stats.dexterity || 0),
+          intelligence: currentStats.intelligence + (equipmentStats.stats.intelligence || 0),
+          wisdom: currentStats.wisdom + (equipmentStats.stats.wisdom || 0),
+          constitution: currentStats.constitution + (equipmentStats.stats.constitution || 0),
+          luck: currentStats.luck + (equipmentStats.stats.luck || 0),
+        }
+
+        const derived = {
+          health: Math.round(50 + (level * 5) + (totalStats.constitution)),
+          maxHealth: Math.round(50 + (level * 5) + (totalStats.constitution)),
+          mana: Math.round(30 + (totalStats.intelligence * 2) + (totalStats.wisdom * 1)),
+          maxMana: Math.round(30 + (totalStats.intelligence * 2) + (totalStats.wisdom * 1)),
+          attackMin: Math.round(equipmentStats.damage.min + (totalStats.dexterity * 0.3)),
+          attackMax: Math.round(equipmentStats.damage.max + (totalStats.dexterity * 0.3)),
+          defense: Math.round(equipmentStats.defense + (totalStats.dexterity * 0.2)),
+          critChance: Math.round(5 + (totalStats.dexterity * 0.2) + (totalStats.luck * 0.1)),
+          evasion: Math.round(10 + (totalStats.dexterity * 0.4) + (totalStats.luck * 0.2)),
+        }
+
+        set({ derivedStats: derived });
       },
 
 
@@ -121,6 +153,7 @@ export const useCharacterStore = create<CharacterStore>()(
         newInventory[inventoryIndex] = { item, quantity: 1 };
 
         set({ equipment: newEquipment, inventory: newInventory });
+        get().calculateDerivedStats();
       },
 
       equipItem: (inventoryIndex, equipmentSlot) => {
@@ -141,6 +174,7 @@ export const useCharacterStore = create<CharacterStore>()(
         }
 
         set({ equipment: newEquipment, inventory: newInventory });
+        get().calculateDerivedStats();
       },
 
       moveInventoryItem: (fromIndex, toIndex) => {
@@ -165,7 +199,7 @@ export const useCharacterStore = create<CharacterStore>()(
 
         set({ equipment: newEquipment });
       },
-      
+
       reset: () => set({
         selectedClass: null,
         selectedRace: null,

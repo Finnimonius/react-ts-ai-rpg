@@ -25,36 +25,36 @@ export default function DraggableItem({ item, location }: { item: Weapon | Armor
     const rarity = rarityBorder[item.rarity]
 
     return (
-            <Tooltip
-                classNames={{
-                    body: 'my-classname'
-                }}
-                styles={{
-                    body: {
-                        border: '2px solid black',
-                        borderRadius: 10,
-                        padding: 15,
-                    }
-                }}
-                placement="rightTop"
-                title={
-                    <div className='draggable-box-tooltip' >
-                        <h3 className='draggable-tooltip-title'>{item.name}</h3>
-                        <p>{item.description}</p>
-                        {item.defense && <p>{`Защита: ${item.defense}`}</p>}
-                        {item.damage && <p>{`Урон: ${item.damage.min} - ${item.damage.max}`}</p>}
-                    </div>
+        <Tooltip
+            classNames={{
+                body: 'my-classname'
+            }}
+            styles={{
+                body: {
+                    border: '1px solid #5d4037',
+                    borderRadius: 10,
+                    padding: '1vh',
                 }
-                color='#5d4037' >
-                <div
-                    ref={setNodeRef}
-                    style={style}
-                    {...attributes}
-                    {...listeners}
-                    className='draggableItem'
-                >
-                    <img src={itemImage} alt={item.name} className={`draggableItem-img ${rarity}`} />
+            }}
+            placement="rightTop"
+            title={
+                <div className='draggable-box-tooltip' >
+                    <h3 className='draggable-tooltip-title'>{item.name}</h3>
+                    <p className='draggable-tooltip-descr'>{item.description}</p>
+                    {item.defense && <p className='draggable-tooltip-descr'>{`Защита: ${item.defense}`}</p>}
+                    {item.damage && <p className='draggable-tooltip-descr'>{`Урон: ${item.damage.min} - ${item.damage.max}`}</p>}
                 </div>
-            </Tooltip >
+            }
+            color='black' >
+            <div
+                ref={setNodeRef}
+                style={style}
+                {...attributes}
+                {...listeners}
+                className='draggableItem'
+            >
+                <img src={itemImage} alt={item.name} className={`draggableItem-img ${rarity}`} />
+            </div>
+        </Tooltip >
     )
 }

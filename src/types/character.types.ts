@@ -14,8 +14,11 @@ export interface BaseStats {
 
 export interface DerivedStats {
     health: number,
+    maxHealth: number,
     mana: number,
-    attack: number,
+    maxMana: number,
+    attackMin: number,
+    attackMax: number,
     defense: number,
     critChance: number,
     evasion: number,
@@ -37,7 +40,7 @@ export interface ClassAbility {
 export type ClassId = 'grey_wanderer';
 
 export interface ClassConfig {
-    equipment: Equipment; 
+    equipment: Equipment;
     inventory: InventorySlot[];
 }
 

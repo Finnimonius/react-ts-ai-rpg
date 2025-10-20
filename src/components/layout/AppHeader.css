@@ -15,7 +15,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 22px;
+    font-size: 1.9vh;
+    line-height: 2.5;
     letter-spacing: 1px;
     padding: 1rem 100px;
     transition: all 0.3s ease;
@@ -30,7 +31,6 @@
 .header-nav-drawer{
     display: flex;
     flex-direction: column;
-    font-size: 25px;
     gap: 10px;
 }
 
@@ -69,7 +69,7 @@
 }
 
 .header-logo {
-    width: 300px;
+    width: 25vh;
     display: block;
 }
 

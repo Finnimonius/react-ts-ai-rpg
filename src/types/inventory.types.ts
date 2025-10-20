@@ -55,3 +55,9 @@ export interface Equipment {
     ring_2: Accessory | null;
     amulet: Accessory | null;
 }
+
+export interface EquipmentStats {
+  stats: Partial<Record<keyof BaseStats, number>>;
+  defense: number;
+  damage: { min: number; max: number };
+}

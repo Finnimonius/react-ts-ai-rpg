@@ -5,9 +5,13 @@
     width: 6.5vh;
     height: 6.5vh;
     text-align: center;
-    background-color: var(--brown-dark);
     border: 2px solid var(--primary-black);
     border-radius: 10px;
+    background: linear-gradient(145deg, #6d5040 0%, #5d4037 100%);
+    box-shadow: 
+        inset 3px 3px 6px rgba(0, 0, 0, 0.5),
+        inset -3px -3px 6px rgba(255, 255, 255, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 .equipment-slot {
