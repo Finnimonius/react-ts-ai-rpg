@@ -198,6 +198,7 @@ export const useCharacterStore = create<CharacterStore>()(
         };
 
         set({ equipment: newEquipment });
+        get().calculateDerivedStats();
       },
 
       reset: () => set({

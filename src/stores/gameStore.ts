@@ -4,7 +4,7 @@ import queryAI from "../services/api";
 import { DUNGEONS } from "../utils/data/locations/forest-locations";
 import { generateEvent, getRandomEvent, type EventType } from "../utils/generators/event-generator";
 
-const EVENTS = ['treasure']
+const EVENTS: EventType[] = ['treasure']
 
 type Directions = 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast';
 export type DirectionName = 'Юг' | 'Юго-восток' | 'Юго-запад' |

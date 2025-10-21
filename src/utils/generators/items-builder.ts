@@ -32,7 +32,7 @@ export const canEquipItem = (item: Weapon | Armor | Accessory | Consumable, slot
             if (item.type !== 'weapon') {
                 return { canEquip: false, reason: 'wrong_type' };
             }
-            break;
+            return { canEquip: true, reason: 'success' }; // ← заменить break на return
         case 'helmet':
         case 'chest':
         case 'gloves':
@@ -41,23 +41,21 @@ export const canEquipItem = (item: Weapon | Armor | Accessory | Consumable, slot
             if (item.type !== 'armor' || (item as Armor).slot !== slot) {
                 return { canEquip: false, reason: 'wrong_type' };
             }
-            break;
+            return { canEquip: true, reason: 'success' }; // ← заменить break на return
         case 'ring_1':
         case 'ring_2':
             if (item.type !== 'accessory' || !(item as Accessory).slot?.startsWith('ring')) {
                 return { canEquip: false, reason: 'wrong_type' };
             }
-            break;
+            return { canEquip: true, reason: 'success' }; // ← заменить break на return
         case 'amulet':
             if (item.type !== 'accessory' || (item as Accessory).slot !== 'amulet') {
                 return { canEquip: false, reason: 'wrong_type' };
             }
-            break;
+            return { canEquip: true, reason: 'success' }; // ← заменить break на return
         default:
             return { canEquip: false, reason: 'wrong_type' };
     }
-
-    return { canEquip: true, reason: 'success' };
 };
 
 export const calculateEuqipmentStats = (equipment: Equipment): EquipmentStats => {

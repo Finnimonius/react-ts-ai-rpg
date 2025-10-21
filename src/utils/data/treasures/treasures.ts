@@ -1,9 +1,9 @@
 export const treasures = {
   chest: {
     rewards: [
-      { type: 'weapon', weight: 30 },
-      { type: 'consumable', weight: 50 },
-      { type: 'shopItem', category: 'any', weight: 20 },
+      { type: 'weapon', chance: 30 },
+      { type: 'consumable', chance: 50 },
+      { type: 'shopItem', category: 'any', chance: 20 },
     ],
   },
   gemstones: {

@@ -119,12 +119,26 @@ export default function CharacterSheet() {
     };
 
     const handleItemMove = (draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetZone: string) => {
-
         if (targetZone.startsWith('equipment-')) {
             const equipmentSlot = targetZone.replace('equipment-', '') as keyof Equipment;
             const equipResult = canEquipItem(draggedItem.item, equipmentSlot, level);
 
             if (equipResult.canEquip) {
+                const targetItem = equipment[equipmentSlot];
+                if (targetItem && draggedItem.source.startsWith('equipment-')) {
+                    const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
+                    const targetEquipResult = canEquipItem(targetItem, fromSlot, level);
+
+                    if (!targetEquipResult.canEquip) {
+                        if (targetEquipResult.reason === 'low_level') {
+                            showLevelNotification();
+                        } else if (targetEquipResult.reason === 'wrong_type') {
+                            showTypeNotification();
+                        }
+                        return;
+                    }
+                }
+
                 moveToEquipment(draggedItem, equipmentSlot);
             } else {
                 if (equipResult.reason === 'low_level') {
