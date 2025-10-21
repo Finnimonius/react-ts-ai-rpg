@@ -2,7 +2,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import type { Accessory, Armor, Consumable, Rarity, Weapon } from '../../../types/inventory.types'
 import './DraggableItem.css'
 import { CSS } from '@dnd-kit/utilities';
-import { ITEM_IMAGES } from '../../../utils/data/items/starterGear';
+import { STARTER_ITEM_IMAGES } from '../../../utils/data/items/starterGear';
 import { Tooltip } from 'antd';
 
 export default function DraggableItem({ item, location }: { item: Weapon | Armor | Consumable | Accessory; location: string }) {
@@ -12,7 +12,7 @@ export default function DraggableItem({ item, location }: { item: Weapon | Armor
         transform: CSS.Transform.toString(transform)
     }
 
-    const itemImage = ITEM_IMAGES[item.img as keyof typeof ITEM_IMAGES]
+    const itemImage = STARTER_ITEM_IMAGES[item.img as keyof typeof STARTER_ITEM_IMAGES]
 
     const rarityBorder: Record<Rarity, string> = {
         common: 'common',

@@ -7,7 +7,7 @@ export interface InventoryItem {
     id: string,
     name: string,
     description: string,
-    type: 'weapon' | 'armor' | 'accessory' | 'consumable' | 'quest',
+    type: 'weapon' | 'armor' | 'accessory' | 'consumable' | 'shopItem' | 'quest',
     rarity: Rarity,
     value: number,
     img: string,

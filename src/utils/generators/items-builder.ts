@@ -10,33 +10,54 @@ export const getStartingInventory = (classId: ClassId): InventorySlot[] => {
     return classConfigs[classId].inventory;
 };
 
-export const canEquipItem = (item: Weapon | Armor | Accessory | Consumable, slot: keyof Equipment, level: number): boolean => {
-    if (item.type === 'consumable' || item.type === 'quest') {
-        return false;
+interface EquipResult {
+    canEquip: boolean;
+    reason?: 'wrong_type' | 'low_level' | 'success';
+}
+
+export const canEquipItem = (item: Weapon | Armor | Accessory | Consumable, slot: keyof Equipment, level: number): EquipResult => {
+
+    const equippableTypes = ['weapon', 'armor', 'accessory'] as const;
+    if (!equippableTypes.includes(item.type as 'weapon' | 'armor' | 'accessory')) {
+        return { canEquip: false, reason: 'wrong_type' };
     }
 
     if (level < item.requiredLevel) {
-        return false;
+        return { canEquip: false, reason: 'low_level' };
     }
 
     switch (slot) {
         case 'weapon_main':
         case 'weapon_off':
-            return item.type === 'weapon';
+            if (item.type !== 'weapon') {
+                return { canEquip: false, reason: 'wrong_type' };
+            }
+            break;
         case 'helmet':
         case 'chest':
         case 'gloves':
         case 'legs':
         case 'boots':
-            return item.type === 'armor' && (item as Armor).slot === slot;
+            if (item.type !== 'armor' || (item as Armor).slot !== slot) {
+                return { canEquip: false, reason: 'wrong_type' };
+            }
+            break;
         case 'ring_1':
         case 'ring_2':
-            return item.type === 'accessory' && (item as Accessory).slot?.startsWith('ring');
+            if (item.type !== 'accessory' || !(item as Accessory).slot?.startsWith('ring')) {
+                return { canEquip: false, reason: 'wrong_type' };
+            }
+            break;
         case 'amulet':
-            return item.type === 'accessory' && (item as Accessory).slot === 'amulet';
+            if (item.type !== 'accessory' || (item as Accessory).slot !== 'amulet') {
+                return { canEquip: false, reason: 'wrong_type' };
+            }
+            break;
         default:
-            return false;
+            return { canEquip: false, reason: 'wrong_type' };
     }
+
+    return { canEquip: true, reason: 'success' };
 };
 
 export const calculateEuqipmentStats = (equipment: Equipment): EquipmentStats => {

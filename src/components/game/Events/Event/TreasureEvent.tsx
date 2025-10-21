@@ -13,7 +13,7 @@ export default function TreasureEvent({ history }: LocationProp) {
             <p className="treasure-message-descr">{aiText}</p>
             <p className="treasure-message-descr" style={{ fontSize: 23}}>Выбрать награду:</p>
             <div className="treasure-buttons-wrapper">
-                {history.currentEvent?.items.map(item => <NavigationButton descr={item} onClick={() => {}}/>)}
+                {/* {history.currentEvent?.items.map(item => <NavigationButton descr={item} onClick={() => {}}/>)} */}
             </div>
         </div>
     )

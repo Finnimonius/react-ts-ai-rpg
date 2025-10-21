@@ -12,7 +12,7 @@ import ring_with_seal from '../../../assets/images/items/accsesories/ring_with_s
 import storm_amulet from '../../../assets/images/items/accsesories/storm_amulet.png';
 import sun_ring from '../../../assets/images/items/accsesories/sun_ring.png';
 
-export const ITEM_IMAGES = {
+export const STARTER_ITEM_IMAGES = {
   starter_dagger: starter_dagger,
   leather_cap: leather_cap,
   leather_armor: leather_armor,

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
 import type { Accessory, Armor, Consumable, Equipment, Weapon } from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
-import { ITEM_IMAGES } from "../../../utils/data/items/starterGear";
+import { STARTER_ITEM_IMAGES } from "../../../utils/data/items/starterGear";
 import { canEquipItem } from "../../../utils/generators/items-builder";
 import { Divider, Tooltip } from 'antd';
 import Inventory from "./Inventory";
@@ -94,26 +94,44 @@ export default function CharacterSheet() {
         setActiveId(null);
     };
 
-    const showNotification = () => {
+    const showLevelNotification = () => {
         api.info({
-        message: 'Недостаточный уровень',
-        description: 'Для экипировки этого предмета требуется более высокий уровень!',
-        placement: 'topRight',
-        duration: 30,
-        className: 'custom-notification',
-        icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
-        closeIcon: null,
-    });
+            message: 'Недостаточный уровень',
+            description: 'Для экипировки этого предмета требуется более высокий уровень!',
+            placement: 'topRight',
+            duration: 3,
+            className: 'custom-notification',
+            icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+            closeIcon: null,
+        });
+    };
+
+    const showTypeNotification = () => {
+        api.info({
+            message: 'Не подходит для слота',
+            description: 'Этот предмет нельзя экипировать в данный слот!',
+            placement: 'topRight',
+            duration: 3,
+            className: 'custom-notification',
+            icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+            closeIcon: null,
+        });
     };
 
     const handleItemMove = (draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetZone: string) => {
 
         if (targetZone.startsWith('equipment-')) {
             const equipmentSlot = targetZone.replace('equipment-', '') as keyof Equipment;
-            if (canEquipItem(draggedItem.item, equipmentSlot, level)) {
+            const equipResult = canEquipItem(draggedItem.item, equipmentSlot, level);
+
+            if (equipResult.canEquip) {
                 moveToEquipment(draggedItem, equipmentSlot);
             } else {
-                showNotification()
+                if (equipResult.reason === 'low_level') {
+                    showLevelNotification();
+                } else if (equipResult.reason === 'wrong_type') {
+                    showTypeNotification();
+                }
             }
         } else if (targetZone.startsWith('inventory-')) {
             const inventoryIndex = parseInt(targetZone.replace('inventory-', ''));
@@ -211,7 +229,7 @@ export default function CharacterSheet() {
                     {activeItemData ? (
                         <div className="draggableItem overlay">
                             <img
-                                src={ITEM_IMAGES[activeItemData.item.img as keyof typeof ITEM_IMAGES]}
+                                src={STARTER_ITEM_IMAGES[activeItemData.item.img as keyof typeof STARTER_ITEM_IMAGES]}
                                 alt={activeItemData.item.name}
                                 className="draggableItem-img"
                             />

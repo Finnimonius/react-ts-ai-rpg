@@ -1,18 +1,19 @@
 export const treasures = {
   chest: {
-    items: ['gold_coins', 'silver_ring', 'health_potion'],
-    gold: 150
-  },
-  bag: {
-    items: ['smuggled_goods', 'map_fragment'],
-    gold:  80
+    rewards: [
+      { type: 'weapon', weight: 30 },
+      { type: 'consumable', weight: 50 },
+      { type: 'shopItem', category: 'any', weight: 20 },
+    ],
   },
   gemstones: {
-    items: ['diamond', 'emerald', 'sapphire', 'ruby'],
-    gold: 600
+    rewards: [
+      { type: 'shopItem', category: 'gemstones', weight: 100 },
+    ],
   },
-  gold_coins: {
-    items: ['rare_coin', 'gold_bar'],
-    gold:  200
+  bag: {
+    rewards: [
+      { type: 'shopItem', category: 'gold', weight: 100 },
+    ],
   },
 };
