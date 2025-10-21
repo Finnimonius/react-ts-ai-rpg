@@ -1,7 +1,7 @@
 import { useCharacterStore } from "../../../stores/characterStore"
 import './CharacterSheet.css'
 import DraggableItem from "./DraggableItem"
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
 import type { Accessory, Armor, Consumable, Equipment, Weapon } from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
@@ -30,51 +30,127 @@ export default function CharacterSheet() {
     const [activeId, setActiveId] = useState<string | null>(null);
     const [api, contextHolder] = useNotification();
 
-
     const sensors = useSensors(useSensor(PointerSensor));
 
-    const findItemWithSource = (id: string): { item: Weapon | Armor | Accessory | Consumable; source: string } | null => {
-
+    const findItemWithSource = useCallback((id: string): { item: Weapon | Armor | Accessory | Consumable; source: string } | null => {
         const separatorIndex = id.lastIndexOf('|');
+
         if (separatorIndex === -1) return null;
 
         const itemId = id.substring(0, separatorIndex);
-        const sourceFromId = id.substring(separatorIndex + 1);
+        const source = id.substring(separatorIndex + 1);
 
-        if (sourceFromId.startsWith('inventory-')) {
-            const index = parseInt(sourceFromId.replace('inventory-', ''));
-            if (inventory[index]?.item?.id === itemId) {
-                return { item: inventory[index].item!, source: sourceFromId };
+        if (source.startsWith('inventory-')) {
+            const index = parseInt(source.replace('inventory-', ''));
+            if (index >= 0 && index < inventory.length && inventory[index]?.item?.id === itemId) {
+                return { item: inventory[index].item!, source };
             }
-        } else if (sourceFromId.startsWith('equipment-')) {
-            const slot = sourceFromId.replace('equipment-', '') as keyof Equipment;
+        } else if (source.startsWith('equipment-')) {
+            const slot = source.replace('equipment-', '') as keyof Equipment;
             if (equipment[slot]?.id === itemId) {
-                return { item: equipment[slot]!, source: sourceFromId };
-            }
-        }
-
-        for (const [slot, item] of Object.entries(equipment)) {
-            if (item?.id === itemId) {
-                return { item, source: `equipment-${slot}` };
-            }
-        }
-
-        for (let i = 0; i < inventory.length; i++) {
-            if (inventory[i].item?.id === itemId) {
-                return { item: inventory[i].item!, source: `inventory-${i}` };
+                return { item: equipment[slot]!, source };
             }
         }
 
         return null;
-    };
+    }, [equipment, inventory])
 
     const activeItemData = activeId ? findItemWithSource(activeId) : null;
 
-    const handleDragStart = (event: DragStartEvent) => {
+    const handleDragStart = useCallback((event: DragStartEvent) => {
         setActiveId(event.active.id.toString())
-    };
+    }, [])
 
-    const handleDragEnd = (event: DragEndEvent) => {
+    const showLevelNotification = useCallback(() => {
+        api.info({
+            message: 'Недостаточный уровень',
+            description: 'Для экипировки этого предмета требуется более высокий уровень!',
+            placement: 'topRight',
+            duration: 2,
+            className: 'custom-notification',
+            icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+            closeIcon: null,
+        });
+    }, [api]);
+
+    const showTypeNotification = useCallback(() => {
+        api.info({
+            message: 'Не подходит для слота',
+            description: 'Этот предмет нельзя экипировать в данный слот!',
+            placement: 'topRight',
+            duration: 2,
+            className: 'custom-notification',
+            icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+            closeIcon: null,
+        });
+    }, [api]);
+
+    const moveToInventorySlot = useCallback((draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetIndex: number) => {
+        if (draggedItem.source.startsWith('equipment-')) {
+            const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
+
+            if (targetIndex >= 0 && targetIndex < inventory.length && !inventory[targetIndex].item) {
+                unequipItem(fromSlot, targetIndex);
+            }
+        }
+        else if (draggedItem.source.startsWith('inventory-')) {
+            const fromIndex = parseInt(draggedItem.source.replace('inventory-', ''));
+
+            if (targetIndex >= 0 && targetIndex < inventory.length && !inventory[targetIndex].item) {
+                moveInventoryItem(fromIndex, targetIndex);
+            }
+        }
+    }, [inventory, unequipItem, moveInventoryItem]);
+
+    const handleItemMove = useCallback((draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetZone: string) => {
+        if (targetZone.startsWith('equipment-')) {
+            const equipmentSlot = targetZone.replace('equipment-', '') as keyof Equipment;
+
+            const equipResult = canEquipItem(draggedItem.item, equipmentSlot, level);
+
+            if (equipResult.canEquip) {
+                if (draggedItem.source.startsWith('equipment-')) {
+                    const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
+                    const targetItem = equipment[equipmentSlot];
+
+                    if (targetItem) {
+                        const targetEquipResult = canEquipItem(targetItem, fromSlot, level);
+                        if (!targetEquipResult.canEquip) {
+                            if (targetEquipResult.reason === 'low_level') {
+                                showLevelNotification();
+                            } else if (targetEquipResult.reason === 'wrong_type') {
+                                showTypeNotification();
+                            }
+                            return;
+                        }
+                    }
+
+                    swapEquipment(fromSlot, equipmentSlot);
+                } else if (draggedItem.source.startsWith('inventory-')) {
+                    const fromIndex = parseInt(draggedItem.source.replace('inventory-', ''));
+                    equipItem(fromIndex, equipmentSlot);
+                }
+            } else {
+                if (equipResult.reason === 'low_level') {
+                    showLevelNotification();
+                } else if (equipResult.reason === 'wrong_type') {
+                    showTypeNotification();
+                }
+            }
+        } else if (targetZone.startsWith('inventory-')) {
+            const inventoryIndex = parseInt(targetZone.replace('inventory-', ''));
+
+            if (inventoryIndex >= 0 && inventoryIndex < inventory.length) {
+                const targetSlot = inventory[inventoryIndex];
+
+                if (!targetSlot.item) {
+                    moveToInventorySlot(draggedItem, inventoryIndex);
+                }
+            }
+        }
+    }, [equipment, level, showLevelNotification, showTypeNotification, swapEquipment, equipItem, inventory, moveToInventorySlot]);
+
+    const handleDragEnd = useCallback((event: DragEndEvent) => {
         const { active, over } = event;
 
         if (!over) {
@@ -89,100 +165,19 @@ export default function CharacterSheet() {
             return;
         }
 
-        const targetZone = over.id as string;
+        const targetId = over.id as string;
+
+        let targetZone: string;
+        if (targetId.includes('|equipment-')) {
+            const separatorIndex = targetId.lastIndexOf('|');
+            targetZone = targetId.substring(separatorIndex + 1);
+        } else {
+            targetZone = targetId;
+        }
+
         handleItemMove(activeItemData, targetZone);
         setActiveId(null);
-    };
-
-    const showLevelNotification = () => {
-        api.info({
-            message: 'Недостаточный уровень',
-            description: 'Для экипировки этого предмета требуется более высокий уровень!',
-            placement: 'topRight',
-            duration: 3,
-            className: 'custom-notification',
-            icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
-            closeIcon: null,
-        });
-    };
-
-    const showTypeNotification = () => {
-        api.info({
-            message: 'Не подходит для слота',
-            description: 'Этот предмет нельзя экипировать в данный слот!',
-            placement: 'topRight',
-            duration: 3,
-            className: 'custom-notification',
-            icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
-            closeIcon: null,
-        });
-    };
-
-    const handleItemMove = (draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetZone: string) => {
-        if (targetZone.startsWith('equipment-')) {
-            const equipmentSlot = targetZone.replace('equipment-', '') as keyof Equipment;
-            const equipResult = canEquipItem(draggedItem.item, equipmentSlot, level);
-
-            if (equipResult.canEquip) {
-                const targetItem = equipment[equipmentSlot];
-                if (targetItem && draggedItem.source.startsWith('equipment-')) {
-                    const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
-                    const targetEquipResult = canEquipItem(targetItem, fromSlot, level);
-
-                    if (!targetEquipResult.canEquip) {
-                        if (targetEquipResult.reason === 'low_level') {
-                            showLevelNotification();
-                        } else if (targetEquipResult.reason === 'wrong_type') {
-                            showTypeNotification();
-                        }
-                        return;
-                    }
-                }
-
-                moveToEquipment(draggedItem, equipmentSlot);
-            } else {
-                if (equipResult.reason === 'low_level') {
-                    showLevelNotification();
-                } else if (equipResult.reason === 'wrong_type') {
-                    showTypeNotification();
-                }
-            }
-        } else if (targetZone.startsWith('inventory-')) {
-            const inventoryIndex = parseInt(targetZone.replace('inventory-', ''));
-
-            if (inventoryIndex >= 0 && inventoryIndex < inventory.length) {
-                const targetSlot = inventory[inventoryIndex];
-
-                if (targetSlot && !targetSlot.item) {
-                    moveToInventorySlot(draggedItem, inventoryIndex);
-                }
-            }
-        }
-    };
-
-    const moveToEquipment = (draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetSlot: keyof Equipment) => {
-        if (draggedItem.source.startsWith('inventory-')) {
-            const fromIndex = parseInt(draggedItem.source.replace('inventory-', ''));
-            equipItem(fromIndex, targetSlot);
-        } else {
-            const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
-            swapEquipment(fromSlot, targetSlot);
-        }
-    };
-
-    const moveToInventorySlot = (draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetIndex: number) => {
-        if (draggedItem.source.startsWith('equipment-')) {
-            const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
-
-            if (targetIndex >= 0 && targetIndex < inventory.length && !inventory[targetIndex].item) {
-                unequipItem(fromSlot, targetIndex);
-            }
-        }
-        else if (draggedItem.source.startsWith('inventory-')) {
-            const fromIndex = parseInt(draggedItem.source.replace('inventory-', ''));
-            moveInventoryItem(fromIndex, targetIndex);
-        }
-    };
+    }, [findItemWithSource, handleItemMove]);
 
     return (
         <div className="characterSheet-container">

@@ -120,7 +120,7 @@ export const STARTER_ARMOR = {
   }
 };
 
-export const STARTER_ACCSESORIES = {
+export const STARTER_ACCESORIES = {
     SUN_RING: {
       id: 'sun_ring',
       name: 'Кольцо солнца',
@@ -209,9 +209,9 @@ export const classConfigs: Record<ClassId, ClassConfig> = {
       gloves: STARTER_ARMOR.LEATHER_GLOVES,
       legs: STARTER_ARMOR.LEATHER_PANTS,
       boots: STARTER_ARMOR.LEATHER_BOOTS,
-      ring_1: STARTER_ACCSESORIES.SUN_RING,   
-      ring_2: STARTER_ACCSESORIES.RING_WITH_SEAL,   
-      amulet: STARTER_ACCSESORIES.STORM_AMULET
+      ring_1: STARTER_ACCESORIES.SUN_RING,   
+      ring_2: STARTER_ACCESORIES.RING_WITH_SEAL,   
+      amulet: STARTER_ACCESORIES.STORM_AMULET
     },
     inventory: [
       { item: STARTER_CONSUMABLES.HEALTH_POTION, quantity: 5 },

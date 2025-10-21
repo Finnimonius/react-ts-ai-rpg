@@ -25,7 +25,6 @@ function generateTreasureEvent(type: EventType) {
     return {
         eventType: type,
         ...randomTreasure,
-        gold: treasure.gold,
         items: treasure.items
     }
 }
