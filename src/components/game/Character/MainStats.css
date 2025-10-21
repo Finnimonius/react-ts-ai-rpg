@@ -2,7 +2,7 @@
     position: absolute;
     top: -26vh;
     left: 0;
-    background: #000;
+    background: var(--primary-dark1);
     border: 0.2vh solid #5d4037;
     border-radius: 8px;
     padding: 1.5vh;

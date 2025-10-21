@@ -299,3 +299,24 @@
     border-radius: 10px;
     font-size: 1vh;
 }
+
+/* Notification */
+.custom-notification {
+    background-color: #1a1a1a !important;
+    border: 0.2vh solid #5d4037 !important;
+    border-radius: 8px !important;
+    padding: 1.5vh !important;
+    max-width: 30vh !important;
+}
+
+.custom-notification .ant-notification-notice-message {
+    font-family: 'Cormorant' !important;
+    font-size: 1.5vh !important;
+    color: #fff !important;
+}
+
+.custom-notification .ant-notification-notice-description {
+    font-family: 'Cormorant' !important;
+    font-size: 1.3vh !important;
+    color: #fff !important;
+}

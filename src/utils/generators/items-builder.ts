@@ -10,8 +10,12 @@ export const getStartingInventory = (classId: ClassId): InventorySlot[] => {
     return classConfigs[classId].inventory;
 };
 
-export const canEquipItem = (item: Weapon | Armor | Accessory | Consumable, slot: keyof Equipment): boolean => {
-    if (item.type === 'consumable' || item.type === 'material' || item.type === 'quest') {
+export const canEquipItem = (item: Weapon | Armor | Accessory | Consumable, slot: keyof Equipment, level: number): boolean => {
+    if (item.type === 'consumable' || item.type === 'quest') {
+        return false;
+    }
+
+    if (level < item.requiredLevel) {
         return false;
     }
 

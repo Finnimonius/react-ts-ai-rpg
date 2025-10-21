@@ -7,7 +7,7 @@ export interface InventoryItem {
     id: string,
     name: string,
     description: string,
-    type: 'weapon' | 'armor' | 'accessory' | 'consumable' | 'material' | 'quest',
+    type: 'weapon' | 'armor' | 'accessory' | 'consumable' | 'quest',
     rarity: Rarity,
     value: number,
     img: string,
@@ -19,12 +19,14 @@ export interface InventorySlot {
 }
 
 export interface Weapon extends InventoryItem {
+    requiredLevel: number,
     damage: {min: number, max: number},
     stats: Partial<Record<keyof BaseStats, number>>,
     weaponType: string
 }
 
 export interface Armor extends InventoryItem {
+    requiredLevel: number,
     defense: number,
     stats: Partial<Record<keyof BaseStats, number>>,
     armorType: string,
@@ -32,13 +34,14 @@ export interface Armor extends InventoryItem {
 }
 
 export interface Accessory extends InventoryItem {
+    requiredLevel: number,
     damage?: {min: number, max: number},
     stats: Partial<Record<keyof BaseStats, number>>,
     slot: EquipmentSlot
 }
 
 export interface Consumable extends InventoryItem {
-    type: 'consumable';
+    requiredLevel: number,
     effect: {
         type: 'HEAL' | 'MANA_RESTORE' | 'OUT_OF_COMBAT_HEAL';
         value: number;

@@ -7,14 +7,16 @@ import type { Accessory, Armor, Consumable, Equipment, Weapon } from "../../../t
 import EquipmentSlot from "./EquipmentSlot";
 import { ITEM_IMAGES } from "../../../utils/data/items/starterGear";
 import { canEquipItem } from "../../../utils/generators/items-builder";
-import { Divider, Tooltip, } from 'antd';
+import { Divider, Tooltip } from 'antd';
 import Inventory from "./Inventory";
 import Stats from "./CombatStats";
 import StatusBars from "./StatusBars";
 import Materials from "./Materials";
+import useNotification from "antd/es/notification/useNotification";
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 export default function CharacterSheet() {
-    const { 
+    const {
         equipment,
         inventory,
         equipItem,
@@ -23,8 +25,10 @@ export default function CharacterSheet() {
         moveInventoryItem,
         selectedClass,
         currency,
+        level
     } = useCharacterStore();
     const [activeId, setActiveId] = useState<string | null>(null);
+    const [api, contextHolder] = useNotification();
 
 
     const sensors = useSensors(useSensor(PointerSensor));
@@ -90,12 +94,26 @@ export default function CharacterSheet() {
         setActiveId(null);
     };
 
+    const showNotification = () => {
+        api.info({
+        message: 'Недостаточный уровень',
+        description: 'Для экипировки этого предмета требуется более высокий уровень!',
+        placement: 'topRight',
+        duration: 3,
+        className: 'custom-notification',
+        icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+        closeIcon: null,
+    });
+    };
+
     const handleItemMove = (draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetZone: string) => {
 
         if (targetZone.startsWith('equipment-')) {
             const equipmentSlot = targetZone.replace('equipment-', '') as keyof Equipment;
-            if (canEquipItem(draggedItem.item, equipmentSlot)) {
+            if (canEquipItem(draggedItem.item, equipmentSlot, level)) {
                 moveToEquipment(draggedItem, equipmentSlot);
+            } else {
+                showNotification()
             }
         } else if (targetZone.startsWith('inventory-')) {
             const inventoryIndex = parseInt(targetZone.replace('inventory-', ''));
@@ -136,6 +154,7 @@ export default function CharacterSheet() {
 
     return (
         <div className="characterSheet-container">
+            {contextHolder}
             <div className="ui-element1"></div>
             <div className="ui-element2"></div>
             <div className="ui-element3"></div>

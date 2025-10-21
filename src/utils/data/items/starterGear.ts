@@ -36,6 +36,7 @@ export const STARTER_WEAPONS = {
     rarity: 'legendary' as const,
     value: 15,
     img: 'starter_dagger',
+    requiredLevel: 1,
     damage: { min: 4, max: 8 },
     stats: { dexterity: 1 },
     weaponType: 'dagger'
@@ -51,6 +52,7 @@ export const STARTER_ARMOR = {
     rarity: 'common' as const,
     value: 15,
     img: 'leather_cap',
+    requiredLevel: 2,
     defense: 3,
     stats: { dexterity: 1 },
     armorType: 'light',
@@ -65,6 +67,7 @@ export const STARTER_ARMOR = {
     rarity: 'uncommon' as const,
     value: 35,
     img: 'leather_armor',
+    requiredLevel: 1,
     defense: 6,
     stats: { dexterity: 2 },
     armorType: 'light',
@@ -79,6 +82,7 @@ export const STARTER_ARMOR = {
     rarity: 'rare' as const,
     value: 12,
     img: 'leather_gloves',
+    requiredLevel: 1,
     defense: 2,
     stats: { dexterity: 1 },
     armorType: 'light',
@@ -93,6 +97,7 @@ export const STARTER_ARMOR = {
     rarity: 'common' as const,
     value: 20,
     img: 'leather_pants',
+    requiredLevel: 1,
     defense: 3,
     stats: { dexterity: 1 },
     armorType: 'light',
@@ -107,6 +112,7 @@ export const STARTER_ARMOR = {
     rarity: 'epic' as const,
     value: 18,
     img: 'leather_boots',
+    requiredLevel: 1,
     defense: 2,
     stats: { dexterity: 1 },
     armorType: 'light',
@@ -123,6 +129,7 @@ export const STARTER_ACCSESORIES = {
       rarity: 'legendary' as const,
       value: 20,
       img: 'sun_ring',
+      requiredLevel: 1,
       stats: {dexterity: 1, wisdom: 2, luck: 2},
       slot: 'ring' as const,
     },
@@ -134,6 +141,7 @@ export const STARTER_ACCSESORIES = {
       rarity: 'rare' as const,
       value: 22,
       img: 'ring_with_seal',
+      requiredLevel: 1,
       stats: {intelligence: 2, wisdom: 1},
       slot: 'ring' as const,
     },
@@ -145,6 +153,7 @@ export const STARTER_ACCSESORIES = {
       rarity: 'epic' as const,
       value: 22,
       img: 'storm_amulet',
+      requiredLevel: 1,
       damage: { min: 1, max: 1 },
       stats: {strength: 2, intelligence: 2},
       slot: 'amulet' as const,
@@ -160,6 +169,7 @@ export const STARTER_CONSUMABLES = {
     rarity: 'common' as const,
     value: 25,
     img: 'health_flask',
+    requiredLevel: 1,
     effect: { type: 'HEAL' as const, value: 50 }
   },
 
@@ -171,6 +181,7 @@ export const STARTER_CONSUMABLES = {
     rarity: 'common' as const,
     value: 30,
     img: 'mana_flask',
+    requiredLevel: 1,
     effect: { type: 'MANA_RESTORE' as const, value: 30 }
   },
 
@@ -182,6 +193,7 @@ export const STARTER_CONSUMABLES = {
     rarity: 'common' as const,
     value: 5,
     img: 'basic_food',
+    requiredLevel: 1,
     effect: { type: 'OUT_OF_COMBAT_HEAL' as const, value: 20 }
   }
 };

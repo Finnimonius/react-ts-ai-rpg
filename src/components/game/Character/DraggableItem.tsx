@@ -45,7 +45,7 @@ export default function DraggableItem({ item, location }: { item: Weapon | Armor
                     {item.damage && <p className='draggable-tooltip-stats'>{`Урон: ${item.damage.min} - ${item.damage.max}`}</p>}
                 </div>
             }
-            color='black' >
+            color='#1a1a1a' >
             <div
                 ref={setNodeRef}
                 style={style}
