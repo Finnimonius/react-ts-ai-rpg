@@ -99,7 +99,7 @@ export default function CharacterSheet() {
         message: 'Недостаточный уровень',
         description: 'Для экипировки этого предмета требуется более высокий уровень!',
         placement: 'topRight',
-        duration: 3,
+        duration: 30,
         className: 'custom-notification',
         icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
         closeIcon: null,
