@@ -70,6 +70,9 @@ function generateTreasureEvent(type: EventType): CurrentEvent {
         eventType: type,
         ...randomTreasureEvent,
         img: treasureContainer.img,
-        reward: reward
+        reward: {
+            ...reward,
+            img: reward.img
+        }
     }
 }

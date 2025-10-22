@@ -2,7 +2,6 @@ import { useSortable } from '@dnd-kit/sortable'
 import type { AnyItem, Rarity} from '../../../types/inventory.types'
 import './DraggableItem.css'
 import { CSS } from '@dnd-kit/utilities';
-import { STARTER_ITEM_IMAGES } from '../../../utils/data/items/starterGear';
 import { Tooltip } from 'antd';
 
 export default function DraggableItem({ item, location }: { item: AnyItem; location: string }) {
@@ -11,8 +10,6 @@ export default function DraggableItem({ item, location }: { item: AnyItem; locat
     const style = {
         transform: CSS.Transform.toString(transform)
     }
-
-    const itemImage = STARTER_ITEM_IMAGES[item.img as keyof typeof STARTER_ITEM_IMAGES]
 
     const rarityBorder: Record<Rarity, string> = {
         common: 'common',
@@ -53,7 +50,7 @@ export default function DraggableItem({ item, location }: { item: AnyItem; locat
                 {...listeners}
                 className='draggableItem'
             >
-                <img src={itemImage} alt={item.name} className={`draggableItem-img ${rarity}`} />
+                <img src={item.img} alt={item.name} className={`draggableItem-img ${rarity}`} />
             </div>
         </Tooltip >
     )

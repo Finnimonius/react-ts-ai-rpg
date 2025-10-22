@@ -2,12 +2,6 @@ import health_flask from '../../../assets/images/items/consumables/health_flask.
 import mana_flask from '../../../assets/images/items/consumables/mana_flask.png';
 import basic_food from '../../../assets/images/items/consumables/basic_food.png';
 
-export const CONSUMABLES_ITEM_IMAGES = {
-  health_flask: health_flask,
-  mana_flask: mana_flask,
-  basic_food: basic_food
-};
-
 export const CONSUMABLES = {
   HEALTH_POTION: {
     id: 'health_potion',
@@ -16,7 +10,7 @@ export const CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 25,
-    img: 'health_flask',
+    img: health_flask,
     requiredLevel: 1,
     effect: { type: 'HEAL' as const, value: 50 }
   },
@@ -28,7 +22,7 @@ export const CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 30,
-    img: 'mana_flask',
+    img: mana_flask,
     requiredLevel: 1,
     effect: { type: 'MANA_RESTORE' as const, value: 30 }
   },
@@ -40,7 +34,7 @@ export const CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 5,
-    img: 'basic_food',
+    img: basic_food,
     requiredLevel: 1,
     effect: { type: 'OUT_OF_COMBAT_HEAL' as const, value: 20 }
   }

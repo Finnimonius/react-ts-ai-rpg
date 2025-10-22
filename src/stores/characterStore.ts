@@ -133,6 +133,16 @@ export const useCharacterStore = create<CharacterStore>()(
       selectRace: (raceData) => set({ selectedRace: raceData }),
       //---------------------------------------------------------
 
+      // addToInventory: (item) => {
+      //   const { inventory } = get();
+
+      //   const newInventory = [...inventory]
+      //   newInventory.push(item);
+
+      //   set{{ inventory: newInventory}};
+
+      // },
+
       hasCharacter: () => {
         const { selectedClass, selectedRace } = get()
         return !!(selectedClass && selectedRace)

@@ -1,12 +1,6 @@
 import kukri from '../../../assets/images/items/weapons/kukri.png';
 import bowie_knife from '../../../assets/images/items/weapons/bowie_knife.png';
 
-export const WEPAPON_ITEM_IMAGES = {
-  kukri: kukri,
-  bowie_knife: bowie_knife,
-};
-
-
 export const WEAPONS = {
     KUKRI: {
     id: 'kukri',
@@ -15,7 +9,7 @@ export const WEAPONS = {
     type: 'weapon' as const,
     rarity: 'common' as const,
     value: 50,
-    img: 'kukri',
+    img: kukri,
     requiredLevel: 2,
     damage: { min: 5, max: 9 },
     stats: { strength: 2, dexterity: 1 },
@@ -28,7 +22,7 @@ export const WEAPONS = {
     type: 'weapon' as const,
     rarity: 'uncommon' as const,
     value: 25,
-    img: 'bowie_knife',
+    img: bowie_knife,
     requiredLevel: 3,
     damage: { min: 6, max: 10 },
     stats: { dexterity: 1 },

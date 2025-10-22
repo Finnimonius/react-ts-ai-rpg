@@ -2,7 +2,46 @@
     /* font-size: 21px;
     font-weight: 600;
     text-align: center; */
-    margin-bottom: 30px;
+    margin-bottom: 1vh;
+}
+
+.treasure-message-descr-find {
+    color: var(--text-light);
+    font-size: 1.4rem;
+}
+
+.treasure-reward-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.treasure-reward-img {
+    width: 14vh;
+}
+
+.treasure-reward {
+    width: 6.5vh;
+    height: 6.5vh;
+    padding: 5px;
+    object-fit: contain;
+    border-radius: 10px;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    background: linear-gradient(145deg, #6d5040 0%, #3a2c28 100%);
+    box-shadow:
+        inset 3px 3px 6px rgba(255, 255, 255, 0.25),
+        inset -3px -3px 6px rgba(0, 0, 0, 0.6),
+        0 6px 12px rgba(0, 0, 0, 0.5),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+    border: 0.2vh solid var(--primary-black);
 }
 
 .treasure-button-wrapper {
@@ -13,6 +52,8 @@
 
 .treasure-buttons-wrapper {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     gap: 30px;
 }

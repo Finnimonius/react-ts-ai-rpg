@@ -6,25 +6,15 @@ import gold_coins from '../../../assets/images/items/shop-items/gold_coins.png';
 import gold_bars from '../../../assets/images/items/shop-items/gold_bars.png';
 import rare_coin from '../../../assets/images/items/shop-items/rare_coin.png';
 
-export const SHOP_ITEM_IMAGES = {
-  ruby: ruby,
-  sapphire: sapphire,
-  emerald: emerald,
-  gold_ore: gold_ore,
-  gold_coins: gold_coins,
-  gold_bars: gold_bars,
-  rare_coin: rare_coin
-};
-
 export const SHOP_ITEMS = {
   RUBY: {
     id: 'ruby',
     name: 'Рубин',
     description: 'Красная разновидность минерала корунда',
     type: 'shopItem' as const,
-    rarity: 'rare' as const,
+    rarity: 'epic' as const,
     value: 30,
-    img: 'ruby',
+    img: ruby,
     category: 'gemstones'
   },
   SAPPHIRE: {
@@ -32,9 +22,9 @@ export const SHOP_ITEMS = {
     name: 'Сапфир',
     description: 'Драгоценный камень, который высоко ценится в ювелирном деле',
     type: 'shopItem' as const,
-    rarity: 'rare' as const,
+    rarity: 'epic' as const,
     value: 30,
-    img: 'sapphire',
+    img: sapphire,
     category: 'gemstones'
   },
   EMERALD: {
@@ -42,9 +32,9 @@ export const SHOP_ITEMS = {
     name: 'Изумруд',
     description: 'Драгоценный камень, который является разновидностью минерала берилла с глубоким зеленым цветом',
     type: 'shopItem' as const,
-    rarity: 'rare' as const,
+    rarity: 'epic' as const,
     value: 30,
-    img: 'emerald',
+    img: emerald,
     category: 'gemstones'
   },
   GOLD_ORE: {
@@ -52,9 +42,9 @@ export const SHOP_ITEMS = {
     name: 'Золотая руда',
     description: 'Природное минеральное образование, содержащее золото',
     type: 'shopItem' as const,
-    rarity: 'rare' as const,
+    rarity: 'common' as const,
     value: 30,
-    img: 'gold_ore',
+    img: gold_ore,
     category: 'gold'
   },
   GOLD_COINS: {
@@ -62,9 +52,9 @@ export const SHOP_ITEMS = {
     name: 'Золотые монеты',
     description: 'Горсть золотых монет',
     type: 'shopItem' as const,
-    rarity: 'rare' as const,
+    rarity: 'common' as const,
     value: 30,
-    img: 'gold_coins',
+    img: gold_coins,
     category: 'gold'
   },
   GOLD_BARS: {
@@ -72,9 +62,9 @@ export const SHOP_ITEMS = {
     name: 'Золотые слитки',
     description: 'Бруски золота высокой пробы',
     type: 'shopItem' as const,
-    rarity: 'rare' as const,
+    rarity: 'common' as const,
     value: 30,
-    img: 'gold_bars',
+    img: gold_bars,
     category: 'gold'
   },
   RARE_COIN: {
@@ -82,9 +72,9 @@ export const SHOP_ITEMS = {
     name: 'Редкая монета',
     description: 'Монета с гравировкой дракона. Может представлять ценность у коллекционеров.',
     type: 'shopItem' as const,
-    rarity: 'rare' as const,
+    rarity: 'common' as const,
     value: 30,
-    img: 'rare_coin',
+    img: rare_coin,
     category: 'gold'
   }
 };

@@ -36,7 +36,7 @@ export const canEquipItem = (item: AnyItem, slot: keyof Equipment, level: number
             if (item.type !== 'weapon') {
                 return { canEquip: false, reason: 'wrong_type' };
             }
-            return { canEquip: true, reason: 'success' }; // ← заменить break на return
+            return { canEquip: true, reason: 'success' }; 
         case 'helmet':
         case 'chest':
         case 'gloves':
@@ -45,18 +45,18 @@ export const canEquipItem = (item: AnyItem, slot: keyof Equipment, level: number
             if (item.type !== 'armor' || (item as Armor).slot !== slot) {
                 return { canEquip: false, reason: 'wrong_type' };
             }
-            return { canEquip: true, reason: 'success' }; // ← заменить break на return
+            return { canEquip: true, reason: 'success' }; 
         case 'ring_1':
         case 'ring_2':
             if (item.type !== 'accessory' || !(item as Accessory).slot?.startsWith('ring')) {
                 return { canEquip: false, reason: 'wrong_type' };
             }
-            return { canEquip: true, reason: 'success' }; // ← заменить break на return
+            return { canEquip: true, reason: 'success' }; 
         case 'amulet':
             if (item.type !== 'accessory' || (item as Accessory).slot !== 'amulet') {
                 return { canEquip: false, reason: 'wrong_type' };
             }
-            return { canEquip: true, reason: 'success' }; // ← заменить break на return
+            return { canEquip: true, reason: 'success' }; 
         default:
             return { canEquip: false, reason: 'wrong_type' };
     }

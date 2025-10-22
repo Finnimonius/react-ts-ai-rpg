@@ -12,21 +12,6 @@ import ring_with_seal from '../../../assets/images/items/accsesories/ring_with_s
 import storm_amulet from '../../../assets/images/items/accsesories/storm_amulet.png';
 import sun_ring from '../../../assets/images/items/accsesories/sun_ring.png';
 
-export const STARTER_ITEM_IMAGES = {
-  starter_dagger: starter_dagger,
-  leather_cap: leather_cap,
-  leather_armor: leather_armor,
-  leather_gloves: leather_gloves,
-  leather_pants: leather_pants,
-  leather_boots: leather_boots,
-  storm_amulet: storm_amulet,
-  ring_with_seal: ring_with_seal,
-  sun_ring: sun_ring,
-  health_flask: health_flask,
-  mana_flask: mana_flask,
-  basic_food: basic_food
-};
-
 export const STARTER_WEAPONS = {
   DAGGER: {
     id: 'starter_dagger',
@@ -35,7 +20,7 @@ export const STARTER_WEAPONS = {
     type: 'weapon' as const,
     rarity: 'legendary' as const,
     value: 15,
-    img: 'starter_dagger',
+    img: starter_dagger,
     requiredLevel: 1,
     damage: { min: 4, max: 8 },
     stats: { dexterity: 1 },
@@ -51,7 +36,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'common' as const,
     value: 15,
-    img: 'leather_cap',
+    img: leather_cap,
     requiredLevel: 2,
     defense: 3,
     stats: { dexterity: 1 },
@@ -66,7 +51,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'uncommon' as const,
     value: 35,
-    img: 'leather_armor',
+    img: leather_armor,
     requiredLevel: 1,
     defense: 6,
     stats: { dexterity: 2 },
@@ -81,7 +66,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'rare' as const,
     value: 12,
-    img: 'leather_gloves',
+    img: leather_gloves,
     requiredLevel: 1,
     defense: 2,
     stats: { dexterity: 1 },
@@ -96,7 +81,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'common' as const,
     value: 20,
-    img: 'leather_pants',
+    img: leather_pants,
     requiredLevel: 1,
     defense: 3,
     stats: { dexterity: 1 },
@@ -111,7 +96,7 @@ export const STARTER_ARMOR = {
     type: 'armor' as const,
     rarity: 'epic' as const,
     value: 18,
-    img: 'leather_boots',
+    img: leather_boots,
     requiredLevel: 1,
     defense: 2,
     stats: { dexterity: 1 },
@@ -128,7 +113,7 @@ export const STARTER_ACCESORIES = {
       type: 'accessory' as const,
       rarity: 'legendary' as const,
       value: 20,
-      img: 'sun_ring',
+      img: sun_ring,
       requiredLevel: 1,
       stats: {dexterity: 1, wisdom: 2, luck: 2},
       slot: 'ring' as const,
@@ -140,7 +125,7 @@ export const STARTER_ACCESORIES = {
       type: 'accessory' as const,
       rarity: 'rare' as const,
       value: 22,
-      img: 'ring_with_seal',
+      img: ring_with_seal,
       requiredLevel: 1,
       stats: {intelligence: 2, wisdom: 1},
       slot: 'ring' as const,
@@ -152,7 +137,7 @@ export const STARTER_ACCESORIES = {
       type: 'accessory' as const,
       rarity: 'epic' as const,
       value: 22,
-      img: 'storm_amulet',
+      img: storm_amulet,
       requiredLevel: 1,
       damage: { min: 1, max: 1 },
       stats: {strength: 2, intelligence: 2},
@@ -168,7 +153,7 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 25,
-    img: 'health_flask',
+    img: health_flask,
     requiredLevel: 1,
     effect: { type: 'HEAL' as const, value: 50 }
   },
@@ -180,7 +165,7 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 30,
-    img: 'mana_flask',
+    img: mana_flask,
     requiredLevel: 1,
     effect: { type: 'MANA_RESTORE' as const, value: 30 }
   },
@@ -192,7 +177,7 @@ export const STARTER_CONSUMABLES = {
     type: 'consumable' as const,
     rarity: 'common' as const,
     value: 5,
-    img: 'basic_food',
+    img: basic_food,
     requiredLevel: 1,
     effect: { type: 'OUT_OF_COMBAT_HEAL' as const, value: 20 }
   }

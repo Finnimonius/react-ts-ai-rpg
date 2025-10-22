@@ -17,7 +17,7 @@ export default function Forest() {
                 disabled={gameHistory.length > 0}
             />
             <div style={{ width: '100%' }} className="forest-messages-container">
-                <button onClick={backToCity}>Сбросить</button>
+                <button onClick={backToCity} className="reset-test-btn">Сбросить</button>
 
                 {gameHistory.map((history, index) => (
                     <div key={index} className="forest-message-block">

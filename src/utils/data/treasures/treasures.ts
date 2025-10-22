@@ -4,39 +4,29 @@ import large_chest from '../../../assets/images/rewards/large_chest.png';
 import gemstones from '../../../assets/images/rewards/gemstones.png';
 import bag from '../../../assets/images/rewards/bag.png';
 
-
-export const TREASURES_ITEM_IMAGES = {
-  chest: chest,
-  large_chest: large_chest,
-  gemstones: gemstones,
-  bag: bag,
-};
-
 export const treasures: Record<TreasureType, TreasureContainer> = {
   chest: {
-    img: '',
+    img: chest,
     rewards: [
-      { type: 'weapon', chance: 30 },
-      { type: 'consumable', chance: 50 },
+      { type: 'weapon', chance: 40 },
+      { type: 'consumable', chance: 40 },
       { type: 'shopItem', category: 'any', chance: 20 },
     ],
   },
   large_chest: {
-    img: '',
+    img: large_chest,
     rewards: [
-      { type: 'weapon', chance: 30 },
-      { type: 'consumable', chance: 50 },
-      { type: 'shopItem', category: 'any', chance: 20 },
+      { type: 'weapon', chance: 100 },
     ],
   },
   gemstones: {
-    img: '',
+    img: gemstones,
     rewards: [
       { type: 'shopItem', category: 'gemstones', chance: 100 },
     ],
   },
   bag: {
-    img: '',
+    img: bag,
     rewards: [
       { type: 'shopItem', category: 'gold', chance: 100 },
       { type: 'consumable', chance: 50 },

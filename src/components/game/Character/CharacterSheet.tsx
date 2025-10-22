@@ -5,7 +5,6 @@ import { useCallback, useState } from "react";
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
 import type { AnyItem, Equipment} from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
-import { STARTER_ITEM_IMAGES } from "../../../utils/data/items/starterGear";
 import { canEquipItem } from "../../../utils/generators/items-builder";
 import { Divider, Tooltip } from 'antd';
 import Inventory from "./Inventory";
@@ -237,7 +236,7 @@ export default function CharacterSheet() {
                     {activeItemData ? (
                         <div className="draggableItem overlay">
                             <img
-                                src={STARTER_ITEM_IMAGES[activeItemData.item.img as keyof typeof STARTER_ITEM_IMAGES]}
+                                src={activeItemData.item.img}
                                 alt={activeItemData.item.name}
                                 className="draggableItem-img"
                             />
