@@ -1,3 +1,21 @@
+import ruby from '../../../assets/images/items/shop-items/ruby.png';
+import sapphire from '../../../assets/images/items/shop-items/sapphire.png';
+import emerald from '../../../assets/images/items/shop-items/emerald.png';
+import gold_ore from '../../../assets/images/items/shop-items/gold_ore.png';
+import gold_coins from '../../../assets/images/items/shop-items/gold_coins.png';
+import gold_bars from '../../../assets/images/items/shop-items/gold_bars.png';
+import rare_coin from '../../../assets/images/items/shop-items/rare_coin.png';
+
+export const SHOP_ITEM_IMAGES = {
+  ruby: ruby,
+  sapphire: sapphire,
+  emerald: emerald,
+  gold_ore: gold_ore,
+  gold_coins: gold_coins,
+  gold_bars: gold_bars,
+  rare_coin: rare_coin
+};
+
 export const SHOP_ITEMS = {
   RUBY: {
     id: 'ruby',
@@ -6,7 +24,7 @@ export const SHOP_ITEMS = {
     type: 'shopItem' as const,
     rarity: 'rare' as const,
     value: 30,
-    img: '',
+    img: 'ruby',
     category: 'gemstones'
   },
   SAPPHIRE: {
@@ -16,7 +34,7 @@ export const SHOP_ITEMS = {
     type: 'shopItem' as const,
     rarity: 'rare' as const,
     value: 30,
-    img: '',
+    img: 'sapphire',
     category: 'gemstones'
   },
   EMERALD: {
@@ -26,7 +44,7 @@ export const SHOP_ITEMS = {
     type: 'shopItem' as const,
     rarity: 'rare' as const,
     value: 30,
-    img: '',
+    img: 'emerald',
     category: 'gemstones'
   },
   GOLD_ORE: {
@@ -36,7 +54,7 @@ export const SHOP_ITEMS = {
     type: 'shopItem' as const,
     rarity: 'rare' as const,
     value: 30,
-    img: '',
+    img: 'gold_ore',
     category: 'gold'
   },
   GOLD_COINS: {
@@ -46,7 +64,7 @@ export const SHOP_ITEMS = {
     type: 'shopItem' as const,
     rarity: 'rare' as const,
     value: 30,
-    img: '',
+    img: 'gold_coins',
     category: 'gold'
   },
   GOLD_BARS: {
@@ -56,7 +74,7 @@ export const SHOP_ITEMS = {
     type: 'shopItem' as const,
     rarity: 'rare' as const,
     value: 30,
-    img: '',
+    img: 'gold_bars',
     category: 'gold'
   },
   RARE_COIN: {
@@ -66,7 +84,7 @@ export const SHOP_ITEMS = {
     type: 'shopItem' as const,
     rarity: 'rare' as const,
     value: 30,
-    img: '',
+    img: 'rare_coin',
     category: 'gold'
   }
 };

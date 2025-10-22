@@ -2,19 +2,21 @@ import type { BaseStats } from "./character.types";
 
 export type EquipmentSlot = 'helmet' | 'chest' | 'gloves' | 'legs' | 'boots' | 'amulet' | 'ring'
 export type Rarity = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
+export type InventoryItemType = 'weapon' | 'armor' | 'accessory' | 'consumable' | 'shopItem' | 'quest';
+export type AnyItem = Weapon | Armor | Accessory | Consumable | ShopItem;
 
 export interface InventoryItem {
     id: string,
     name: string,
     description: string,
-    type: 'weapon' | 'armor' | 'accessory' | 'consumable' | 'shopItem' | 'quest',
+    type: InventoryItemType,
     rarity: Rarity,
     value: number,
     img: string,
 }
 
 export interface InventorySlot {
-    item: Weapon | Armor | Consumable | Accessory | null; 
+    item: AnyItem | null; 
     quantity: number;                 
 }
 
@@ -46,6 +48,10 @@ export interface Consumable extends InventoryItem {
         type: 'HEAL' | 'MANA_RESTORE' | 'OUT_OF_COMBAT_HEAL';
         value: number;
     };
+}
+
+export interface ShopItem extends InventoryItem {
+    category: string;
 }
 
 export interface Equipment {

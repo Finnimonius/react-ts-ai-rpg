@@ -2,39 +2,10 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import queryAI from "../services/api";
 import { DUNGEONS } from "../utils/data/locations/forest-locations";
-import { generateEvent, getRandomEvent, type EventType } from "../utils/generators/event-generator";
+import { generateEvent, getRandomEvent } from "../utils/generators/event-generator";
+import type { CurrentLocation, DirectionName, EventType, GameHistory, Path, TargetLocation } from "../types/game.types";
 
 const EVENTS: EventType[] = ['treasure']
-
-type Directions = 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast';
-export type DirectionName = 'Юг' | 'Юго-восток' | 'Юго-запад' |
-    'Запад' | 'Север' | 'Северо-запад' | 'Северо-восток';
-export type TargetLocation = string;
-
-type Path = {
-    direction: Directions,
-    directionName: DirectionName,
-    targetLocationId: TargetLocation,
-}
-
-type CurrentEvent = {
-    eventType: EventType,
-    id: string,
-    title: string,
-    description: string,
-    container: string[]
-    gold: number,
-    items: string[],
-}
-
-export type GameHistory = {
-    type: 'location' | 'travel_event',
-    aiText: string,
-    directions?: Path[],
-    currentEvent?: CurrentEvent,
-}
-
-export type CurrentLocation = 'city' | 'forest' | 'desert';
 
 interface GameStore {
     currentLocation: CurrentLocation,
@@ -143,7 +114,6 @@ export const useGameStore = create<GameStore>()(
                     })
                 } catch (error) {
                     console.log(error);
-
                 }
 
             },

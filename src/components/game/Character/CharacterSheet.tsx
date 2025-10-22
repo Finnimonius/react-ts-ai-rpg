@@ -3,7 +3,7 @@ import './CharacterSheet.css'
 import DraggableItem from "./DraggableItem"
 import { useCallback, useState } from "react";
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
-import type { Accessory, Armor, Consumable, Equipment, Weapon } from "../../../types/inventory.types";
+import type { AnyItem, Equipment} from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
 import { STARTER_ITEM_IMAGES } from "../../../utils/data/items/starterGear";
 import { canEquipItem } from "../../../utils/generators/items-builder";
@@ -29,10 +29,9 @@ export default function CharacterSheet() {
     } = useCharacterStore();
     const [activeId, setActiveId] = useState<string | null>(null);
     const [api, contextHolder] = useNotification();
-
     const sensors = useSensors(useSensor(PointerSensor));
 
-    const findItemWithSource = useCallback((id: string): { item: Weapon | Armor | Accessory | Consumable; source: string } | null => {
+    const findItemWithSource = useCallback((id: string): { item: AnyItem; source: string } | null => {
         const separatorIndex = id.lastIndexOf('|');
 
         if (separatorIndex === -1) return null;
@@ -85,7 +84,7 @@ export default function CharacterSheet() {
         });
     }, [api]);
 
-    const moveToInventorySlot = useCallback((draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetIndex: number) => {
+    const moveToInventorySlot = useCallback((draggedItem: { item: AnyItem; source: string }, targetIndex: number) => {
         if (draggedItem.source.startsWith('equipment-')) {
             const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
 
@@ -102,7 +101,7 @@ export default function CharacterSheet() {
         }
     }, [inventory, unequipItem, moveInventoryItem]);
 
-    const handleItemMove = useCallback((draggedItem: { item: Weapon | Armor | Accessory | Consumable; source: string }, targetZone: string) => {
+    const handleItemMove = useCallback((draggedItem: { item: AnyItem; source: string }, targetZone: string) => {
         if (targetZone.startsWith('equipment-')) {
             const equipmentSlot = targetZone.replace('equipment-', '') as keyof Equipment;
 

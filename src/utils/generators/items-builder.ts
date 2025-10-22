@@ -1,5 +1,5 @@
 import type { BaseStats, ClassId } from "../../types/character.types";
-import type { Accessory, Armor, Consumable, Equipment, EquipmentStats, InventorySlot, Weapon } from "../../types/inventory.types";
+import type { Accessory, AnyItem, Armor, Equipment, EquipmentStats, InventorySlot, Rarity } from "../../types/inventory.types";
 import { classConfigs } from "../data/items/starterGear";
 
 export const getStartingEquipment = (classId: ClassId): Equipment => {
@@ -15,10 +15,14 @@ interface EquipResult {
     reason?: 'wrong_type' | 'low_level' | 'success';
 }
 
-export const canEquipItem = (item: Weapon | Armor | Accessory | Consumable, slot: keyof Equipment, level: number): EquipResult => {
+export const canEquipItem = (item: AnyItem, slot: keyof Equipment, level: number): EquipResult => {
 
     const equippableTypes = ['weapon', 'armor', 'accessory'] as const;
     if (!equippableTypes.includes(item.type as 'weapon' | 'armor' | 'accessory')) {
+        return { canEquip: false, reason: 'wrong_type' };
+    }
+
+    if (!('requiredLevel' in item)) {
         return { canEquip: false, reason: 'wrong_type' };
     }
 
@@ -100,6 +104,22 @@ export const calculateEuqipmentStats = (equipment: Equipment): EquipmentStats =>
             result.defense += item.defense
         }
     })
+
+    return result
+}
+
+export const groupByRarity = (items: Record<string, AnyItem>): Record<Rarity, AnyItem[]> => {
+    const result: Record<Rarity, AnyItem[]> = {
+        common: [],
+        uncommon: [],
+        rare: [],
+        epic: [],
+        legendary: []
+    }
+
+    Object.values(items).forEach(item => {
+        result[item.rarity].push(item)
+    });
 
     return result
 }

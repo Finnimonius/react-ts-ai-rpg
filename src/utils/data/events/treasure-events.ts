@@ -1,16 +1,16 @@
-export const treasureEvents = [
+import type { TreasureEventData } from "../../../types/game.types";
+
+export const treasureEvents: TreasureEventData[] = [
   {
     id: 'forgotten_chest',
     title: 'Забытый сундук',
     description: 'Вы нашли старый сундук, спрятанный в руинах.',
-    img: '',
-    container: ['chest'] 
+    container: ['chest', 'large_chest'] 
   },
   {
     id: 'smugglers_cache',
     title: 'Тайник контрабандистов',
     description: 'В дупле старого дуба спрятан мешок с сокровищами.',
-    img: '',
     container: ['bag', 'gemstones']
   }
 ];

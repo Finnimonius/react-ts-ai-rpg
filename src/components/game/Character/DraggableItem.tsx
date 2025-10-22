@@ -1,11 +1,11 @@
 import { useSortable } from '@dnd-kit/sortable'
-import type { Accessory, Armor, Consumable, Rarity, Weapon } from '../../../types/inventory.types'
+import type { AnyItem, Rarity} from '../../../types/inventory.types'
 import './DraggableItem.css'
 import { CSS } from '@dnd-kit/utilities';
 import { STARTER_ITEM_IMAGES } from '../../../utils/data/items/starterGear';
 import { Tooltip } from 'antd';
 
-export default function DraggableItem({ item, location }: { item: Weapon | Armor | Consumable | Accessory; location: string }) {
+export default function DraggableItem({ item, location }: { item: AnyItem; location: string }) {
     const { attributes, listeners, setNodeRef, transform } = useSortable({ id: `${item.id}|${location}` });
 
     const style = {
