@@ -5,7 +5,7 @@
     width: 6.5vh;
     height: 6.5vh;
     text-align: center;
-    border: 0.2vh solid var(--primary-black);
+    border: 0.2vh solid var(--primary-dark1);
     border-radius: 10px;
     background: linear-gradient(145deg, #6d5040 0%, #5d4037 100%);
     box-shadow: 

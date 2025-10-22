@@ -25,7 +25,7 @@
         inset -3px -3px 6px rgba(0, 0, 0, 0.6),
         0 6px 12px rgba(0, 0, 0, 0.5),
         0 2px 4px rgba(0, 0, 0, 0.3);
-    border: 0.2vh solid var(--primary-black);
+    border: 0.2vh solid var(--primary-dark1);
 }
 
 .common {

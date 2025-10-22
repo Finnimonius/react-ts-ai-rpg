@@ -8,15 +8,16 @@ export const treasures: Record<TreasureType, TreasureContainer> = {
   chest: {
     img: chest,
     rewards: [
-      { type: 'weapon', chance: 40 },
-      { type: 'consumable', chance: 40 },
+      { type: 'weapon', chance: 30 },
+      { type: 'armor', chance: 40 },
       { type: 'shopItem', category: 'any', chance: 20 },
     ],
   },
   large_chest: {
     img: large_chest,
     rewards: [
-      { type: 'weapon', chance: 100 },
+      { type: 'weapon', chance: 50 },
+      { type: 'armor', chance: 50 },
     ],
   },
   gemstones: {

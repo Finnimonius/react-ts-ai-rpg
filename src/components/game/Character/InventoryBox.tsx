@@ -4,6 +4,7 @@ import DraggableItem from "./DraggableItem";
 
 export default function InventoryBox({ slot, index }: { slot: InventorySlot, index: number }) {
     const { setNodeRef } = useDroppable({ id: `inventory-${index}` })
+
     return (
         <div ref={setNodeRef} className="inventory-box">
             {slot.item ? (

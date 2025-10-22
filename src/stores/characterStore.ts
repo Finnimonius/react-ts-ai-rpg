@@ -4,7 +4,7 @@ import type { BaseStats, CharacterClass, DerivedStats } from '../types/character
 import type { Race } from '../types/character.types'
 import type { CraftingMaterials, Currency } from '../types/currency.types'
 import { calculateEuqipmentStats, getStartingEquipment, getStartingInventory } from '../utils/generators/items-builder'
-import type { Equipment, InventorySlot } from '../types/inventory.types'
+import type { AnyItem, Equipment, InventorySlot } from '../types/inventory.types'
 
 export const INVENTORY_SIZE = 14;
 
@@ -26,6 +26,7 @@ interface CharacterStore {
   selectRace: (raceData: Race) => void,
   calculateDerivedStats: () => void,
   hasCharacter: () => boolean,
+  addItemToInventory: (item: AnyItem) => void,
   reset: () => void,
   unequipItem: (equipmentSlot: keyof Equipment, inventoryIndex: number) => void;
   equipItem: (inventoryIndex: number, equipmentSlot: keyof Equipment) => void;
@@ -37,7 +38,7 @@ export const useCharacterStore = create<CharacterStore>()(
   persist(
     (set, get) => ({
       selectedClass: null,
-      level: 1,
+      level: 5,
       experience: 0,
 
       currentStats: { strength: 0, dexterity: 0, intelligence: 0, wisdom: 0, constitution: 0, luck: 0 },
@@ -133,15 +134,30 @@ export const useCharacterStore = create<CharacterStore>()(
       selectRace: (raceData) => set({ selectedRace: raceData }),
       //---------------------------------------------------------
 
-      // addToInventory: (item) => {
-      //   const { inventory } = get();
+      addItemToInventory: (item) => {
+        const { inventory } = get();
 
-      //   const newInventory = [...inventory]
-      //   newInventory.push(item);
+        const existingSlotIndex = inventory.findIndex(slot => {
+          return slot.item?.id === item.id && item.type === 'consumable'
+        })
 
-      //   set{{ inventory: newInventory}};
+        if (existingSlotIndex !== -1) {
+          const newInventory = [...inventory];
+          newInventory[existingSlotIndex].quantity += 1;
+          set({ inventory: newInventory });
+          return 
+        }
 
-      // },
+        const emptySlotIndex = inventory.findIndex(slot => !slot.item);
+
+        if (emptySlotIndex !== -1) {
+          const newInventory = [...inventory]
+          newInventory[emptySlotIndex] = { item, quantity: 1 };
+
+          set({ inventory: newInventory });
+        }
+
+      },
 
       hasCharacter: () => {
         const { selectedClass, selectedRace } = get()

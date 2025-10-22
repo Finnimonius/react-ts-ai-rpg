@@ -10,7 +10,7 @@ export default async function queryAI(prompt: string, temperature: number = 0.7)
             body: JSON.stringify({
                 prompt: prompt,
                 temperature: temperature,
-                maxTokens: 100
+                maxTokens: 10
             })
         });
         

@@ -37,7 +37,7 @@ function getRandomTreasureReward(rewards: Treasure[]): Treasure {
 
 function getWeightedRarity(): Rarity {
     const rarities: Rarity[] = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
-    const chances = [55, 25, 12, 6, 2]
+    const chances = [48, 23, 15, 9, 5]
 
     const random = Math.random() * 100;
 
@@ -70,9 +70,6 @@ function generateTreasureEvent(type: EventType): CurrentEvent {
         eventType: type,
         ...randomTreasureEvent,
         img: treasureContainer.img,
-        reward: {
-            ...reward,
-            img: reward.img
-        }
+        reward: reward
     }
 }
