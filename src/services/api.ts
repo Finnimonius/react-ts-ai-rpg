@@ -2,7 +2,7 @@ const SERVER_URL = 'http://localhost:3001';
 
 export default async function queryAI(prompt: string, temperature: number = 0.7) {
     try {  
-        const response = await fetch(`${SERVER_URL}/api/generate`, {
+        const response = await fetch(`${SERVER_URL}/api/ai/generate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -10,7 +10,7 @@ export default async function queryAI(prompt: string, temperature: number = 0.7)
             body: JSON.stringify({
                 prompt: prompt,
                 temperature: temperature,
-                maxTokens: 10
+                maxTokens: 250
             })
         });
         

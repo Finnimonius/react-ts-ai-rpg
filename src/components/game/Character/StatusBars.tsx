@@ -21,7 +21,7 @@ export default function StatusBars() {
                     size={{ height: 6 }}
                     percent={(derivedStats.maxHealth / derivedStats.health) * 100}
                     strokeColor={'red'}
-                    style={{ width: '35vh', color: 'white', fontSize: '1.2vh', fontWeight: 600 }}
+                    style={{ width: '35vh', color: 'white', fontSize: '1.2vh', fontWeight: 600, fontFamily: 'AngelusMedieval', }}
                     format={() => `${derivedStats.health} / ${derivedStats.maxHealth}`}
                 />
             </ConfigProvider>
@@ -39,7 +39,7 @@ export default function StatusBars() {
                     className="character-sheet-hp"
                     size={{ height: 6 }}
                     percent={(derivedStats.maxMana / derivedStats.mana) * 100}
-                    style={{ width: '35vh', color: 'white', fontSize: '1.2vh', fontWeight: 600 }}
+                    style={{ width: '35vh', color: 'white', fontSize: '1.2vh', fontWeight: 600, fontFamily: 'AngelusMedieval', }}
                     format={() => `${derivedStats.mana} / ${derivedStats.maxMana}`}
                 />
             </ConfigProvider>

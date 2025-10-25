@@ -77,7 +77,6 @@ export const useCharacterStore = create<CharacterStore>()(
 
       learnedAbilities: [],
 
-
       selectClass: (classData) => {
         const startingEquipment = getStartingEquipment(classData.id);
         const startingInventory = getStartingInventory(classData.id);
