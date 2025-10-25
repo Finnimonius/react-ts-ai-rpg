@@ -1,4 +1,5 @@
-import { useGameStore, type DirectionName, type GameHistory, type TargetLocation } from '../../../stores/gameStore'
+import { useGameStore } from '../../../stores/gameStore'
+import type { DirectionName, GameHistory, TargetLocation } from '../../../types/game.types'
 import { NavigationButton } from '../Game-UI/ActionButtons'
 import './Location.css'
 

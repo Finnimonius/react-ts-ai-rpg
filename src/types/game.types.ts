@@ -39,6 +39,8 @@ export type CurrentEvent = {
     container: TreasureType[],
     img: string,
     reward: AnyItem,
+    isOpened: boolean,
+    isTaken: boolean,
 }
 
 export type GameHistory = {

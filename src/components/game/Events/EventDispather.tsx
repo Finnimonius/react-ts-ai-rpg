@@ -1,4 +1,4 @@
-import type { GameHistory } from "../../../stores/gameStore"
+import type { GameHistory } from "../../../types/game.types"
 import TreasureEvent from "./Event/TreasureEvent"
 
 interface LocationProp {

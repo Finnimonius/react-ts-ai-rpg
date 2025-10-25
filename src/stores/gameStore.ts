@@ -18,6 +18,8 @@ interface GameStore {
     enterLocation: (location: CurrentLocation) => void,
     startGame: () => void,
     movingToLocation: (targetLocation: TargetLocation, directionName: DirectionName) => void,
+    updateEventOpenedStatus: () => void,
+    updateEventTakenStatus: () => void,
     backToCity: () => void,
 }
 
@@ -88,13 +90,6 @@ export const useGameStore = create<GameStore>()(
                     set({ error: "Событие не найдено", isLoading: false });
                     return;
                 }
-                //    id: 'forgotten_chest',
-                //     title: 'Забытый сундук',
-                //     description: 'Вы нашли старый сундук, спрятанный в руинах.',
-                //     container: ['chest', 'gemstones']
-                //     gold: 80,
-                //     items: ['diamond', 'emerald', 'sapphire', 'ruby'],
-                //   }
 
                 try {
                     const { gameHistory } = get()
@@ -116,6 +111,43 @@ export const useGameStore = create<GameStore>()(
                     console.log(error);
                 }
 
+            },
+
+            updateEventOpenedStatus: () => {
+                const { gameHistory } = get();
+                const lastEntry = gameHistory[gameHistory.length - 1]
+
+                if (!lastEntry.currentEvent) return
+                let newCurrentEvent = { ...lastEntry.currentEvent };
+
+                newCurrentEvent = { ...newCurrentEvent, isOpened: true };
+                const newHistory = [...gameHistory]
+                newHistory[newHistory.length - 1].currentEvent = newCurrentEvent;
+
+                set({
+                    gameHistory: newHistory
+                })
+            },
+
+            updateEventTakenStatus: () => {
+                const { gameHistory } = get();
+                const lastEntry = gameHistory[gameHistory.length - 1]
+
+                if (!lastEntry.currentEvent) return
+                let newCurrentEvent = { ...lastEntry.currentEvent };
+
+                newCurrentEvent = {
+                    ...newCurrentEvent,
+                    isTaken: true,
+                    isOpened: false
+                };
+
+                const newHistory = [...gameHistory]
+                newHistory[newHistory.length - 1].currentEvent = newCurrentEvent;
+
+                set({
+                    gameHistory: newHistory
+                })
             },
 
             backToCity: () => {
