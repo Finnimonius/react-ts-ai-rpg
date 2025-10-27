@@ -37,7 +37,7 @@ export const STARTER_ARMOR = {
     rarity: 'common' as const,
     value: 15,
     img: leather_cap,
-    requiredLevel: 2,
+    requiredLevel: 1,
     defense: 3,
     stats: { dexterity: 1 },
     armorType: 'light',

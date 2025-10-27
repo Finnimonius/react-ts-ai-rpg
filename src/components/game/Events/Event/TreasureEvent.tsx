@@ -12,8 +12,8 @@ interface LocationProp {
 
 export default function TreasureEvent({ history }: LocationProp) {
     const { aiText, currentEvent } = history;
-    const { addItemToInventory } = useCharacterStore()
-    const { updateEventTakenStatus, updateEventOpenedStatus } = useGameStore()
+    const { addItemToInventory } = useCharacterStore();
+    const { updateEventTakenStatus, updateEventOpenedStatus } = useGameStore();
 
     const handleClick = () => {
         updateEventOpenedStatus()

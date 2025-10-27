@@ -15,7 +15,7 @@ import dreamwalker_garb from '../../../assets/images/items/armor/dreamwalker_gar
 import soulweave_tunic from '../../../assets/images/items/armor/soulweave_tunic.png';
 import spirit_binding from '../../../assets/images/items/armor/spirit_binding.png';
 
-// Импорты для перчаток
+// Перчатки
 import hunter_grips from '../../../assets/images/items/armor/hunter_grips.png';
 import ancient_rune_bracers from '../../../assets/images/items/armor/ancient_rune_bracers.png';
 import forest_bracers from '../../../assets/images/items/armor/forest_bracers.png';

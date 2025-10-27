@@ -17,7 +17,7 @@ const setActivePlay = ({isActive}: IsActive) => isActive ? 'active-link' : 'nav-
 export default function AppHeader() {
     const { hasCharacter } = useCharacterStore()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-
+    
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen)
     }

@@ -1,0 +1,34 @@
+/* PageLoader.css */
+.page-loader-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: var(--primary-dark1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  box-shadow: 
+    inset 0 0 50px rgba(255, 255, 255, 0.1),
+    inset 0 0 100px rgba(255, 255, 255, 0.05);
+}
+
+.page-loader-content {
+  text-align: center;
+}
+
+.page-loader-spinner {
+  font-size: 54px;
+  color: #fff;
+}
+
+.page-loader-text {
+  color: #fff;
+  margin-top: 20px;
+  font-size: 1.8vh;
+  font-family: 'Cormorant', sans-serif;
+  font-weight: 300;
+}
