@@ -1,6 +1,4 @@
 import { Splitter, Menu, ConfigProvider } from 'antd';
-import type { MenuProps } from 'antd';
-import { useState } from "react";
 import { AppstoreOutlined, ContainerOutlined, DesktopOutlined, MailOutlined, PieChartOutlined } from '@ant-design/icons';
 import './Gameplay.css';
 import CityView from "../components/game/Locations/City/CityView";
@@ -10,7 +8,6 @@ import Blacksmith from '../components/game/Locations/City/Blacksmith';
 import DungeonView from '../components/game/Locations/Dungeon/DungeonView';
 import { useRoutes } from 'react-router-dom';
 import Market from '../components/game/Locations/City/Market';
-import type { MenuInfo } from 'rc-menu/lib/interface';
 import CharacterSheet from '../components/game/Character/CharacterSheet';
 
 const gameRoutes = [
@@ -21,19 +18,6 @@ const gameRoutes = [
     { path: '/dungeon', element: <DungeonView /> },
     { path: '/market', element: <Market /> },
 ]
-
-export default function Gameplay() {
-    const [collapsed, setCollapsed] = useState(true);
-    const routing = useRoutes(gameRoutes)
-
-
-    const toggleCollapsed = () => {
-        setCollapsed(!collapsed);
-    };
-
-    const handleMenuClick: MenuProps['onClick'] = (e: MenuInfo): void => {
-        e.domEvent.stopPropagation();
-    };
 
     const items = [
         { key: '1', icon: <PieChartOutlined />, label: 'Option 1' },
@@ -69,18 +53,18 @@ export default function Gameplay() {
         },
     ];
 
+export default function Gameplay() {
+    const routing = useRoutes(gameRoutes)
+
     return (
         <div className="gameplay-container gameplay-layout">
-            <div onClick={toggleCollapsed} className="gameplay-menu-container">
                 <Menu
                     className="gameplay-menu"
                     defaultSelectedKeys={['1']}
                     mode="inline"
-                    inlineCollapsed={collapsed}
+                    inlineCollapsed={true}
                     items={items}
-                    onClick={handleMenuClick}
                 />
-            </div>
             <ConfigProvider theme={{ components: { Splitter: { colorPrimary: '#1677ff', colorFill: 'rgb(0,0,0)', controlItemBgActiveHover: 'rgb(0,0,0)', controlItemBgActive: 'rgb(0,0,0)', } } }}>
                 <Splitter style={{ minHeight: '90vh', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                     <Splitter.Panel resizable={true} className="gameplay-splitter">

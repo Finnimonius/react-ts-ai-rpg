@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import queryAI from "../services/api";
+import queryAI from "../services/ai-service";
 import { DUNGEONS } from "../utils/data/locations/forest-locations";
 import { generateEvent, getRandomEvent } from "../utils/generators/event-generator";
 import type { CurrentLocation, DirectionName, EventType, GameHistory, Path, TargetLocation } from "../types/game.types";
