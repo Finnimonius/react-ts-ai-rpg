@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { loginQuery, logoutQuery, registerQuery } from "../services/auth-service";
+import { loginQuery, logoutQuery, profileQuery, registerQuery } from "../services/auth-service";
 
 type User = {
     _id: string,
@@ -17,7 +17,7 @@ interface AuthStore {
     login: (email: string, password: string) => void,
     logout: () => void,
     register: (nickName: string, email: string, password: string, confirmPassword: string) => void,
-    // checkAuth: () => void,
+    checkAuth: () => void,
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -52,6 +52,22 @@ export const useAuthStore = create<AuthStore>()(
                     isAuthenticated: true,
                     user: data.user
                 })
+            },
+
+            checkAuth: async () => {
+                const data = await profileQuery()
+
+                if (!data) {
+                    set({
+                        isAuthenticated: false,
+                        user: null
+                    })
+                } else {
+                    set({
+                        isAuthenticated: true,
+                        user: data.user
+                    })
+                }
             }
         }),
         {

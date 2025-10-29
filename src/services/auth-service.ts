@@ -57,7 +57,6 @@ export async function registerQuery(nickName: string, email: string, password: s
 
         if (!response.ok) {
             throw new Error(`Ошибка сервера: ${response.status}`);
-
         }
 
         const data = await response.json()
@@ -69,10 +68,21 @@ export async function registerQuery(nickName: string, email: string, password: s
     }
 }
 
-// export async function profileQuery() {
-//     try {
-        
-//     } catch (error) {
-        
-//     }
-// }
+export async function profileQuery() {
+    try {
+        const response = await fetch(`${SERVER_URL}/api/auth/profile`, {
+            credentials: 'include'
+        })
+
+        if (!response.ok) {
+            throw new Error(`Ошибка сервера: ${response.status}`);
+        }
+
+        const data = await response.json()
+
+        return data
+    } catch (error) {
+        console.error('Ошибка запроса', error)
+        return null
+    }
+}

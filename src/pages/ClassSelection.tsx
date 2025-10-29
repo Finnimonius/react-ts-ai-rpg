@@ -1,5 +1,5 @@
 import { useCharacterStore } from '../stores/characterStore'
-import type { Class } from '../types/character.types';
+import type { CharacterClass } from '../types/character.types';
 import { CLASSES } from "../utils/characterData/classes";
 import './ClassSelection.css'
 
@@ -10,7 +10,7 @@ type ClassSelectionProps = {
 export default function ClassSelection({ onNext }: ClassSelectionProps) {
     const { selectClass } = useCharacterStore()
 
-    const handleSelectClass = (classData: Class) => {
+    const handleSelectClass = (classData: CharacterClass) => {
         selectClass(classData)
         onNext()
     }

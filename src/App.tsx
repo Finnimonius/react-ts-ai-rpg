@@ -4,6 +4,8 @@ import { AnimatePresence } from 'framer-motion';
 import './styles/App.css'
 import AppLayout from './components/layout/AppLayout';
 import PageLoader from './components/UI/PageLoader';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+import Login from './components/auth/Login';
 
 
 const Home = lazy(() => import('./pages/Home'));
@@ -11,7 +13,7 @@ const CharacterCreator = lazy(() => import('./pages/CharacterCreator'));
 const Game = lazy(() => import('./pages/Game'));
 const Rules = lazy(() => import('./pages/Rules'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
-const Gameplay = lazy(() => import('./pages/Gameplay'));
+// const Gameplay = lazy(() => import('./pages/Gameplay'));
 
 
 export default function App() {
@@ -25,9 +27,12 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path='rules' element={<Rules />} />
           <Route path='charactercreator' element={<CharacterCreator />} />
-          <Route path='play' element={<Game />} />
-          <Route path="/play/:step" element={<Game />} />
-          <Route path='/play/game/*' element={<Gameplay />} />
+          <Route path="login" element={<Login />} />
+          <Route path='play/*' element={
+            <ProtectedRoute>
+              <Game />
+            </ProtectedRoute>
+          } />
           <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>

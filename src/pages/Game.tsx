@@ -1,4 +1,4 @@
-import GameMain from './GameStart'
+import GameStart from './GameStart'
 import ClassSelection from "./ClassSelection"
 import RaceSelection from "./RaceSelection"
 import Gameplay from './Gameplay'
@@ -6,10 +6,11 @@ import { useNavigate, useParams, Navigate } from "react-router-dom"
 import { useCharacterStore } from "../stores/characterStore"
 import './Game.css'
 
+
 export default function Game() {
-    const navigate = useNavigate()
-    const { step } = useParams()
-    const { hasCharacter } = useCharacterStore()
+    const navigate = useNavigate();
+    const { step } = useParams();
+    const { hasCharacter } = useCharacterStore();
 
     const goToStep = (stepName: string) => navigate(`/play/${stepName}`)
 
@@ -22,7 +23,7 @@ export default function Game() {
         }
     }
 
-    const currentScreen = getCurrentScreen()
+    const currentScreen = getCurrentScreen();
 
     if (hasCharacter() && step !== 'game') {
         return <Navigate to="/play/game" replace />
@@ -38,7 +39,7 @@ export default function Game() {
 
     return (
         <section className='hero'>
-            {currentScreen === 'main' && <GameMain onStartCreation={() => goToStep('class')} />}
+            {currentScreen === 'main' && <GameStart onStartCreation={() => goToStep('class')} />}
             {currentScreen === 'class-selection' && <ClassSelection onNext={() => goToStep('race')} />}
             {currentScreen === 'race-selection' && <RaceSelection onNext={() => goToStep('game')} />}
             {currentScreen === 'gameplay' && <Gameplay />}
