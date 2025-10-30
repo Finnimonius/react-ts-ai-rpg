@@ -48,7 +48,12 @@
 .login-input {
   width: 245px;
   min-height: 45px;
-  color: #fff;
+  color: var(--primary-dark1);
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.9),
+    0 0 10px rgba(255, 255, 255, 0.7),
+    0 0 15px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.3);
   outline: none;
   transition: 0.35s;
   padding: 0px 7px;
@@ -95,7 +100,7 @@
     0 0 10px rgba(255, 255, 255, 0.7),
     0 0 15px rgba(255, 255, 255, 0.5),
     0 0 20px rgba(255, 255, 255, 0.3);
-  font-size: 17px;
+  font-size: 19px;
   font-weight: bold;
   transition: 0.35s;
 }
@@ -139,6 +144,38 @@
   text-decoration: underline;
 }
 
+@keyframes shake {
+  0% { transform: translateX(0) rotate(0deg); }
+  20% { transform: translateX(-8px) rotate(-1deg); }
+  40% { transform: translateX(8px) rotate(1deg); }
+  60% { transform: translateX(-6px) rotate(-0.5deg); }
+  80% { transform: translateX(6px) rotate(0.5deg); }
+  100% { transform: translateX(0) rotate(0deg); }
+}
+
+.shake-animation {
+  animation: shake 0.6s ease-in-out;
+}
+
+.login-error-popover{
+  color: var(--primary-dark1);
+  font-family: 'Cormorant', cursive;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.login-error-message {
+  color: var(--primary-red);
+   text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.9),
+    0 0 10px rgba(255, 255, 255, 0.7),
+    0 0 15px rgba(255, 255, 255, 0.5),
+    0 0 20px rgba(255, 255, 255, 0.3);
+  margin: 0;
+  padding: 0;
+}
+
 /* Стили для формы входа */
 .login-form-wrapper .login-form {
   display: flex;
@@ -148,10 +185,12 @@
   gap: 20px;
   position: absolute;
   backface-visibility: hidden;
-  padding: 5vh 6vh;
+  padding: 5vh 7vh;
   border-radius: 15px;
   box-shadow: inset 2px 2px 10px rgba(0,0,0,1),
   inset -1px -1px 5px rgba(70, 68, 68, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /* Стили для формы регистрации */
@@ -164,8 +203,10 @@
   position: absolute;
   backface-visibility: hidden;
   transform: rotateY(-180deg);
-  padding: 5vh 6vh;
+  padding: 5vh 7vh;
   border-radius: 15px;
   box-shadow: inset 2px 2px 10px rgba(0,0,0,0.7),
   inset -1px -1px 5px rgba(70, 68, 68, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
