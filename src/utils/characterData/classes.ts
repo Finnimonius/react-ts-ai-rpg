@@ -7,7 +7,7 @@ import grey_wanderer from '../../assets/images/characters/classes/grey-wanderer.
 
 export const CLASSES = [
     {
-    id: 'grey_wanderer',
+    id: 'grey_wanderer' as const,
     name: 'Серый странник',
     description: 'Мастер скрытности и манипуляций, использующий иллюзии и хитрость',
     img: grey_wanderer,
@@ -26,9 +26,9 @@ export const CLASSES = [
       luck: 0.5
     },
 
-    weponTypes: ['dagger', 'short_sword', 'crossbow'],
+    weaponTypes: ['dagger', 'short_sword', 'crossbow'],
     armorTypes: ['light', 'cloth'],
-    resource: 'leads',
+    resource: 'leads' as const,
 
     abilities: [
       {
@@ -37,7 +37,7 @@ export const CLASSES = [
         description: 'Быстрая атака с шансом получить улику',
         level: 1,
         cost: { ap: 50 },
-        type: 'damage',
+        type: 'damage' as const,
       },
       {
         id: 'precise_strike',
@@ -45,7 +45,7 @@ export const CLASSES = [
         description: 'Точный удар с увеличенным шансом крита',
         level: 3,
         cost: { ap: 60 },
-        type: 'damage'
+        type: 'damage' as const
       },
       {
         id: 'distracting_move',
@@ -53,7 +53,7 @@ export const CLASSES = [
         description: 'Оглушает врага на 1 ход',
         level: 5,
         cost: { ap: 40, mana: 15 },
-        type: 'utility'
+        type: 'utility' as const
       }
     ]
   }

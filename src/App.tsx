@@ -28,7 +28,7 @@ export default function App() {
           <Route path='rules' element={<Rules />} />
           <Route path='charactercreator' element={<CharacterCreator />} />
           <Route path="login" element={<Login />} />
-          <Route path='play/*' element={
+          <Route path='play/:step?/*' element={
             <ProtectedRoute>
               <Game />
             </ProtectedRoute>
