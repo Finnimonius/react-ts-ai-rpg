@@ -1,5 +1,5 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { Layout, Button, Drawer } from 'antd'
+import { Layout, Button, Drawer, Dropdown, type MenuProps } from 'antd'
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 import logo from '../../assets/images/logos/main-logo.png'
 import './AppHeader.css'
@@ -15,7 +15,7 @@ const setActive = ({ isActive }: IsActive) => isActive ? 'active-link' : 'nav-li
 
 export default function AppHeader() {
     const { hasCharacter } = useCharacterStore()
-    const { isAuthenticated } = useAuthStore()
+    const { isAuthenticated, logout, user } = useAuthStore()
     const navigate = useNavigate()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const location = useLocation()
@@ -35,6 +35,26 @@ export default function AppHeader() {
         setIsMobileMenuOpen(!isMobileMenuOpen)
     }
 
+    const items: MenuProps['items'] = [
+        {
+            key: 'content',
+            type: 'group',
+            label: <div className="header-profile-content">
+                <h2>Профиль</h2>
+                <h3>{user?.nickName}</h3>
+            </div>,
+        },
+        {
+            key: 'logout',
+            label: 'Выйти из аккаунта',
+            className: "custom-logout-item",
+            onClick: () => {
+                logout()
+            }
+        },
+
+    ];
+
     return (
         <Layout.Header className='header-layout'>
             <div className="header-container">
@@ -49,6 +69,26 @@ export default function AppHeader() {
                     style={{ color: 'red', fontSize: '24px' }}
                 />
                 <nav className='header-nav'>
+                    {isAuthenticated &&
+                        <Dropdown
+                            menu={{
+                                items,
+                                style: {
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'right',
+                                    justifyContent: 'space-between',
+                                    width: 300,
+                                    height: 150,
+                                    borderRadius: 10,
+                                    border: '2px solid #5d4037',
+                                    backgroundColor: '#1a1a1a'
+                                },
+                            }}
+                        >
+                            <button className="header-profile-btn"></button>
+                        </Dropdown>
+                    }
                     <NavLink to='/' className={setActive}>Главная</NavLink>
                     <NavLink to='/rules' className={setActive}>Правила</NavLink>
                     <NavLink to='/charactercreato' className={setActive}>Создание персонажа</NavLink>
@@ -118,6 +158,6 @@ export default function AppHeader() {
                     </nav>
                 </Drawer>
             </div>
-        </Layout.Header>
+        </Layout.Header >
     )
 }

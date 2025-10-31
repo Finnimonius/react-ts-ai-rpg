@@ -4,8 +4,10 @@ import './Home.css'
 export default function Home() {
 
     return (
+        <section className='hero'>
         <div className='home-contaner'>
-            <ParticlesBackground />
+            {/* <ParticlesBackground /> */}
         </div>
+        </section>
     )
 }
