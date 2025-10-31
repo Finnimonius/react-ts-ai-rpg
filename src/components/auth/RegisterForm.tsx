@@ -16,7 +16,7 @@ type Form = {
 
 export default function RegisterForm({ onFlip }: Props) {
     const navigate = useNavigate()
-    const { registerUser } = useAuthStore()
+    const { registerUser, error, clearError } = useAuthStore()
     const { register, handleSubmit, formState, clearErrors, watch } = useForm<Form>({
         mode: 'onChange'
     })
@@ -27,6 +27,7 @@ export default function RegisterForm({ onFlip }: Props) {
     const nickNameError = formState.errors['nickName']?.message;
 
     const handleFlip = () => {
+        clearError()
         clearErrors()
         onFlip()
     }
@@ -145,7 +146,14 @@ export default function RegisterForm({ onFlip }: Props) {
                     })}
                 />
             </Popover>
-            <button type="submit" className="login-btn">Принять клятву</button>
+            <Popover
+                content={error && 'Пользователь с таким email уже существует'}
+                open={!!error}
+                placement="left"
+                color="#ff4d4f"
+            >
+                <button type="submit" className="login-btn">Принять клятву</button>
+            </Popover>
             <span className="login-switch">Уже путешественник?{' '}
                 <label htmlFor="signup_toggle" className="signup_tog" onClick={handleFlip}>
                     Ко входу

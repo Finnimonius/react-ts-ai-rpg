@@ -19,6 +19,7 @@ interface AuthStore {
     logout: () => Promise<void>,
     registerUser: (nickName: string, email: string, password: string, confirmPassword: string) => Promise<void>,
     checkAuth: () => Promise<void>,
+    clearError: () => void
 }
 
 export const useAuthStore = create<AuthStore>()(
@@ -104,7 +105,9 @@ export const useAuthStore = create<AuthStore>()(
                         error: errorMessage
                     });
                 }
-            }
+            },
+
+            clearError: () => set({ error: null }),
         }),
         {
             name: 'user-storage'

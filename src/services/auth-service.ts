@@ -20,7 +20,7 @@ export async function loginQuery(email: string, password: string) {
         return data
     } catch (error) {
         console.error('Ошибка запроса', error)
-        return null
+        throw error
     }
 }
 
@@ -40,7 +40,7 @@ export async function logoutQuery() {
         return data
     } catch (error) {
         console.error('Ошибка запроса', error)
-        return null
+        throw error
     }
 }
 
@@ -64,7 +64,7 @@ export async function registerQuery(nickName: string, email: string, password: s
         return data
     } catch (error) {
         console.error('Ошибка запроса', error)
-        return null
+        throw error
     }
 }
 
@@ -83,6 +83,6 @@ export async function profileQuery() {
         return data
     } catch (error) {
         console.error('Ошибка запроса', error)
-        return null
+        throw error
     }
 }
