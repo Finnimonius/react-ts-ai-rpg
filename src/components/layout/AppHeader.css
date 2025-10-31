@@ -3,12 +3,13 @@
     position: sticky;
     top: 0;
     justify-content: center;
-    background-color: black;
+    background-color: var(--primary-dark1);
     margin-bottom: -20px;
+    border-bottom: 1px solid var(--primary-red);
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     padding: 0;
-    z-index: 1;
+    z-index: 999;
 }
 
 .header-container {

@@ -1,5 +1,48 @@
-.home-contaner {
-    height:100vh;
-    background-image: url('/src/assets/images/backgrounds/home-bg.jpg');
+.home-hero {
+    height:70vh;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--primary-red);
+}
+
+.home-hero::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -30px;
+    right: -30px;
+    bottom: -40px;
+    background-image: url('/src/assets/images/backgrounds/hero-back.jpg');
     background-size: cover;
+    filter: blur(6px);
+    /* z-index: -1; */
+}
+
+.home-hero__container{
+    max-width: 1600px;
+    padding: 0 100px;
+    margin: 0 auto;
+    height: 100%;
+    width: 100%
+}
+
+.home-hero__content {
+    display: flex;
+    height: 100%;
+}
+
+.home-hero__left {
+    width: 50%;
+}
+
+.home-hero__right {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    width: 50%;
+}
+
+.home-about {
+    min-height: 50vh;
+    background-color: var(--primary-dark1);
 }

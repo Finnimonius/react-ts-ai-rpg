@@ -1,6 +1,6 @@
 .footer-layout {
     height: 96px;
-    background-color: black;
+    background-color: var(--primary-dark1);
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     margin-top: -20px;

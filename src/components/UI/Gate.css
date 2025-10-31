@@ -1,0 +1,169 @@
+.gate__container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+}
+
+.gate__img {
+    height: 100%;
+    z-index: 2;
+}
+
+.gate__img-under {
+    position: absolute;
+    padding: 20px;
+    height: 91%;
+    width: 91%;
+    border: 4.5vh solid #ff0033;
+    border-radius: 50%;
+    background: transparent;
+    z-index: 1;
+}
+
+.gate-img-back {
+    position: absolute;
+    padding: 20px;
+    height: 91%;
+    width: 91%;
+    border: 4.5vh solid var(--primary-black);
+    border-radius: 50%;
+    background: transparent;
+    background-image: url('../../assets/images/backgrounds/gate-back.jpg');
+    background-size: cover;
+    z-index: 1;
+}
+
+.gate-rock3 {
+    position: absolute;
+    top: 1vh;
+    right: 0;
+    width: 9vh;
+}
+
+.gate-rock2 {
+    position: absolute;
+    top: 12vh;
+    right: -1.5vh;
+    width: 3.5vh;
+}
+
+.gate-rock3-med {
+    position: absolute;
+    top: 18vh;
+    right: -6vh;
+    width: 8vh;
+}
+
+.gate-rock12 {
+   position: absolute;
+    top: 16.7vh;
+    right: -1vh;
+    width: 1vh;
+}
+
+.gate-rock4 {
+    position: absolute;
+    bottom: 9vh;
+    right: -5vh;
+    width: 10vh;
+}
+
+.gate-rock5-large {
+    position: absolute;
+    bottom: -3.5vh;
+    right: 3vh;
+    width: 11vh;
+}
+
+.gate-rock5 {
+    position: absolute;
+    bottom: -5vh;
+    right: 15vh;
+    width: 3.7vh;
+}
+
+.gate-rock6-small-med {
+    position: absolute;
+    bottom: -4vh;
+    right: 20vh;
+    width: 4vh;
+}
+
+.gate-rock7 {
+    position: absolute;
+    bottom: -4.5vh;
+    right: 24.5vh;
+    width: 4.5vh;
+}
+
+.gate-rock8 {
+    position: absolute;
+    bottom: -2vh;
+    left: 18vh;
+    width: 3vh;
+}
+
+.gate-rock9 {
+    position: absolute;
+    bottom: -3vh;
+    left: 2vh;
+    width: 10vh;
+}
+
+.gate-rock10 {
+    position: absolute;
+    bottom: 8vh;
+    left: 6vh;
+    width: 1vh;
+}
+
+.gate-rock11 {
+    position: absolute;
+    bottom: -1vh;
+    left: 13vh;
+    width: 3.6vh;
+}
+
+.gate-rock13 {
+    position: absolute;
+    bottom: 5vh;
+    left: -1vh;
+    width: 2.3vh;
+}
+
+.gate-rock14 {
+    position: absolute;
+    bottom: 9vh;
+    left: -1vh;
+    width: 5vh;
+}
+
+.gate-rock15 {
+    position: absolute;
+    bottom: 15vh;
+    left: -3vh;
+    width: 4vh;
+}
+
+.gate-rock16 {
+    position: absolute;
+    top: 22vh;
+    left: -7vh;
+    width: 8vh;
+}
+
+.gate-rock17 {
+    position: absolute;
+    top: 10vh;
+    left: -2vh;
+    width: 4vh;
+}
+
+.gate-rock18 {
+    position: absolute;
+    top: 2vh;
+    left: 2vh;
+    width: 5.2vh;
+}
