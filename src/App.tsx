@@ -7,7 +7,6 @@ import PageLoader from './components/UI/PageLoader';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Login from './components/auth/Login';
 
-
 const Home = lazy(() => import('./pages/Home'));
 const CharacterCreator = lazy(() => import('./pages/CharacterCreator'));
 const Game = lazy(() => import('./pages/Game'));

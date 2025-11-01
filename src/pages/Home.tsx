@@ -1,16 +1,31 @@
 import Gate from '../components/UI/Gate'
-import { ParallaxBackground } from '../components/UI/ParallaxBackground';
-import './Home.css'
+import { ParallaxBackgroundAbout, ParallaxBackgroundHero } from '../components/UI/ParallaxBackground';
+import { useSmoothScroll } from '../hooks/useSmoothScroll';
+import { useAuthStore } from '../stores/authStore';
+import { useNavigate } from "react-router-dom";
+import './Home.css';
 import { motion } from 'framer-motion';
+import { useCharacterStore } from '../stores/characterStore';
 
 export default function Home() {
+    useSmoothScroll();
+    const { isAuthenticated } = useAuthStore();
+    const navigate = useNavigate();
+    const { hasCharacter } = useCharacterStore();
 
+    const handlePlayClick = (targetPath: string) => {
+        if (!isAuthenticated) {
+            navigate('/login')
+        } else {
+            navigate(targetPath)
+        }
+    }
 
     return (
         <>
             <section className='home-hero'>
-                <ParallaxBackground />
-                <div className='home-hero__container'>
+                <ParallaxBackgroundHero />
+                <div className='home__container'>
                     <div className='home-hero__content'>
                         <div className='home-hero__left'>
                             <motion.div
@@ -25,8 +40,7 @@ export default function Home() {
                                     но сталкивайтесь с совершенно новыми историями, которые ИИ создаёт специально
                                     для вашего прохождения в текстовой RPG.
                                 </p>
-                                <button className="cta">
-                                    <span className="span">Играть</span>
+                                <button className="home-hero__btn" onClick={hasCharacter() ? () => handlePlayClick('/play/game') : () => handlePlayClick('/play')}>Играть
                                     <span className="second">
                                         <svg
                                             width="50px"
@@ -38,9 +52,9 @@ export default function Home() {
                                             <g
                                                 id="arrow"
                                                 stroke="none"
-                                                stroke-width="1"
+                                                strokeWidth="1"
                                                 fill="none"
-                                                fill-rule="evenodd"
+                                                fillRule="evenodd"
                                             >
                                                 <path
                                                     className="one"
@@ -70,6 +84,19 @@ export default function Home() {
                 </div>
             </section>
             <section className='home-about'>
+                <ParallaxBackgroundAbout />
+                <div className='home__container'>
+                    <div className='home-about__content'>
+                        <h2 className='home-about__title'>Выбери <span className='home-hero__span'>героя</span> и отправляйся в путь</h2>
+                        <ul className='home-about__list'>
+                            <li className='home-about__item'><div className='home-about__item1'></div></li>
+                            <li className='home-about__item'><div className='home-about__item2'></div></li>
+                            <li className='home-about__item'><div className='home-about__item3'></div></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <section className='home-content'>
 
             </section>
         </>

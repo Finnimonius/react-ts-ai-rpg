@@ -7,6 +7,18 @@
     z-index: 1;
 }
 
+.gate__container img,
+.gate-img-back,
+.gate__img-under {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
 .gate__img {
     height: 100%;
     z-index: 3;
@@ -34,6 +46,7 @@
     background-image: url('../../assets/images/backgrounds/gate-back.jpg');
     background-size: cover;
     z-index: 2;
+    pointer-events: none;
 }
 
 .gate-rock3 {

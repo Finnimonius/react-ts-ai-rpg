@@ -1,4 +1,8 @@
 .home-hero {
+    display: flex;
+    padding: 100px 0;
+    align-items: center;
+    justify-content: center;
     height: 70vh;
     position: relative;
     overflow: hidden;
@@ -7,26 +11,27 @@
 
 .home-hero__back {
     position: absolute;
-    bottom: -65vh;
+    bottom: -19vh;
     left: 0;
-    width: 100%;
-    height: 90vh;
-    background-image: url('../assets/images/backgrounds/Слой\ 4.png');
-    background-size: 38%;
+    width: 35%;
+    height: 80vh;
+    background-image: url('../assets/images/backgrounds/rock-left-parallax.webp');
+    background-size: 100%;
+    background-position: bottom;
     background-repeat: no-repeat;
-    z-index: 0;
+    z-index: 1;
 }
 
 .home-hero__back2 {
     position: absolute;
-    bottom: -15vh;
-    right: 0;
+    bottom: -16vh;
+    right: -0.5vh;
     width: 69%;
     height: 80vh;
-    background-image: url('../assets/images/backgrounds/Слой\ 7.png');
+    background-image: url('../assets/images/backgrounds/rock-right-parallax.webp');
     background-size: 100%;
     background-repeat: no-repeat;
-    z-index: 0;
+    z-index: 1;
 }
 
 .home-hero::before {
@@ -36,7 +41,7 @@
     left: -30px;
     right: -30px;
     bottom: -40px;
-    background-image: url('/src/assets/images/backgrounds/hero-back.jpg');
+    background-image: url('/src/assets/images/backgrounds/hero-back.webp');
     background-size: cover;
     background-attachment: fixed;
 }
@@ -49,15 +54,16 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.4);
-    z-index: 0;
+    z-index: 1;
 }
 
-.home-hero__container {
+.home__container {
     max-width: 1600px;
     padding: 0 100px;
     margin: 0 auto;
     height: 100%;
-    width: 100%
+    width: 100%;
+    z-index: 2;
 }
 
 .home-hero__content {
@@ -116,17 +122,11 @@
 .home-hero__right {
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: center;
     width: 50%;
 }
 
-.home-about {
-    min-height: 100vh;
-    background-color: var(--primary-dark1);
-}
-
-
-.cta {
+.home-hero__btn {
     display: flex;
     padding: 11px 33px;
     text-decoration: none;
@@ -146,27 +146,23 @@
     cursor: pointer;
 }
 
-.cta:focus {
+.home-hero__btn:focus {
     outline: none;
 }
 
-.cta:hover {
+.home-hero__btn:hover {
     transition: 0.5s;
     box-shadow: 10px 10px 0 var(--text-light);
 }
 
-.cta .second {
+.home-hero__btn .second {
     transition: 0.5s;
     margin-right: 0px;
 }
 
-.cta:hover .second {
+.home-hero__btn:hover .second {
     transition: 0.5s;
     margin-right: 45px;
-}
-
-.span {
-    transform: skewX(15deg);
 }
 
 .second {
@@ -186,16 +182,16 @@
     transform: translateX(-30%);
 }
 
-.cta:hover .three {
+.home-hero__btn:hover .three {
     animation: color_anim 1s infinite 0.2s;
 }
 
-.cta:hover .one {
+.home-hero__btn:hover .one {
     transform: translateX(0%);
     animation: color_anim 1s infinite 0.6s;
 }
 
-.cta:hover .two {
+.home-hero__btn:hover .two {
     transform: translateX(0%);
     animation: color_anim 1s infinite 0.4s;
 }
@@ -212,4 +208,130 @@
     100% {
         fill: white;
     }
+}
+
+/* about ------------------------------------------------------*/
+
+.home-about {
+    height: 75vh;
+    padding: 100px 0;
+    background-color: var(--primary-dark1);
+    border-bottom: 1px solid var(--primary-red);
+    position: relative;
+}
+
+.home-about__back {
+    position: absolute;
+    top: 25vh;
+    right: 5vh;
+    width: 50vh;
+    height: 50vh;
+    background-image: url('../assets/images/backgrounds/about-back.webp');
+    background-size: cover;
+}
+
+.home-about__back2 {
+    position: absolute;
+    top: 28vh;
+    left: 5vh;
+    width: 50vh;
+    height: 50vh;
+    background-image: url('../assets/images/backgrounds/about-back2.webp');
+    background-size: cover;
+}
+
+.home-about__content {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.home-about__title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    font-family: 'AngelusMedieval', cursive;
+    font-size: 4.5vh;
+    line-height: 1;
+    font-weight: 700;
+    max-width: 45vh;
+    transform: skewX(-15deg);
+    margin: 0;
+    margin-bottom: 3vh;
+    color: var(--text-light);
+    text-shadow:
+        0 0 3px rgba(255, 255, 255, 0.6),
+        0 0 6px rgba(255, 255, 255, 0.4),
+        0 0 9px rgba(255, 255, 255, 0.2);
+}
+
+.home-about__list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0 10%;
+    position: relative;
+}
+
+.home-about__item {
+    width: 22vh;
+    height: 27vh;
+    border: 1px solid var(--primary-red);
+    border-radius: 20px;
+    transform: skewX(-15deg);
+    position: absolute;
+    overflow: hidden;
+
+    &:nth-child(1) {
+        top: 0%;
+        left: 15%;
+    }
+
+    &:nth-child(2) {
+        top: 30%;
+        left: 40%;
+    }
+
+    &:nth-child(3) {
+        top: 60%;
+        left: 65%;
+    }
+}
+
+.home-content {
+    height: 70vh;
+    background-color: var(--primary-dark1);
+    border-bottom: 1px solid var(--primary-red);
+}
+
+.home-about__item1 {
+    transform: skewX(15deg);
+    margin-left: -3vh;
+    height: 100%;
+    width: 28vh;
+    background-image: url('../assets/images/characters/classes/war-back.webp');
+    background-size: cover;
+}
+
+.home-about__item2 {
+    transform: skewX(15deg);
+    margin-left: -3vh;
+    height: 100%;
+    width: 28vh;
+    background-image: url('../assets/images/characters/classes/mage-back.webp');
+    background-size: cover;
+    background-position: center;
+}
+
+.home-about__item3 {
+    transform: skewX(15deg);
+    margin-left: -3vh;
+    height: 100%;
+    width: 28vh;
+    background-image: url('../assets/images/characters/classes/grey-wanderer-back.webp');
+    background-size: cover;
 }
