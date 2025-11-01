@@ -4,11 +4,12 @@
     align-items: center;
     justify-content: center;
     height: 50vh;
+    z-index: 1;
 }
 
 .gate__img {
     height: 100%;
-    z-index: 2;
+    z-index: 3;
 }
 
 .gate__img-under {
@@ -19,7 +20,7 @@
     border: 4.5vh solid #ff0033;
     border-radius: 50%;
     background: transparent;
-    z-index: 1;
+    z-index: 2;
 }
 
 .gate-img-back {
@@ -32,7 +33,7 @@
     background: transparent;
     background-image: url('../../assets/images/backgrounds/gate-back.jpg');
     background-size: cover;
-    z-index: 1;
+    z-index: 2;
 }
 
 .gate-rock3 {

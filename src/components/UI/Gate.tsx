@@ -49,7 +49,12 @@ export default function Gate() {
     };
 
     return (
-        <div className='gate__container'>
+        <motion.div
+            className='gate__container'
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+        >
             <motion.div
                 className="gate-img-back"
                 animate={{
@@ -357,6 +362,6 @@ export default function Gate() {
                     ease: "easeInOut"
                 }}
             />
-        </div>
+        </motion.div>
     );
 }
