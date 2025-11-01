@@ -12,6 +12,15 @@
   </tr>
   <tr>
     <td width="50%"><img src="src/assets/images/screenshots/hero-select-screenshot.png" width="100%"></td>
+    <td width="50%"><img src="src/assets/images/screenshots/location-screenshot.png" width="100%"></td>
+  </tr>
+    <tr>
+    <td width="50%"><img src="src/assets/images/screenshots/character-screenshot.png" width="100%"></td>
+    <td width="50%"><img src="src/assets/images/screenshots/register-screenshot.png" width="100%"></td>
+  </tr>
+    </tr>
+    <tr>
+    <td width="50%"><img src="src/assets/images/screenshots/story-screenshot.png" width="100%"></td>
     <td width="50%"><img src="src/assets/images/screenshots/city-screenshot.png" width="100%"></td>
   </tr>
   <tr>

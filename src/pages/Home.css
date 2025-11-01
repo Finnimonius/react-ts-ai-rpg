@@ -13,7 +13,7 @@
     position: absolute;
     bottom: -19vh;
     left: 0;
-    width: 35%;
+    width: 40%;
     height: 80vh;
     background-image: url('../assets/images/backgrounds/rock-left-parallax.webp');
     background-size: 100%;
@@ -211,12 +211,10 @@
 }
 
 /* about ------------------------------------------------------*/
-
 .home-about {
     height: 75vh;
     padding: 100px 0;
     background-color: var(--primary-dark1);
-    border-bottom: 1px solid var(--primary-red);
     position: relative;
 }
 
@@ -228,6 +226,13 @@
     height: 50vh;
     background-image: url('../assets/images/backgrounds/about-back.webp');
     background-size: cover;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .home-about__back2 {
@@ -238,6 +243,13 @@
     height: 50vh;
     background-image: url('../assets/images/backgrounds/about-back2.webp');
     background-size: cover;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .home-about__content {
@@ -257,7 +269,6 @@
     max-width: 45vh;
     transform: skewX(-15deg);
     margin: 0;
-    margin-bottom: 3vh;
     color: var(--text-light);
     text-shadow:
         0 0 3px rgba(255, 255, 255, 0.6),
@@ -302,12 +313,6 @@
     }
 }
 
-.home-content {
-    height: 70vh;
-    background-color: var(--primary-dark1);
-    border-bottom: 1px solid var(--primary-red);
-}
-
 .home-about__item1 {
     transform: skewX(15deg);
     margin-left: -3vh;
@@ -334,4 +339,103 @@
     width: 28vh;
     background-image: url('../assets/images/characters/classes/grey-wanderer-back.webp');
     background-size: cover;
+}
+
+/* locatiom ---------------------------------------------------*/
+
+.home-location {
+    padding-top: 20vh;
+    height: 90vh;
+    position: relative;
+    background-color: var(--primary-dark1);
+    border-bottom: 1px solid var(--primary-red);
+    overflow: hidden;
+}
+
+.home-location__title {
+    position: absolute;
+    top: 6vh;
+    left: 25%;
+    font-family: 'AngelusMedieval', cursive;
+    font-size: 5vh;
+    line-height: 1;
+    font-weight: 700;
+    max-width: 25%;
+    margin: 0;
+    color: var(--text-light);
+    text-shadow:
+        0 0 3px rgba(255, 255, 255, 0.6),
+        0 0 6px rgba(255, 255, 255, 0.4),
+        0 0 9px rgba(255, 255, 255, 0.2);
+    z-index: 4;
+    transform: skewX(-15deg);
+}
+
+.home-location__content {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    border-top: 1px solid var(--primary-red);
+}
+
+.home-location__item {
+    flex: 1;
+    height: 100%;
+    position: relative;
+    transform: skewX(-15deg);
+    border-right: 2px solid var(--primary-dark1);
+    overflow: hidden;
+    transition: flex 0.3s ease;
+
+    &:first-child {
+        border-left: none;
+        margin-left: -10vh;
+    }
+
+    &:last-child {
+        border-right: none;
+        margin-right: -10vh;
+    }
+
+    &:hover {
+        flex: 1.05;
+        z-index: 2;
+    }
+}
+
+[class^="home-location__image"] {
+    position: absolute;
+    top: 0;
+    left: -25%;
+    width: 150%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: skewX(15deg);
+}
+
+.home-location__image1 {
+    background-image: url('../assets/images/backgrounds/lava-location-back.webp');
+}
+
+.home-location__image2 {
+    background-image: url('../assets/images/backgrounds/kingdom-location-rpg.webp');
+    background-size: 90%;
+}
+
+.home-location__image3 {
+    background-image: url('../assets/images/backgrounds/forest-location-back.webp');
+    background-size: 90%;
+}
+
+.home-location__image4 {
+    background-image: url('../assets/images/backgrounds/deser-location-back.webp');
+    background-size: 90%;
+}
+
+@media (max-width: 1920px) {
+    .home__container {
+        max-width: 1300px;
+    }
 }
