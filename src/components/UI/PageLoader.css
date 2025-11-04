@@ -16,19 +16,75 @@
     inset 0 0 100px rgba(255, 255, 255, 0.05);
 }
 
-.page-loader-content {
-  text-align: center;
+.loader {
+  width: 400px;
+  font-family: 'Cormorant', cursive;
+  height: 32px;
+  border-radius: 15px;
+  background-color: #000000;
+  position: relative;
+  overflow: hidden;
+  border: 3px solid white;
 }
 
-.page-loader-spinner {
-  font-size: 54px;
-  color: #fff;
+.progress {
+  width: 0%;
+  height: 100%;
+  background-color: #ffffff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: progress-animation 3s ease-in-out forwards infinite;
 }
 
-.page-loader-text {
-  color: #fff;
-  margin-top: 20px;
-  font-size: 1.8vh;
-  font-family: 'Cormorant', sans-serif;
-  font-weight: 300;
+.progress::after {
+  content: attr(data-percentage);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-weight: bold;
+  transform: translate(-50%, -50%);
+  font-size: 1rem;
+  color: black;
 }
+
+@keyframes progress-animation {
+  0% {
+    width: 0%;
+  }
+  25% {
+    width: 25%;
+  }
+  50% {
+    width: 50%;
+  }
+  75% {
+    width: 75%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes percentage-animation {
+  0% {
+    content: "0%";
+  }
+  25% {
+    content: "25%";
+  }
+  50% {
+    content: "50%";
+  }
+  75% {
+    content: "75%";
+  }
+  100% {
+    content: "100%";
+  }
+}
+
+.progress::after {
+  animation: percentage-animation 3s ease-in-out forwards infinite;
+}
+

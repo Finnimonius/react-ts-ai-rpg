@@ -16,13 +16,13 @@ export interface InventoryItem {
 }
 
 export interface InventorySlot {
-    item: AnyItem | null; 
-    quantity: number;                 
+    item: AnyItem | null;
+    quantity: number;
 }
 
 export interface Weapon extends InventoryItem {
     requiredLevel: number,
-    damage: {min: number, max: number},
+    damage: { min: number, max: number },
     stats: Partial<Record<keyof BaseStats, number>>,
     weaponType: string
 }
@@ -37,7 +37,7 @@ export interface Armor extends InventoryItem {
 
 export interface Accessory extends InventoryItem {
     requiredLevel: number,
-    damage?: {min: number, max: number},
+    damage?: { min: number, max: number },
     stats: Partial<Record<keyof BaseStats, number>>,
     slot: EquipmentSlot
 }
@@ -55,20 +55,20 @@ export interface ShopItem extends InventoryItem {
 }
 
 export interface Equipment {
-    weapon_main: Weapon | null,
-    weapon_off: Weapon | null,
-    helmet: Armor | null,
-    chest: Armor | null,
-    gloves: Armor | null,
-    legs: Armor | null,
-    boots: Armor | null,
-    ring_1: Accessory | null;
-    ring_2: Accessory | null;
-    amulet: Accessory | null;
+    weapon_main: string | null;
+    weapon_off: string | null;
+    helmet: string | null;
+    chest: string | null;
+    gloves: string | null;
+    legs: string | null;
+    boots: string | null;
+    ring_1: string | null;
+    ring_2: string | null;
+    amulet: string | null;
 }
 
 export interface EquipmentStats {
-  stats: Partial<Record<keyof BaseStats, number>>;
-  defense: number;
-  damage: { min: number; max: number };
+    stats: Partial<Record<keyof BaseStats, number>>;
+    defense: number;
+    damage: { min: number; max: number };
 }

@@ -1,9 +1,6 @@
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import './PageLoader.css'
 
-// Простой вариант - всегда показываем лоадер
 export default function PageLoader() {
   return (
     <motion.div
@@ -18,17 +15,9 @@ export default function PageLoader() {
         transition={{ duration: 0.5 }}
         className="page-loader-content"
       >
-        <Spin 
-          indicator={<LoadingOutlined className="page-loader-spinner" spin style={{ fontSize: '3vh'}}/>}
-        />
-        <motion.p 
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="page-loader-text"
-        >
-          Загружаем самую крутую игру...
-        </motion.p>
+        <div className="loader">
+          <div className="progress" data-percentage="100%"></div>
+        </div>
       </motion.div>
     </motion.div>
   );
