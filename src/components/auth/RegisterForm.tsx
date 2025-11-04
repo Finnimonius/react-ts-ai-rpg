@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../stores/authStore'
 
 type Props = {
-    onFlip: () => void
+    onFlip: () => void,
+    from: string,
 }
 
 type Form = {
@@ -14,7 +15,7 @@ type Form = {
     'confirmPassword': string,
 }
 
-export default function RegisterForm({ onFlip }: Props) {
+export default function RegisterForm({ onFlip, from }: Props) {
     const navigate = useNavigate()
     const { registerUser, error, clearError } = useAuthStore()
     const { register, handleSubmit, formState, clearErrors, watch } = useForm<Form>({
@@ -35,7 +36,7 @@ export default function RegisterForm({ onFlip }: Props) {
     const handleSignup: SubmitHandler<Form> = async (data) => {
         try {
             await registerUser(data.nickName, data.email, data.password, data.confirmPassword);
-            navigate('/play');
+            navigate(from, { replace: true });
         } catch (error) {
             console.error('Ошибка регистрации:', error);
         }

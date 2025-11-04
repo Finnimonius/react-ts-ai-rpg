@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 import { loginQuery, logoutQuery, profileQuery, registerQuery } from "../services/auth-service";
 import { getErrorMessage } from "../utils/errors/errorUtils";
 
@@ -15,6 +14,7 @@ interface AuthStore {
     isAuthenticated: boolean,
     user: User | null,
     error: string | null,
+    isLoading: boolean,
     login: (email: string, password: string) => Promise<void>,
     logout: () => Promise<void>,
     registerUser: (nickName: string, email: string, password: string, confirmPassword: string) => Promise<void>,
@@ -22,95 +22,101 @@ interface AuthStore {
     clearError: () => void
 }
 
-export const useAuthStore = create<AuthStore>()(
-    persist(
-        (set) => ({
-            isAuthenticated: false,
-            user: null,
-            error: null,
+export const useAuthStore = create<AuthStore>()((set) => ({
+    isAuthenticated: false,
+    user: null,
+    error: null,
+    isLoading: true,
 
-            login: async (email, password) => {
-                try {
+    login: async (email, password) => {
+        try {
+            set({ isLoading: true })
+            const data = await loginQuery(email, password);
 
-                    const data = await loginQuery(email, password);
+            set({
+                isAuthenticated: true,
+                user: data.user,
+                error: null,
+                isLoading: false
+            });
+        } catch (error) {
+            const errorMessage = getErrorMessage(error);
+            set({
+                isAuthenticated: false,
+                user: null,
+                error: errorMessage,
+                isLoading: false
+            });
 
-                    set({
-                        isAuthenticated: true,
-                        user: data.user,
-                        error: null
-                    });
-                } catch (error) {
-                    const errorMessage = getErrorMessage(error);
-                    set({
-                        isAuthenticated: false,
-                        user: null,
-                        error: errorMessage,
-                    });
-
-                    throw error;
-                }
-            },
-
-            logout: async () => {
-                try {
-                    await logoutQuery();
-                    set({
-                        isAuthenticated: false,
-                        user: null,
-                        error: null
-                    });
-                } catch (error) {
-                    const errorMessage = getErrorMessage(error); 
-                    set({
-                        error: errorMessage, 
-                        isAuthenticated: false, 
-                        user: null
-                    });
-                    throw error;
-                }
-            },
-
-            registerUser: async (nickName, email, password, confirmPassword) => {
-                try {
-                    const data = await registerQuery(nickName, email, password, confirmPassword);
-                    set({
-                        isAuthenticated: true,
-                        user: data.user,
-                        error: null
-                    });
-                } catch (error) {
-                    const errorMessage = getErrorMessage(error);
-                    set({
-                        isAuthenticated: false,
-                        user: null,
-                        error: errorMessage,
-                    });
-                    throw error;
-                }
-            },
-
-            checkAuth: async () => {
-                try {
-                    const data = await profileQuery();
-                    set({
-                        isAuthenticated: true,
-                        user: data.user,
-                        error: null
-                    });
-                } catch (error) {
-                    const errorMessage = getErrorMessage(error);
-                    set({
-                        isAuthenticated: false,
-                        user: null,
-                        error: errorMessage
-                    });
-                }
-            },
-
-            clearError: () => set({ error: null }),
-        }),
-        {
-            name: 'user-storage'
+            throw error;
         }
-    )
+    },
+
+    logout: async () => {
+        try {
+            set({ isLoading: true })
+            await logoutQuery();
+            set({
+                isAuthenticated: false,
+                user: null,
+                error: null,
+                isLoading: false
+            });
+        } catch (error) {
+            const errorMessage = getErrorMessage(error);
+            set({
+                error: errorMessage,
+                isAuthenticated: false,
+                user: null,
+                isLoading: false
+            });
+            throw error;
+        }
+    },
+
+    registerUser: async (nickName, email, password, confirmPassword) => {
+        try {
+            set({ isLoading: true })
+            const data = await registerQuery(nickName, email, password, confirmPassword);
+            set({
+                isAuthenticated: true,
+                user: data.user,
+                error: null,
+                isLoading: false
+            });
+        } catch (error) {
+            const errorMessage = getErrorMessage(error);
+            set({
+                isAuthenticated: false,
+                user: null,
+                error: errorMessage,
+                isLoading: false
+            });
+            throw error;
+        }
+    },
+
+    checkAuth: async () => {
+        try {
+            const data = await profileQuery();
+            set({
+                isAuthenticated: true,
+                user: data.user,
+                error: null,
+                isLoading: false
+            });
+        } catch (error) {
+            const errorMessage = getErrorMessage(error);
+            set({
+                isAuthenticated: false,
+                user: null,
+                error: errorMessage,
+                isLoading: false
+            });
+        }
+    },
+
+    clearError: () => set({ error: null }),
+}
+)
 )

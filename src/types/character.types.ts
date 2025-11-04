@@ -29,7 +29,7 @@ export interface ClassAbility {
     name: string,
     description: string,
     level: number,
-    cost: {           // Обновить по мере добавления новых классов
+    cost: {
         ap: number,
         mana?: number,
         leads?: number

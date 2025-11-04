@@ -290,9 +290,9 @@
 
 .home-about__item {
     width: 22vh;
-    height: 27vh;
+    height: 28vh;
     border: 1px solid var(--primary-red);
-    border-radius: 20px;
+    border-radius: 15px;
     transform: skewX(-15deg);
     position: absolute;
     overflow: hidden;
@@ -315,18 +315,18 @@
 
 .home-about__item1 {
     transform: skewX(15deg);
-    margin-left: -3vh;
+    margin-left: -3.3vh;
     height: 100%;
-    width: 28vh;
+    width: 29vh;
     background-image: url('../assets/images/characters/classes/war-back.webp');
     background-size: cover;
 }
 
 .home-about__item2 {
     transform: skewX(15deg);
-    margin-left: -3vh;
+    margin-left: -3.3vh;
     height: 100%;
-    width: 28vh;
+    width: 29vh;
     background-image: url('../assets/images/characters/classes/mage-back.webp');
     background-size: cover;
     background-position: center;
@@ -334,9 +334,9 @@
 
 .home-about__item3 {
     transform: skewX(15deg);
-    margin-left: -3vh;
+    margin-left: -3.3vh;
     height: 100%;
-    width: 28vh;
+    width: 29vh;
     background-image: url('../assets/images/characters/classes/grey-wanderer-back.webp');
     background-size: cover;
 }

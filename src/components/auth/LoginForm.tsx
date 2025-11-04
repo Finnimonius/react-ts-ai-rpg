@@ -5,6 +5,7 @@ import { Popover } from 'antd';
 
 type Props = {
     onFlip: () => void,
+    from: string,
 }
 
 type Form = {
@@ -12,7 +13,7 @@ type Form = {
     'password': string,
 }
 
-export default function LoginForm({ onFlip }: Props) {
+export default function LoginForm({ onFlip, from }: Props) {
     const navigate = useNavigate();
     const { register, handleSubmit, formState, clearErrors } = useForm<Form>({
         mode: 'onChange'
@@ -30,7 +31,7 @@ export default function LoginForm({ onFlip }: Props) {
     const handleLogin: SubmitHandler<Form> = async (data) => {
         try {
             await login(data.email, data.password)
-            navigate('/play')
+            navigate(from, { replace: true })
         } catch (error) {
             console.error('Ошибка регистрации', error)
         }

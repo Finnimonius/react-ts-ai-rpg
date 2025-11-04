@@ -97,7 +97,7 @@ export default function Home() {
                 </div>
             </section>
             <section className='home-location'>
-                <h2 className='home-location__title'>Каждый уголок таит свою <span className='home-hero__span'>историю</span></h2>
+                <h2 className='home-location__title'>Каждый уголок таит свои <span className='home-hero__span'>приключения</span></h2>
                 <div className='home-location__content'>
                     <div className='home-location__item'>
                         <div className='home-location__image1'></div>

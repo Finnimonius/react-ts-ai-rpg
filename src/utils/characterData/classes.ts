@@ -33,27 +33,27 @@ export const CLASSES = [
     abilities: [
       {
         id: 'stealth_strike',
-        name: 'Скрытый удар',
-        description: 'Быстрая атака с шансом получить улику',
+        // name: 'Скрытый удар',
+        // description: 'Быстрая атака с шансом получить улику',
         level: 1,
-        cost: { ap: 50 },
-        type: 'damage' as const,
+        // cost: { ap: 50 },
+        // type: 'damage' as const,
       },
       {
         id: 'precise_strike',
-        name: 'Меткий Выпад',
-        description: 'Точный удар с увеличенным шансом крита',
+        // name: 'Меткий Выпад',
+        // description: 'Точный удар с увеличенным шансом крита',
         level: 3,
-        cost: { ap: 60 },
-        type: 'damage' as const
+        // cost: { ap: 60 },
+        // type: 'damage' as const
       },
       {
         id: 'distracting_move',
-        name: 'Отвлекающий Маневр',
-        description: 'Оглушает врага на 1 ход',
+        // name: 'Отвлекающий Маневр',
+        // description: 'Оглушает врага на 1 ход',
         level: 5,
-        cost: { ap: 40, mana: 15 },
-        type: 'utility' as const
+        // cost: { ap: 40, mana: 15 },
+        // type: 'utility' as const
       }
     ]
   }
