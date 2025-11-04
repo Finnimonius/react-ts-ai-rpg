@@ -1,10 +1,10 @@
 import GameStart from './GameStart'
 import ClassSelection from "./ClassSelection"
-import RaceSelection from "./RaceSelection"
 import Gameplay from './Gameplay'
 import { useNavigate, useParams, Navigate } from "react-router-dom"
 import { useCharacterStore } from "../stores/characterStore"
 import './Game.css'
+import BackgroundSelection from './BackgroundSelection'
 
 
 export default function Game() {
@@ -19,7 +19,7 @@ export default function Game() {
     const getCurrentScreen = () => {
         switch (step) {
             case 'class': return 'class-selection'
-            case 'race': return 'race-selection'
+            case 'background': return 'background-selection'
             case 'game': return 'gameplay'
             default: return 'main'
         }
@@ -42,8 +42,8 @@ export default function Game() {
     return (
         <section className='hero'>
             {currentScreen === 'main' && <GameStart onStartCreation={() => goToStep('class')} />}
-            {currentScreen === 'class-selection' && <ClassSelection onNext={() => goToStep('race')} />}
-            {currentScreen === 'race-selection' && <RaceSelection onNext={() => goToStep('game')} />}
+            {currentScreen === 'class-selection' && <ClassSelection onNext={() => goToStep('background')} />}
+            {currentScreen === 'background-selection' && <BackgroundSelection onNext={() => goToStep('game')} />}
             {currentScreen === 'gameplay' && <Gameplay />}
         </section>
     )

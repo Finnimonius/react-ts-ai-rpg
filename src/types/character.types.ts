@@ -1,7 +1,8 @@
-import type { RACES } from "../utils/characterData/races";
+import type { BACKGROUNDS } from "../utils/characterData/backgrounds";
+import type { CraftingMaterials, Currency } from "./currency.types";
 import type { Equipment, InventorySlot } from "./inventory.types";
 
-export type Race = typeof RACES[number]
+export type Background = typeof BACKGROUNDS[number]
 
 export interface BaseStats {
     strength: number,
@@ -26,15 +27,15 @@ export interface DerivedStats {
 
 export interface ClassAbility {
     id: string,
-    name: string,
-    description: string,
+    // name: string,
+    // description: string,
     level: number,
-    cost: {
-        ap: number,
-        mana?: number,
-        leads?: number
-    },
-    type: 'damage' | 'utility' | 'passive'
+    // cost: {
+    //     ap: number,
+    //     mana?: number,
+    //     leads?: number
+    // },
+    // type: 'damage' | 'utility' | 'passive'
 }
 
 export type ClassId = 'grey_wanderer';
@@ -56,4 +57,20 @@ export interface CharacterClass {
     armorTypes: string[],
     resource: 'mana' | 'leads'  // Обновить по мере добавления новых классов
     abilities: ClassAbility[]
+}
+
+export interface Character {
+    _id?: string,
+    userId: string,
+    classId: string,
+    backgroundId: string,
+    level: number,
+    stats: BaseStats,
+    derivedStats: DerivedStats,
+    avaliableStatsPoints: number,
+    currency: Currency,
+    craftingMaterials: CraftingMaterials,
+    inventory: InventorySlot[],
+    equipment: Equipment,
+    learnedAbilities: string[]
 }

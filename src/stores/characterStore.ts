@@ -1,33 +1,35 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { BaseStats, CharacterClass, DerivedStats } from '../types/character.types'
-import type { Race } from '../types/character.types'
+import type { BaseStats, Character, CharacterClass, DerivedStats } from '../types/character.types'
+import type { Background } from '../types/character.types'
 import type { CraftingMaterials, Currency } from '../types/currency.types'
 import { calculateEuqipmentStats, getStartingEquipment, getStartingInventory } from '../utils/generators/items-builder'
 import type { AnyItem, Equipment, InventorySlot } from '../types/inventory.types'
+import { characterApi } from '../services/character-service'
 
 export const INVENTORY_SIZE = 14;
 
 interface CharacterStore {
-  selectedClass: CharacterClass | null,
-  // Изменить на background
-  selectedRace: Race | null,
-  //------------------------
-  level: number,
-  currentStats: BaseStats,
-  derivedStats: DerivedStats,
-  avaliableStatsPoints: number,
-  currency: Currency,
-  craftingMaterials: CraftingMaterials,
-  inventory: InventorySlot[],
-  equipment: Equipment,
-  learnedAbilities: string[],
-  selectClass: (classData: CharacterClass) => void,
-  selectRace: (raceData: Race) => void,
-  calculateDerivedStats: () => void,
-  hasCharacter: () => boolean,
-  addItemToInventory: (item: AnyItem) => void,
-  reset: () => void,
+  selectedClass: CharacterClass | null;
+  selectedBackground: Background | null;
+  character: Character | null;
+  isLoading: boolean;
+  selectClass: (classData: CharacterClass) => void;
+  selectBackground: (backgroundData: Background) => Promise<void>;
+
+  level: number;
+  currentStats: BaseStats;
+  derivedStats: DerivedStats;
+  avaliableStatsPoints: number;
+  currency: Currency;
+  craftingMaterials: CraftingMaterials;
+  inventory: InventorySlot[];
+  equipment: Equipment;
+  learnedAbilities: string[];
+  calculateDerivedStats: () => void;
+  hasCharacter: () => boolean;
+  addItemToInventory: (item: AnyItem) => void;
+  reset: () => void;
   unequipItem: (equipmentSlot: keyof Equipment, inventoryIndex: number) => void;
   equipItem: (inventoryIndex: number, equipmentSlot: keyof Equipment) => void;
   moveInventoryItem: (fromIndex: number, toIndex: number) => void;
@@ -38,6 +40,10 @@ export const useCharacterStore = create<CharacterStore>()(
   persist(
     (set, get) => ({
       selectedClass: null,
+      selectedBackground: null,
+      character: null,
+      isLoading: false,
+
       level: 1,
       experience: 0,
 
@@ -98,6 +104,38 @@ export const useCharacterStore = create<CharacterStore>()(
         get().calculateDerivedStats()
       },
 
+      selectBackground: async (backgroundData) => {
+        const { selectedClass } = get();
+
+        if (!selectedClass) {
+          throw new Error("Сначала выберите класс");
+        }
+
+        set({
+          selectedBackground: backgroundData,
+          isLoading: true,
+        })
+
+        try {
+          const data = await characterApi.create({
+            classId: selectedClass.id,
+            backgroundId: backgroundData.id
+          });
+
+          set({
+            character: data.character,
+            isLoading: false
+          });
+
+        } catch (error) {
+          set({
+            isLoading: false,
+            selectedBackground: null
+          });
+          throw error;
+        }
+      },
+
       calculateDerivedStats: () => {
         const { equipment, level, currentStats } = get();
 
@@ -127,12 +165,6 @@ export const useCharacterStore = create<CharacterStore>()(
         set({ derivedStats: derived });
       },
 
-
-      // Выбор рассы переделать в background
-      selectedRace: null,
-      selectRace: (raceData) => set({ selectedRace: raceData }),
-      //---------------------------------------------------------
-
       addItemToInventory: (item) => {
         const { inventory } = get();
 
@@ -144,7 +176,7 @@ export const useCharacterStore = create<CharacterStore>()(
           const newInventory = [...inventory];
           newInventory[existingSlotIndex].quantity += 1;
           set({ inventory: newInventory });
-          return 
+          return
         }
 
         const emptySlotIndex = inventory.findIndex(slot => !slot.item);
@@ -159,8 +191,8 @@ export const useCharacterStore = create<CharacterStore>()(
       },
 
       hasCharacter: () => {
-        const { selectedClass, selectedRace } = get()
-        return !!(selectedClass && selectedRace)
+        const { character } = get();
+        return !!character;
       },
 
       unequipItem: (equipmentSlot, inventoryIndex) => {
@@ -228,7 +260,8 @@ export const useCharacterStore = create<CharacterStore>()(
 
       reset: () => set({
         selectedClass: null,
-        selectedRace: null,
+        selectedBackground: null,
+        character: null,
         level: 1,
       }),
     }),

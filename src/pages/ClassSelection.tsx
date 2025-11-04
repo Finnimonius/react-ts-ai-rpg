@@ -1,4 +1,4 @@
-import { useCharacterStore } from '../stores/characterStore'
+import { useCharacterStore } from '../stores/characterStore';
 import type { CharacterClass } from '../types/character.types';
 import { CLASSES } from "../utils/characterData/classes";
 import './ClassSelection.css'

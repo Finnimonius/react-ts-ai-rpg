@@ -9,6 +9,7 @@ const SERVER_URL = 'http://localhost:3001';
 export const characterApi = {
     async create(createData: CreateCharacterDto) {
         try {
+            await new Promise(resolve => setTimeout(resolve, 2000));
             const response = await fetch(`${SERVER_URL}/api/character/`, {
                 method: 'POST',
                 headers: {
