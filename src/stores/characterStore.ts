@@ -4,8 +4,6 @@ import type { Character, CharacterClass } from '../types/character.types';
 import type { Background } from '../types/character.types';
 import type { AnyItem, Equipment } from '../types/inventory.types';
 import { characterApi } from '../services/character-service';
-import { canEquipItem } from '../utils/generators/items-builder';
-import { itemsService } from '../utils/data/items/items-service';
 
 interface CharacterStore {
   selectedClass: CharacterClass | null;
@@ -17,7 +15,7 @@ interface CharacterStore {
   equipItem: (inventoryIndex: number, equipmentSlot: keyof Equipment) => Promise<void>;
   hasCharacter: () => boolean;
   addItemToInventory: (item: AnyItem) => void;
-  reset: () => void;
+  reset: () => Promise<void>;
   unequipItem: (equipmentSlot: keyof Equipment, inventoryIndex: number) => Promise<void>;
   moveInventoryItem: (fromIndex: number, toIndex: number) => Promise<void>;
   swapEquipment: (fromSlot: keyof Equipment, toSlot: keyof Equipment) => Promise<void>;
@@ -270,22 +268,6 @@ export const useCharacterStore = create<CharacterStore>()(
             throw new Error("Оба слота пустые");
           }
 
-          if (fromItemId) {
-            const fromItem = itemsService.getItemById(fromItemId);
-            const canEquipTo = canEquipItem(fromItem!, toSlot, character.level);
-            if (!canEquipTo.canEquip) {
-              throw new Error(`Нельзя переместить предмет в слот: ${canEquipTo.reason}`);
-            }
-          }
-
-          if (toItemId) {
-            const toItem = itemsService.getItemById(toItemId);
-            const canEquipFrom = canEquipItem(toItem!, fromSlot, character.level);
-            if (!canEquipFrom.canEquip) {
-              throw new Error(`Нельзя переместить предмет в слот: ${canEquipFrom.reason}`);
-            }
-          }
-
           const updatedEquipment = { ...character.equipment };
           const temp = updatedEquipment[fromSlot];
           updatedEquipment[fromSlot] = updatedEquipment[toSlot];
@@ -312,11 +294,32 @@ export const useCharacterStore = create<CharacterStore>()(
         }
       },
 
-      reset: () => set({
-        selectedClass: null,
-        selectedBackground: null,
-        character: null,
-      }),
+      reset: async () => {
+        set({
+          isLoading: true,
+        });
+
+        try {
+
+          await characterApi.delete()
+
+          set({
+            selectedClass: null,
+            selectedBackground: null,
+            character: null,
+            isLoading: false
+          });
+
+        } catch (error) {
+
+          set({
+            isLoading: false,
+          });
+
+          console.error('Ошибка удаления персонажа:', error);
+          throw error;
+        }
+      },
     }),
     {
       name: 'character-storage',

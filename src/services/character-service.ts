@@ -9,7 +9,7 @@ const SERVER_URL = 'http://localhost:3001';
 export const characterApi = {
     async create(createData: CreateCharacterDto) {
         try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise(resolve => setTimeout(resolve, 3000));
             const response = await fetch(`${SERVER_URL}/api/character/`, {
                 method: 'POST',
                 headers: {
@@ -32,13 +32,33 @@ export const characterApi = {
 
     async get() {
         try {
-            const response = await fetch(`${SERVER_URL}/api/character`,{
+            const response = await fetch(`${SERVER_URL}/api/character`, {
                 credentials: 'include'
             });
 
             if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
 
             const data = await response.json()
+            return data
+        } catch (error) {
+            console.error('Ошибка запроса', error)
+            throw error
+        }
+    },
+
+    async delete() {
+        try {
+            const response = await fetch(`${SERVER_URL}/api/character`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include'
+            });
+
+            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
+
+            const data = await response.json();
             return data
         } catch (error) {
             console.error('Ошибка запроса', error)
