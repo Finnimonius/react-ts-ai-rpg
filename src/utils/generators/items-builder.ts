@@ -1,5 +1,6 @@
 import type { BaseStats, ClassId } from "../../types/character.types";
 import type { Accessory, AnyItem, Armor, Equipment, EquipmentStats, InventorySlot, Rarity } from "../../types/inventory.types";
+import { itemsService } from "../data/items/items-service";
 import { classConfigs } from "../data/items/starterGear";
 
 export const getStartingEquipment = (classId: ClassId): Equipment => {
@@ -76,37 +77,38 @@ export const calculateEuqipmentStats = (equipment: Equipment): EquipmentStats =>
         defense: 0,
     };
 
-    Object.values(equipment).forEach(item => {
+    Object.values(equipment).forEach(itemId => {
+        if (!itemId) return;
 
-        if (!item) return
+        const item = itemsService.getItemById(itemId);
+        if (!item) return;
 
-        if (item.stats) {
+        if ('stats' in item && item.stats) {
             Object.entries(item.stats).forEach(([stat, value]) => {
                 const statKey = stat as keyof BaseStats;
                 if (typeof value === 'number') {
-                    result.stats[statKey] += value
+                    result.stats[statKey] += value;
                 }
-
-            })
+            });
         }
 
-        if (item.type === 'weapon') {
+        if (item.type === 'weapon' && 'damage' in item && item.damage) {
             result.damage.min += item.damage.min;
             result.damage.max += item.damage.max;
         }
 
-        if (item.type === 'accessory' && item.damage) {
-            result.damage.min += item.damage.min || 0;
-            result.damage.max += item.damage.max || 0;
+        if (item.type === 'accessory' && 'damage' in item && item.damage) {
+            result.damage.min += item.damage.min;
+            result.damage.max += item.damage.max;
         }
 
-        if (item.type === 'armor') {
-            result.defense += item.defense
+        if (item.type === 'armor' && 'defense' in item) {
+            result.defense += item.defense;
         }
-    })
+    });
 
-    return result
-}
+    return result;
+};
 
 export const groupByRarity = (items: Record<string, AnyItem>): Record<Rarity, AnyItem[]> => {
     const result: Record<Rarity, AnyItem[]> = {

@@ -184,24 +184,23 @@ export const STARTER_CONSUMABLES = {
 };
 
 export const classConfigs: Record<ClassId, ClassConfig> = {
-  // === СЕРЫЙ СТРАННИК ===
   grey_wanderer: {
     equipment: {
-      weapon_main: STARTER_WEAPONS.DAGGER,
-      weapon_off: STARTER_WEAPONS.DAGGER,
-      helmet: STARTER_ARMOR.LEATHER_CAP,
-      chest: STARTER_ARMOR.LEATHER_ARMOR,
-      gloves: STARTER_ARMOR.LEATHER_GLOVES,
-      legs: STARTER_ARMOR.LEATHER_PANTS,
-      boots: STARTER_ARMOR.LEATHER_BOOTS,
-      ring_1: STARTER_ACCESORIES.SUN_RING,   
-      ring_2: STARTER_ACCESORIES.RING_WITH_SEAL,   
-      amulet: STARTER_ACCESORIES.STORM_AMULET
+      weapon_main: 'starter_dagger',         
+      weapon_off: 'starter_dagger',          
+      helmet: 'leather_cap',               
+      chest: 'leather_armor',            
+      gloves: 'leather_gloves',            
+      legs: 'leather_pants',          
+      boots: 'leather_boots',              
+      ring_1: 'sun_ring',                
+      ring_2: 'ring_with_seal',          
+      amulet: 'storm_amulet'                
     },
     inventory: [
-      { item: STARTER_CONSUMABLES.HEALTH_POTION, quantity: 5 },
-      { item: STARTER_CONSUMABLES.MANA_POTION, quantity: 3 },
-      { item: STARTER_CONSUMABLES.BASIC_FOOD, quantity: 10 }
+      { itemId: 'health_potion', quantity: 5 },
+      { itemId: 'mana_potion', quantity: 3 },
+      { itemId: 'basic_food', quantity: 10 }
     ]
   },
 };

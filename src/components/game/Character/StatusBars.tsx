@@ -1,9 +1,15 @@
 import { ConfigProvider, Progress } from "antd";
 import './StatusBars.css'
 import { useCharacterStore } from "../../../stores/characterStore";
+import { useMemo } from "react";
 
 export default function StatusBars() {
-    const { derivedStats } = useCharacterStore()
+    const { character } = useCharacterStore();
+
+    const derivedStats = useMemo(() => character?.derivedStats || {
+        health: 0, maxHealth: 0, mana: 0, maxMana: 0,
+        attackMin: 0, attackMax: 0, defense: 0, critChance: 0, evasion: 0
+    }, [character]);
 
     return (
         <div className="character-sheet-status-wrapper">

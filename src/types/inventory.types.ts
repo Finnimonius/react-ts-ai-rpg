@@ -16,7 +16,7 @@ export interface InventoryItem {
 }
 
 export interface InventorySlot {
-    item: AnyItem | null;
+    itemId: string | null;
     quantity: number;
 }
 

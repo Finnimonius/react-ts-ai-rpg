@@ -8,9 +8,13 @@ import { CrystalsIcon, HerbsIcon, LeatherIcon, OreIcon, RelicsIcon, WoodIcon } f
 import { MaterialItem } from "./MaterialItem";
 
 export default function Materials() {
-    const { craftingMaterials, reset } = useCharacterStore()
+    const { character, reset } = useCharacterStore()
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const navigate = useNavigate();
+
+    const craftingMaterials = useMemo(() => character?.craftingMaterials || {
+        wood: 0, ore: 0, leather: 0, herbs: 0, crystals: 0, relics: 0
+    }, [character]);
 
     const toggleDeleteModal = (open: boolean) => {
         setIsDeleteModalOpen(open);

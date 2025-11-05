@@ -1,13 +1,17 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import './MainStats.css'
 import { useCharacterStore } from "../../../stores/characterStore";
-import { calculateEuqipmentStats } from "../../../utils/generators/items-builder";
 
 export default function MainStats() {
     const [isOpen, setIsOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
-    const { avaliableStatsPoints, currentStats, equipment } = useCharacterStore();
+    const { character } = useCharacterStore();
     const popoverRef = useRef<HTMLDivElement>(null);
+
+    const avaliableStatsPoints = useMemo(() => character?.avaliableStatsPoints || 0, [character]);
+    const currentStats = useMemo(() => character?.stats || {
+        strength: 0, dexterity: 0, intelligence: 0, wisdom: 0, constitution: 0, luck: 0
+    }, [character]);
 
     const handleButtonClick = () => {
         if (!isOpen) {
@@ -31,15 +35,7 @@ export default function MainStats() {
         return statNames[stat] || stat;
     };
 
-    const equipmentStats = calculateEuqipmentStats(equipment);
-    const currentStatsWithEquipment = {
-        strength: currentStats.strength + (equipmentStats.stats.strength || 0),
-        dexterity: currentStats.dexterity + (equipmentStats.stats.dexterity || 0),
-        intelligence: currentStats.intelligence + (equipmentStats.stats.intelligence || 0),
-        wisdom: currentStats.wisdom + (equipmentStats.stats.wisdom || 0),
-        constitution: currentStats.constitution + (equipmentStats.stats.constitution || 0),
-        luck: currentStats.luck + (equipmentStats.stats.luck || 0),
-    };
+    const currentStatsWithEquipment = currentStats;
 
     return (
         <div className="main-stats-container">

@@ -1,9 +1,15 @@
+import { useMemo } from 'react';
 import { useCharacterStore } from '../../../stores/characterStore'
 import './CombatStats.css'
 import MainStats from './MainStats'
 
 export default function Stats() {
-    const { derivedStats } = useCharacterStore()
+    const { character } = useCharacterStore();
+    
+    const derivedStats = useMemo(() => character?.derivedStats || {
+        health: 0, maxHealth: 0, mana: 0, maxMana: 0,
+        attackMin: 0, attackMax: 0, defense: 0, critChance: 0, evasion: 0
+    }, [character]);
 
     return (
         <div className="stats-container">

@@ -1,24 +1,23 @@
-import { INVENTORY_SIZE, useCharacterStore } from "../../../stores/characterStore";
+import { useCharacterStore } from "../../../stores/characterStore";
 import InventoryBox from "./InventoryBox";
 import './Inventory.css'
+import { useMemo } from "react";
 
 export default function Inventory() {
+    const { character } = useCharacterStore();
 
-    const { inventory } = useCharacterStore()
-    
+    const inventory = useMemo(() => character?.inventory || [], [character]);
+
     return (
         <div className="inventory-section">
             <div className="inventory-grid">
-                {Array.from({ length: INVENTORY_SIZE }, (_, index) => {
-                    const slot = inventory[index];
-                    return (
-                        <InventoryBox
-                            key={index}
-                            slot={slot || { item: null, quantity: 0 }}
-                            index={index}
-                        />
-                    );
-                })}
+                {inventory.map((slot, index) => (
+                    <InventoryBox
+                        key={index}
+                        slot={slot}
+                        index={index}
+                    />
+                ))}
             </div>
         </div>
     )

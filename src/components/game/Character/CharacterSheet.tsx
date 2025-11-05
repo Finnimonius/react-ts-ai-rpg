@@ -1,7 +1,7 @@
 import { useCharacterStore } from "../../../stores/characterStore"
 import './CharacterSheet.css'
 import DraggableItem from "./DraggableItem"
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
 import type { AnyItem, Equipment} from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
@@ -13,26 +13,28 @@ import StatusBars from "./StatusBars";
 import Materials from "./Materials";
 import useNotification from "antd/es/notification/useNotification";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import { itemsService } from "../../../utils/data/items/items-service";
 
 export default function CharacterSheet() {
     const {
-        equipment,
-        inventory,
+        character,
         equipItem,
         swapEquipment,
         unequipItem,
         moveInventoryItem,
         selectedClass,
-        currency,
-        level
     } = useCharacterStore();
     const [activeId, setActiveId] = useState<string | null>(null);
     const [api, contextHolder] = useNotification();
     const sensors = useSensors(useSensor(PointerSensor));
 
+    const equipment = useMemo(() => (character?.equipment || {}) as Equipment, [character]);
+    const inventory = useMemo(() => character?.inventory || [], [character]);
+    const currency = useMemo(() => character?.currency || { gold: 0, souls: 0, fame: 0 }, [character]);
+    const level = useMemo(() => character?.level || 1, [character]);
+
     const findItemWithSource = useCallback((id: string): { item: AnyItem; source: string } | null => {
         const separatorIndex = id.lastIndexOf('|');
-
         if (separatorIndex === -1) return null;
 
         const itemId = id.substring(0, separatorIndex);
@@ -40,18 +42,22 @@ export default function CharacterSheet() {
 
         if (source.startsWith('inventory-')) {
             const index = parseInt(source.replace('inventory-', ''));
-            if (index >= 0 && index < inventory.length && inventory[index]?.item?.id === itemId) {
-                return { item: inventory[index].item!, source };
+            const slot = inventory[index];
+            if (index >= 0 && index < inventory.length && slot?.itemId === itemId) {
+                const item = itemsService.getItemById(slot.itemId);
+                return item ? { item, source } : null;
             }
         } else if (source.startsWith('equipment-')) {
             const slot = source.replace('equipment-', '') as keyof Equipment;
-            if (equipment[slot]?.id === itemId) {
-                return { item: equipment[slot]!, source };
+            const itemIdInSlot = equipment[slot];
+            if (itemIdInSlot === itemId) {
+                const item = itemsService.getItemById(itemIdInSlot);
+                return item ? { item, source } : null;
             }
         }
 
         return null;
-    }, [equipment, inventory])
+    }, [equipment, inventory]);
 
     const activeItemData = activeId ? findItemWithSource(activeId) : null;
 
@@ -87,14 +93,14 @@ export default function CharacterSheet() {
         if (draggedItem.source.startsWith('equipment-')) {
             const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
 
-            if (targetIndex >= 0 && targetIndex < inventory.length && !inventory[targetIndex].item) {
+            if (targetIndex >= 0 && targetIndex < inventory.length && !inventory[targetIndex].itemId) {
                 unequipItem(fromSlot, targetIndex);
             }
         }
         else if (draggedItem.source.startsWith('inventory-')) {
             const fromIndex = parseInt(draggedItem.source.replace('inventory-', ''));
 
-            if (targetIndex >= 0 && targetIndex < inventory.length && !inventory[targetIndex].item) {
+            if (targetIndex >= 0 && targetIndex < inventory.length && !inventory[targetIndex].itemId) {
                 moveInventoryItem(fromIndex, targetIndex);
             }
         }
@@ -109,17 +115,20 @@ export default function CharacterSheet() {
             if (equipResult.canEquip) {
                 if (draggedItem.source.startsWith('equipment-')) {
                     const fromSlot = draggedItem.source.replace('equipment-', '') as keyof Equipment;
-                    const targetItem = equipment[equipmentSlot];
+                    const targetItemId = equipment[equipmentSlot];
 
-                    if (targetItem) {
-                        const targetEquipResult = canEquipItem(targetItem, fromSlot, level);
-                        if (!targetEquipResult.canEquip) {
-                            if (targetEquipResult.reason === 'low_level') {
-                                showLevelNotification();
-                            } else if (targetEquipResult.reason === 'wrong_type') {
-                                showTypeNotification();
+                    if (targetItemId) {
+                        const targetItem = itemsService.getItemById(targetItemId);
+                        if (targetItem) {
+                            const targetEquipResult = canEquipItem(targetItem, fromSlot, level);
+                            if (!targetEquipResult.canEquip) {
+                                if (targetEquipResult.reason === 'low_level') {
+                                    showLevelNotification();
+                                } else if (targetEquipResult.reason === 'wrong_type') {
+                                    showTypeNotification();
+                                }
+                                return;
                             }
-                            return;
                         }
                     }
 
@@ -141,7 +150,7 @@ export default function CharacterSheet() {
             if (inventoryIndex >= 0 && inventoryIndex < inventory.length) {
                 const targetSlot = inventory[inventoryIndex];
 
-                if (!targetSlot.item) {
+                if (!targetSlot.itemId) {
                     moveToInventorySlot(draggedItem, inventoryIndex);
                 }
             }
@@ -193,10 +202,6 @@ export default function CharacterSheet() {
             >
                 <div className="divider-wrapper">
                     <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: '2.2vh' }}>{selectedClass?.name}</Divider>
-                    {/* <div className="character-level-wrapper">
-                        <span>Ур: {level}</span>
-                        <div className="ui-element-level"></div>
-                    </div> */}
                     <div className="character-sheet-currency-wrapper">
                         <Tooltip placement="bottom" title={'Золото'}>
                             <p className="character-sheet-currency-gold">{currency.gold}</p>
@@ -213,13 +218,18 @@ export default function CharacterSheet() {
                 <div className="equipment-section">
                     <div className="equipment-grid">
                         <img className="character-sheet-img" src={selectedClass?.img} alt="" draggable={false} />
-                        {(Object.keys(equipment) as (keyof Equipment)[]).map((slot) => (
-                            <EquipmentSlot key={slot} slotType={slot} data-slot={slot}>
-                                {equipment[slot] && (
-                                    <DraggableItem item={equipment[slot]} location={`equipment-${slot}`} />
-                                )}
-                            </EquipmentSlot>
-                        ))}
+                        {(Object.keys(equipment) as (keyof Equipment)[]).map((slot) => {
+                            const itemId = equipment[slot];
+                            const item = itemId ? itemsService.getItemById(itemId) : null;
+                            
+                            return (
+                                <EquipmentSlot key={slot} slotType={slot} data-slot={slot}>
+                                    {item && (
+                                        <DraggableItem item={item} location={`equipment-${slot}`} />
+                                    )}
+                                </EquipmentSlot>
+                            );
+                        })}
                     </div>
                 </div>
 

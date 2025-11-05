@@ -1,13 +1,11 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import type { BaseStats, Character, CharacterClass, DerivedStats } from '../types/character.types'
-import type { Background } from '../types/character.types'
-import type { CraftingMaterials, Currency } from '../types/currency.types'
-import { calculateEuqipmentStats, getStartingEquipment, getStartingInventory } from '../utils/generators/items-builder'
-import type { AnyItem, Equipment, InventorySlot } from '../types/inventory.types'
-import { characterApi } from '../services/character-service'
-
-export const INVENTORY_SIZE = 14;
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import type { Character, CharacterClass } from '../types/character.types';
+import type { Background } from '../types/character.types';
+import type { AnyItem, Equipment } from '../types/inventory.types';
+import { characterApi } from '../services/character-service';
+import { canEquipItem } from '../utils/generators/items-builder';
+import { itemsService } from '../utils/data/items/items-service';
 
 interface CharacterStore {
   selectedClass: CharacterClass | null;
@@ -16,24 +14,13 @@ interface CharacterStore {
   isLoading: boolean;
   selectClass: (classData: CharacterClass) => void;
   selectBackground: (backgroundData: Background) => Promise<void>;
-
-  level: number;
-  currentStats: BaseStats;
-  derivedStats: DerivedStats;
-  avaliableStatsPoints: number;
-  currency: Currency;
-  craftingMaterials: CraftingMaterials;
-  inventory: InventorySlot[];
-  equipment: Equipment;
-  learnedAbilities: string[];
-  calculateDerivedStats: () => void;
+  equipItem: (inventoryIndex: number, equipmentSlot: keyof Equipment) => Promise<void>;
   hasCharacter: () => boolean;
   addItemToInventory: (item: AnyItem) => void;
   reset: () => void;
-  unequipItem: (equipmentSlot: keyof Equipment, inventoryIndex: number) => void;
-  equipItem: (inventoryIndex: number, equipmentSlot: keyof Equipment) => void;
-  moveInventoryItem: (fromIndex: number, toIndex: number) => void;
-  swapEquipment: (fromSlot: keyof Equipment, toSlot: keyof Equipment) => void;
+  unequipItem: (equipmentSlot: keyof Equipment, inventoryIndex: number) => Promise<void>;
+  moveInventoryItem: (fromIndex: number, toIndex: number) => Promise<void>;
+  swapEquipment: (fromSlot: keyof Equipment, toSlot: keyof Equipment) => Promise<void>;
 }
 
 export const useCharacterStore = create<CharacterStore>()(
@@ -44,64 +31,10 @@ export const useCharacterStore = create<CharacterStore>()(
       character: null,
       isLoading: false,
 
-      level: 1,
-      experience: 0,
-
-      currentStats: { strength: 0, dexterity: 0, intelligence: 0, wisdom: 0, constitution: 0, luck: 0 },
-      derivedStats: { health: 0, maxHealth: 0, mana: 0, maxMana: 0, attackMin: 0, attackMax: 0, defense: 0, critChance: 0, evasion: 0 },
-      avaliableStatsPoints: 0,
-
-      currency: {
-        gold: 100,
-        souls: 0,
-        fame: 0,
-      },
-
-      craftingMaterials: {
-        wood: 0,
-        ore: 0,
-        leather: 0,
-        herbs: 0,
-        crystals: 0,
-        relics: 0
-      },
-
-      inventory: Array.from({ length: INVENTORY_SIZE }, () => ({ item: null, quantity: 0 })),
-
-      equipment: {
-        weapon_main: null,
-        weapon_off: null,
-        helmet: null,
-        chest: null,
-        gloves: null,
-        legs: null,
-        boots: null,
-        ring_1: null,
-        ring_2: null,
-        amulet: null
-      },
-
-      learnedAbilities: [],
-
       selectClass: (classData) => {
-        const startingEquipment = getStartingEquipment(classData.id);
-        const startingInventory = getStartingInventory(classData.id);
-
-        const emptyInventory = Array.from({ length: INVENTORY_SIZE }, (): InventorySlot => ({ item: null, quantity: 0 }));
-
-        startingInventory.forEach((slot, index) => {
-          if (index < 20) emptyInventory[index] = slot;
-        });
-
         set({
-          selectedClass: classData,
-          currentStats: classData.baseStats,
-          learnedAbilities: classData.abilities.filter(a => a.level === 1).map(a => a.id),
-          equipment: startingEquipment,
-          inventory: emptyInventory,
+          selectedClass: classData
         });
-
-        get().calculateDerivedStats()
       },
 
       selectBackground: async (backgroundData) => {
@@ -117,13 +50,13 @@ export const useCharacterStore = create<CharacterStore>()(
         })
 
         try {
-          const data = await characterApi.create({
+          const response = await characterApi.create({
             classId: selectedClass.id,
             backgroundId: backgroundData.id
           });
 
           set({
-            character: data.character,
+            character: response.character,
             isLoading: false
           });
 
@@ -136,58 +69,33 @@ export const useCharacterStore = create<CharacterStore>()(
         }
       },
 
-      calculateDerivedStats: () => {
-        const { equipment, level, currentStats } = get();
+      addItemToInventory: (item: AnyItem) => {
+        const { character } = get();
+        if (!character) return;
 
-        const equipmentStats = calculateEuqipmentStats(equipment);
+        const updatedInventory = [...character.inventory];
 
-        const totalStats: BaseStats = {
-          strength: currentStats.strength + (equipmentStats.stats.strength || 0),
-          dexterity: currentStats.dexterity + (equipmentStats.stats.dexterity || 0),
-          intelligence: currentStats.intelligence + (equipmentStats.stats.intelligence || 0),
-          wisdom: currentStats.wisdom + (equipmentStats.stats.wisdom || 0),
-          constitution: currentStats.constitution + (equipmentStats.stats.constitution || 0),
-          luck: currentStats.luck + (equipmentStats.stats.luck || 0),
-        }
-
-        const derived = {
-          health: Math.round(50 + (level * 5) + (totalStats.constitution)),
-          maxHealth: Math.round(50 + (level * 5) + (totalStats.constitution)),
-          mana: Math.round(30 + (totalStats.intelligence * 2) + (totalStats.wisdom * 1)),
-          maxMana: Math.round(30 + (totalStats.intelligence * 2) + (totalStats.wisdom * 1)),
-          attackMin: Math.round(equipmentStats.damage.min + (totalStats.dexterity * 0.3)),
-          attackMax: Math.round(equipmentStats.damage.max + (totalStats.dexterity * 0.3)),
-          defense: Math.round(equipmentStats.defense + (totalStats.dexterity * 0.2)),
-          critChance: Math.round(5 + (totalStats.dexterity * 0.2) + (totalStats.luck * 0.1)),
-          evasion: Math.round(10 + (totalStats.dexterity * 0.4) + (totalStats.luck * 0.2)),
-        }
-
-        set({ derivedStats: derived });
-      },
-
-      addItemToInventory: (item) => {
-        const { inventory } = get();
-
-        const existingSlotIndex = inventory.findIndex(slot => {
-          return slot.item?.id === item.id && item.type === 'consumable'
-        })
+        const existingSlotIndex = updatedInventory.findIndex(slot => {
+          return slot.itemId === item.id && item.type === 'consumable'
+        });
 
         if (existingSlotIndex !== -1) {
-          const newInventory = [...inventory];
-          newInventory[existingSlotIndex].quantity += 1;
-          set({ inventory: newInventory });
-          return
+          updatedInventory[existingSlotIndex].quantity += 1;
+        } else {
+          const emptySlotIndex = updatedInventory.findIndex(slot => !slot.itemId);
+          if (emptySlotIndex !== -1) {
+            updatedInventory[emptySlotIndex] = { itemId: item.id, quantity: 1 };
+          } else {
+            return;
+          }
         }
 
-        const emptySlotIndex = inventory.findIndex(slot => !slot.item);
-
-        if (emptySlotIndex !== -1) {
-          const newInventory = [...inventory]
-          newInventory[emptySlotIndex] = { item, quantity: 1 };
-
-          set({ inventory: newInventory });
-        }
-
+        set({
+          character: {
+            ...character,
+            inventory: updatedInventory
+          }
+        });
       },
 
       hasCharacter: () => {
@@ -195,74 +103,219 @@ export const useCharacterStore = create<CharacterStore>()(
         return !!character;
       },
 
-      unequipItem: (equipmentSlot, inventoryIndex) => {
-        const { equipment, inventory } = get();
+      unequipItem: async (equipmentSlot: keyof Equipment, inventoryIndex: number) => {
+        const { character } = get();
 
-        const item = equipment[equipmentSlot];
-        if (!item) return;
-
-        if (inventory[inventoryIndex].item) {
-          return;
+        if (!character) {
+          throw new Error("Персонаж не найден");
         }
 
-        const newEquipment = { ...equipment, [equipmentSlot]: null };
-        const newInventory = [...inventory];
-        newInventory[inventoryIndex] = { item, quantity: 1 };
+        const previousCharacter = { ...character };
 
-        set({ equipment: newEquipment, inventory: newInventory });
-        get().calculateDerivedStats();
+        try {
+          const equippedItemId = character.equipment[equipmentSlot];
+          if (!equippedItemId) {
+            throw new Error("В слоте нет предмета");
+          }
+
+          const targetSlot = character.inventory[inventoryIndex];
+          if (targetSlot.itemId) {
+            throw new Error("Целевой слот инвентаря занят");
+          }
+
+          const updatedEquipment = { ...character.equipment };
+          const updatedInventory = [...character.inventory];
+
+          updatedEquipment[equipmentSlot] = null;
+
+          updatedInventory[inventoryIndex] = {
+            itemId: equippedItemId,
+            quantity: 1
+          };
+
+          set({
+            character: {
+              ...character,
+              equipment: updatedEquipment,
+              inventory: updatedInventory
+            }
+          });
+
+          const response = await characterApi.unequip({ equipmentSlot, inventoryIndex });
+
+          set({
+            character: response.character
+          });
+
+        } catch (error) {
+          set({
+            character: previousCharacter
+          });
+          throw error;
+        }
       },
 
-      equipItem: (inventoryIndex, equipmentSlot) => {
-        const { equipment, inventory } = get();
+      equipItem: async (inventoryIndex: number, equipmentSlot: keyof Equipment) => {
+        const { character } = get();
 
-        const item = inventory[inventoryIndex].item;
-        if (!item) return;
-
-        const currentEquipped = equipment[equipmentSlot];
-
-        const newEquipment = { ...equipment, [equipmentSlot]: item };
-        const newInventory = [...inventory];
-
-        if (currentEquipped) {
-          newInventory[inventoryIndex] = { item: currentEquipped, quantity: 1 };
-        } else {
-          newInventory[inventoryIndex] = { item: null, quantity: 0 };
+        if (!character) {
+          throw new Error("Персонаж не найден");
         }
 
-        set({ equipment: newEquipment, inventory: newInventory });
-        get().calculateDerivedStats();
+        const previousCharacter = { ...character };
+
+        try {
+          const inventorySlot = character.inventory[inventoryIndex];
+          if (!inventorySlot || !inventorySlot.itemId) {
+            throw new Error("Предмет не найден в инвентаре");
+          }
+
+          const currentEquippedItemId = character.equipment[equipmentSlot];
+          const updatedEquipment = { ...character.equipment };
+          const updatedInventory = [...character.inventory];
+
+          updatedEquipment[equipmentSlot] = inventorySlot.itemId;
+
+          if (currentEquippedItemId) {
+            updatedInventory[inventoryIndex] = {
+              itemId: currentEquippedItemId,
+              quantity: 1
+            };
+          } else {
+            updatedInventory[inventoryIndex] = { itemId: null, quantity: 0 };
+          }
+
+          set({
+            character: {
+              ...character,
+              equipment: updatedEquipment,
+              inventory: updatedInventory
+            }
+          });
+
+          const response = await characterApi.equip({ inventoryIndex, equipmentSlot });
+
+          set({
+            character: response.character
+          });
+
+        } catch (error) {
+          set({
+            character: previousCharacter
+          });
+          throw error;
+        }
       },
 
-      moveInventoryItem: (fromIndex, toIndex) => {
-        const { inventory } = get();
+      moveInventoryItem: async (fromIndex: number, toIndex: number) => {
+        const { character } = get();
 
-        const newInventory = [...inventory];
-        const temp = newInventory[fromIndex];
-        newInventory[fromIndex] = newInventory[toIndex];
-        newInventory[toIndex] = temp;
+        if (!character) {
+          throw new Error("Персонаж не найден");
+        }
 
-        set({ inventory: newInventory });
+        const previousCharacter = { ...character };
+
+        try {
+          if (fromIndex < 0 || fromIndex >= character.inventory.length ||
+            toIndex < 0 || toIndex >= character.inventory.length) {
+            throw new Error("Неверный индекс инвентаря");
+          }
+
+          const fromSlot = character.inventory[fromIndex];
+          if (!fromSlot || !fromSlot.itemId) {
+            throw new Error("Предмет не найден в инвентаре");
+          }
+
+          const updatedInventory = [...character.inventory];
+          const temp = updatedInventory[fromIndex];
+          updatedInventory[fromIndex] = updatedInventory[toIndex];
+          updatedInventory[toIndex] = temp;
+
+          set({
+            character: {
+              ...character,
+              inventory: updatedInventory
+            }
+          });
+
+          const response = await characterApi.moveInventory({ fromIndex, toIndex });
+
+          set({
+            character: response.character
+          });
+
+        } catch (error) {
+          set({
+            character: previousCharacter
+          });
+          throw error;
+        }
       },
 
-      swapEquipment: (fromSlot, toSlot) => {
-        const { equipment } = get();
+      swapEquipment: async (fromSlot: keyof Equipment, toSlot: keyof Equipment) => {
+        const { character } = get();
 
-        const newEquipment: Equipment = {
-          ...equipment,
-          [fromSlot]: equipment[toSlot],
-          [toSlot]: equipment[fromSlot]
-        };
+        if (!character) {
+          throw new Error("Персонаж не найден");
+        }
 
-        set({ equipment: newEquipment });
-        get().calculateDerivedStats();
+        const previousCharacter = { ...character };
+
+        try {
+          const fromItemId = character.equipment[fromSlot];
+          const toItemId = character.equipment[toSlot];
+
+          if (!fromItemId && !toItemId) {
+            throw new Error("Оба слота пустые");
+          }
+
+          if (fromItemId) {
+            const fromItem = itemsService.getItemById(fromItemId);
+            const canEquipTo = canEquipItem(fromItem!, toSlot, character.level);
+            if (!canEquipTo.canEquip) {
+              throw new Error(`Нельзя переместить предмет в слот: ${canEquipTo.reason}`);
+            }
+          }
+
+          if (toItemId) {
+            const toItem = itemsService.getItemById(toItemId);
+            const canEquipFrom = canEquipItem(toItem!, fromSlot, character.level);
+            if (!canEquipFrom.canEquip) {
+              throw new Error(`Нельзя переместить предмет в слот: ${canEquipFrom.reason}`);
+            }
+          }
+
+          const updatedEquipment = { ...character.equipment };
+          const temp = updatedEquipment[fromSlot];
+          updatedEquipment[fromSlot] = updatedEquipment[toSlot];
+          updatedEquipment[toSlot] = temp;
+
+          set({
+            character: {
+              ...character,
+              equipment: updatedEquipment
+            }
+          });
+
+          const response = await characterApi.swapEquipment({ fromSlot, toSlot });
+
+          set({
+            character: response.character
+          });
+
+        } catch (error) {
+          set({
+            character: previousCharacter
+          });
+          throw error;
+        }
       },
 
       reset: () => set({
         selectedClass: null,
         selectedBackground: null,
         character: null,
-        level: 1,
       }),
     }),
     {
