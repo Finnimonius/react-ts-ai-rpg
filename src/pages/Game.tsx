@@ -5,12 +5,14 @@ import { useNavigate, useParams, Navigate } from "react-router-dom"
 import { useCharacterStore } from "../stores/characterStore"
 import './Game.css'
 import BackgroundSelection from './BackgroundSelection'
+import { useEffect } from 'react'
+import PageLoader from '../components/UI/PageLoader'
 
 
 export default function Game() {
     const navigate = useNavigate();
     const { step } = useParams();
-    const { hasCharacter } = useCharacterStore();
+    const { hasCharacter, loadCharacter, isLoading } = useCharacterStore();
 
     const goToStep = (stepName: string) => {
         navigate(`/play/${stepName}`)
@@ -26,6 +28,14 @@ export default function Game() {
     }
 
     const currentScreen = getCurrentScreen();
+
+    useEffect(() => {
+        loadCharacter();
+    }, []);
+
+    if (isLoading) {
+        return <PageLoader />;
+    }
 
     if (hasCharacter() && step !== 'game') {
         return <Navigate to="/play/game" replace />

@@ -36,6 +36,10 @@ export const characterApi = {
                 credentials: 'include'
             });
 
+            if (response.status === 404) {
+                return { character: null };
+            }
+
             if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
 
             const data = await response.json()
