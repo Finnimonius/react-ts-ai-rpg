@@ -7,6 +7,7 @@ import PageLoader from './components/UI/PageLoader';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Login from './components/auth/Login';
 import { useAuthStore } from './stores/authStore';
+import { motion } from 'framer-motion';
 
 const Home = lazy(() => import('./pages/Home'));
 const CharacterCreator = lazy(() => import('./pages/CharacterCreator'));
@@ -35,20 +36,28 @@ export default function App() {
   return (
     <AnimatePresence mode="wait">
       <Suspense fallback={<PageLoader />}>
-        <Routes location={location} key={location.pathname}>
-          <Route path='/' element={<AppLayout />}>
-            <Route index element={<Home />} />
-            <Route path='rules' element={<Rules />} />
-            <Route path='charactercreator' element={<CharacterCreator />} />
-            <Route path="login" element={<Login />} />
-            <Route path='play/:step?/*' element={
-              <ProtectedRoute>
-                <Game />
-              </ProtectedRoute>
-            } />
-            <Route path='*' element={<NotFoundPage />} />
-          </Route>
-        </Routes>
+        <motion.div
+          key={location.pathname}
+          initial={{ opacity: 0.9 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.1 }}
+          style={{ minHeight: '100vh' }}
+        >
+          <Routes location={location} key={location.pathname}>
+            <Route path='/' element={<AppLayout />}>
+              <Route index element={<Home />} />
+              <Route path='rules' element={<Rules />} />
+              <Route path='charactercreator' element={<CharacterCreator />} />
+              <Route path="login" element={<Login />} />
+              <Route path='play/:step?/*' element={
+                <ProtectedRoute>
+                  <Game />
+                </ProtectedRoute>
+              } />
+              <Route path='*' element={<NotFoundPage />} />
+            </Route>
+          </Routes>
+        </motion.div>
       </Suspense>
     </AnimatePresence>
   )

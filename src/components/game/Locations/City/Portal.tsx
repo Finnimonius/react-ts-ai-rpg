@@ -2,7 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { NavigationButton } from "../../Game-UI/ActionButtons";
 import LocationHeader from "../../Game-UI/LocationHeader";
 import './Portal.css'
-import { useGameStore, type CurrentLocation } from "../../../../stores/gameStore";
+import { useGameStore } from "../../../../stores/gameStore";
+import type { CurrentLocation } from "../../../../types/game.types";
 
 export default function Portal() {
     const navigate = useNavigate()

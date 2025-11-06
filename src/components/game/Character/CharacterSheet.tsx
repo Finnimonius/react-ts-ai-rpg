@@ -3,7 +3,7 @@ import './CharacterSheet.css'
 import DraggableItem from "./DraggableItem"
 import { useCallback, useState, useMemo } from "react";
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
-import type { AnyItem, Equipment} from "../../../types/inventory.types";
+import type { AnyItem, Equipment } from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
 import { canEquipItem } from "../../../utils/generators/items-builder";
 import { Divider, Tooltip } from 'antd';
@@ -187,74 +187,74 @@ export default function CharacterSheet() {
     }, [findItemWithSource, handleItemMove]);
 
     return (
-        <div className="characterSheet-container">
-            {contextHolder}
-            <div className="ui-element1"></div>
-            <div className="ui-element2"></div>
-            <div className="ui-element3"></div>
-            <div className="ui-element4"></div>
-            <div className="ui-element5"></div>
-            <DndContext
-                sensors={sensors}
-                collisionDetection={closestCenter}
-                onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
-            >
-                <div className="divider-wrapper">
-                    <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: '2.2vh' }}>{selectedClass?.name}</Divider>
-                    <div className="character-sheet-currency-wrapper">
-                        <Tooltip placement="bottom" title={'Золото'}>
-                            <p className="character-sheet-currency-gold">{currency.gold}</p>
-                        </Tooltip>
-                        <Tooltip placement="bottom" title={'Души'}>
-                            <p className="character-sheet-currency-souls">{currency.souls}</p>
-                        </Tooltip>
-                        <Tooltip placement="bottom" title={'Честь'}>
-                            <p className="character-sheet-currency-fame">{currency.fame}</p>
-                        </Tooltip>
-                    </div>
-                </div>
-
-                <div className="equipment-section">
-                    <div className="equipment-grid">
-                        <img className="character-sheet-img" src={selectedClass?.img} alt="" draggable={false} />
-                        {(Object.keys(equipment) as (keyof Equipment)[]).map((slot) => {
-                            const itemId = equipment[slot];
-                            const item = itemId ? itemsService.getItemById(itemId) : null;
-                            
-                            return (
-                                <EquipmentSlot key={slot} slotType={slot} data-slot={slot}>
-                                    {item && (
-                                        <DraggableItem item={item} location={`equipment-${slot}`} />
-                                    )}
-                                </EquipmentSlot>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                <StatusBars />
-                <Stats />
-                <Inventory />
-                <Materials />
-
-                <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: 23 }}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="M42.65 34.75v-21.5L24 2.5L5.35 13.25v21.5L24 45.5z" /><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="m36.31 32.45l6.34-19.2L24 10.59L5.35 13.25l6.34 19.2L24 45.5z" /><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="M36.31 32.45H11.69L24 10.59zM24 10.59V2.5m12.31 29.95l6.34 2.3m-30.96-2.3l-6.34 2.3" /></svg>
-                </Divider>
-
-                <DragOverlay>
-                    {activeItemData ? (
-                        <div className="draggableItem overlay">
-                            <img
-                                src={activeItemData.item.img}
-                                alt={activeItemData.item.name}
-                                className="draggableItem-img"
-                            />
+            <div className="characterSheet-container">
+                {contextHolder}
+                <div className="ui-element1"></div>
+                <div className="ui-element2"></div>
+                <div className="ui-element3"></div>
+                <div className="ui-element4"></div>
+                <div className="ui-element5"></div>
+                <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragStart={handleDragStart}
+                    onDragEnd={handleDragEnd}
+                >
+                    <div className="divider-wrapper">
+                        <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: '2.2vh' }}>{selectedClass?.name}</Divider>
+                        <div className="character-sheet-currency-wrapper">
+                            <Tooltip placement="bottom" title={'Золото'}>
+                                <p className="character-sheet-currency-gold">{currency.gold}</p>
+                            </Tooltip>
+                            <Tooltip placement="bottom" title={'Души'}>
+                                <p className="character-sheet-currency-souls">{currency.souls}</p>
+                            </Tooltip>
+                            <Tooltip placement="bottom" title={'Честь'}>
+                                <p className="character-sheet-currency-fame">{currency.fame}</p>
+                            </Tooltip>
                         </div>
-                    ) : null}
-                </DragOverlay>
+                    </div>
 
-            </DndContext>
-        </div>
+                    <div className="equipment-section">
+                        <div className="equipment-grid">
+                            <img className="character-sheet-img" src={selectedClass?.img} alt="" draggable={false} />
+                            {(Object.keys(equipment) as (keyof Equipment)[]).map((slot) => {
+                                const itemId = equipment[slot];
+                                const item = itemId ? itemsService.getItemById(itemId) : null;
+
+                                return (
+                                    <EquipmentSlot key={slot} slotType={slot} data-slot={slot}>
+                                        {item && (
+                                            <DraggableItem item={item} location={`equipment-${slot}`} />
+                                        )}
+                                    </EquipmentSlot>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    <StatusBars />
+                    <Stats />
+                    <Inventory />
+                    <Materials />
+
+                    <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: 23 }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="M42.65 34.75v-21.5L24 2.5L5.35 13.25v21.5L24 45.5z" /><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="m36.31 32.45l6.34-19.2L24 10.59L5.35 13.25l6.34 19.2L24 45.5z" /><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="M36.31 32.45H11.69L24 10.59zM24 10.59V2.5m12.31 29.95l6.34 2.3m-30.96-2.3l-6.34 2.3" /></svg>
+                    </Divider>
+
+                    <DragOverlay>
+                        {activeItemData ? (
+                            <div className="draggableItem overlay">
+                                <img
+                                    src={activeItemData.item.img}
+                                    alt={activeItemData.item.name}
+                                    className="draggableItem-img"
+                                />
+                            </div>
+                        ) : null}
+                    </DragOverlay>
+
+                </DndContext>
+            </div>
     )
 }

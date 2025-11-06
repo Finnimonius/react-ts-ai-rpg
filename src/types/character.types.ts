@@ -50,7 +50,6 @@ export interface CharacterClass {
     name: string,
     description: string,
     img: string,
-
     baseStats: BaseStats,
     levelUpStats: Partial<BaseStats>,
     weaponTypes: string[],

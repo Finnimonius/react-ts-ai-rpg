@@ -5,9 +5,20 @@
     min-height: 90vh;
     width: 100%;
     padding: 50px 100px 100px 100px;
-    background-image: url('/src/assets/images/backgrounds/game-main-back.jpg');
+    background-image: url('/src/assets/images/backgrounds/game-main-back.webp');
     background-size: cover;
     background-repeat: no-repeat;
+    animation: microFade 0.3s ease-out;
+}
+
+@keyframes microFade {
+    from {
+        opacity: 0.95;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .hero-btn {
@@ -68,7 +79,7 @@
 }
 
 @media (max-width: 800px) {
-    .game-main-container{
+    .game-main-container {
         padding: 50px 50px 100px 50px;
     }
 }
@@ -83,4 +94,3 @@
         font-size: 1rem;
     }
 }
-

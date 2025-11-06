@@ -78,7 +78,7 @@ export default function Gameplay() {
                     theme="light"
                 />
             </ConfigProvider>
-            <ConfigProvider theme={{ components: { Splitter: { colorPrimary: '#1677ff', colorFill: 'white', controlItemBgActiveHover: 'rgb(0,0,0)', controlItemBgActive: 'rgb(0,0,0)'} } }}>
+            <ConfigProvider theme={{ components: { Splitter: { colorPrimary: '#1677ff', colorFill: 'white', controlItemBgActiveHover: 'rgb(0,0,0)', controlItemBgActive: 'rgb(0,0,0)' } } }}>
                 <Splitter style={{ minHeight: '90vh', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                     <Splitter.Panel resizable={true} className="gameplay-splitter">
                         <div className="splitter-content-wrapper">

@@ -1,3 +1,4 @@
+import type { AddItemToInventory } from "../types/dto/AddItemToInventoryDto";
 import type { CreateCharacterDto } from "../types/dto/createCharacterDto";
 import type { EquipItemDto } from "../types/dto/equipItemDto";
 import type { MoveItemDto } from "../types/dto/moveItemDto";
@@ -128,6 +129,28 @@ export const characterApi = {
             if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
 
             const data = await response.json()
+
+            return data
+        } catch (error) {
+            console.error('Ошибка запроса', error)
+            throw error
+        }
+    },
+
+    async addItemToInventory(itemData: AddItemToInventory) {
+        try {
+            const response = await fetch(`${SERVER_URL}/api/character/add-to-inventory`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(itemData),
+                credentials: 'include'
+            });
+
+            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
+
+            const data = await response.json();
 
             return data
         } catch (error) {
