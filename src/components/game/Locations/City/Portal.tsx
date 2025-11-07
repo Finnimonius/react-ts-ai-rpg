@@ -2,16 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { NavigationButton } from "../../Game-UI/ActionButtons";
 import LocationHeader from "../../Game-UI/LocationHeader";
 import './Portal.css'
-import { useGameStore } from "../../../../stores/gameStore";
 import type { CurrentLocation } from "../../../../types/game.types";
 
 export default function Portal() {
     const navigate = useNavigate()
-    const { enterLocation } = useGameStore()
 
-    const handleLocation = (location: CurrentLocation) => {
-        enterLocation(location)
-        navigate('/play/game/dungeon')
+    const handleDungeon = (dungeonId: CurrentLocation) => {
+        navigate(`/play/game/dungeon/${dungeonId}`)
     }
 
     return (
@@ -19,8 +16,8 @@ export default function Portal() {
             <LocationHeader location={'Портал'} />
             <div className="portal-buttons-container">
                 <NavigationButton onClick={() => navigate('/play/game')} descr={'Назад'} />
-                <NavigationButton onClick={() => handleLocation('desert')} descr={'Пустыня'} />
-                <NavigationButton onClick={() => handleLocation('forest')} descr={'Древний лес'} />
+                <NavigationButton onClick={() => handleDungeon('desert')} descr={'Пустыня'} />
+                <NavigationButton onClick={() => handleDungeon('forest')} descr={'Древний лес'} />
             </div>
         </div>
     )

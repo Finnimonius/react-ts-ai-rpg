@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { lazy, Suspense, useCallback, useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import './styles/App.css'
 import AppLayout from './components/layout/AppLayout';
@@ -8,26 +8,31 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import Login from './components/auth/Login';
 import { useAuthStore } from './stores/authStore';
 import { motion } from 'framer-motion';
+import { useCharacterStore } from './stores/characterStore';
 
 const Home = lazy(() => import('./pages/Home'));
 const CharacterCreator = lazy(() => import('./pages/CharacterCreator'));
 const Game = lazy(() => import('./pages/Game'));
 const Rules = lazy(() => import('./pages/Rules'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
-// const Gameplay = lazy(() => import('./pages/Gameplay'));
 
 
 export default function App() {
   const location = useLocation();
-  const { checkAuth, isLoading } = useAuthStore();
+  const { checkAuth, isLoading: isAuthLoading, user } = useAuthStore();
+  const { loadCharacter, isLoading: isCharLoading } = useCharacterStore();
 
-  const checkAuthStable = useCallback(() => {
+  useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
   useEffect(() => {
-    checkAuthStable();
-  }, [checkAuthStable]);
+    if (user) {
+      loadCharacter();
+    }
+  }, [user, loadCharacter]);
+
+  const isLoading = isAuthLoading || (user && isCharLoading);
 
   if (isLoading) {
     return <PageLoader />

@@ -98,6 +98,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
 
     checkAuth: async () => {
         try {
+            await new Promise(resolve => setTimeout(resolve, 1500));
             const data = await profileQuery();
             set({
                 isAuthenticated: true,
@@ -117,6 +118,4 @@ export const useAuthStore = create<AuthStore>()((set) => ({
     },
 
     clearError: () => set({ error: null }),
-}
-)
-)
+}))

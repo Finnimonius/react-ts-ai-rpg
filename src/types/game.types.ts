@@ -50,6 +50,6 @@ export type GameHistory = {
     currentEvent?: CurrentEvent,
 }
 
-export type CurrentLocation = 'city' | 'forest' | 'desert';
+export type CurrentLocation = 'forest' | 'desert';
 export type EventType = 'combat' | 'treasure';
 

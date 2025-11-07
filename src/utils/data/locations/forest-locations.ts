@@ -1,4 +1,4 @@
-export const DUNGEONS = {
+export const FOREST_LOCATION = {
   wind_gorge: {
     id: "wind_gorge",
     name: "Ущелье Ветров",

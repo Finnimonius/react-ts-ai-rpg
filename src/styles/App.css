@@ -3,6 +3,10 @@ h1, h2, h3 {
   color: #8B4513;
 }
 
+body {
+  background-color: var(--primary-dark1);
+}
+
 p {
   font-family: 'Cormorant', cursive;
 }

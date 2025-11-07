@@ -15,7 +15,7 @@ const gameRoutes = [
     { path: '/portal', element: <Portal /> },
     { path: '/tavern', element: <Tavern /> },
     { path: '/blacksmith', element: <Blacksmith /> },
-    { path: '/dungeon', element: <DungeonView /> },
+    { path: '/dungeon/:dungeonId', element: <DungeonView /> },
     { path: '/market', element: <Market /> },
 ]
 

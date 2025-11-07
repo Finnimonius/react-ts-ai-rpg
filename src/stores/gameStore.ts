@@ -1,21 +1,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import queryAI from "../services/ai-service";
-import { DUNGEONS } from "../utils/data/locations/forest-locations";
+import { FOREST_LOCATION } from "../utils/data/locations/forest-locations";
 import { generateEvent, getRandomEvent } from "../utils/generators/event-generator";
-import type { CurrentLocation, DirectionName, EventType, GameHistory, Path, TargetLocation } from "../types/game.types";
+import type { DirectionName, EventType, GameHistory, Path, TargetLocation } from "../types/game.types";
 
 const EVENTS: EventType[] = ['treasure']
 
 interface GameStore {
-    currentLocation: CurrentLocation,
+    // currentLocation: CurrentLocation,
     currentDungeon: string | null,
     targetLocation: string,
     currentStep: number,
     gameHistory: Array<GameHistory>,
     isLoading: boolean,
     error: string | null,
-    enterLocation: (location: CurrentLocation) => void,
     startGame: () => void,
     movingToLocation: (targetLocation: TargetLocation, directionName: DirectionName) => void,
     updateEventOpenedStatus: () => void,
@@ -26,7 +25,7 @@ interface GameStore {
 export const useGameStore = create<GameStore>()(
     persist(
         (set, get) => ({
-            currentLocation: 'city',
+            // currentLocation: 'city',
             currentDungeon: null,
             targetLocation: '',
             currentStep: 0,
@@ -34,19 +33,13 @@ export const useGameStore = create<GameStore>()(
             isLoading: false,
             error: null,
 
-            enterLocation: (location) => {
-                set({
-                    currentLocation: location,
-                })
-            },
-
             startGame: async () => {
                 set({
                     isLoading: true,
                     currentDungeon: 'wind_gorge',
                 })
 
-                const dungeon = getDungeon(DUNGEONS, get().currentDungeon)
+                const dungeon = getDungeon(FOREST_LOCATION, get().currentDungeon)
                 if (!dungeon) {
                     set({ error: "Данж не найден", isLoading: false });
                     return;
@@ -72,7 +65,6 @@ export const useGameStore = create<GameStore>()(
                 } catch (error) {
                     set({ error: 'Мастер не смог найти историю', isLoading: false })
                     console.log(error);
-
                 }
             },
 
@@ -172,7 +164,7 @@ type Dungeon = {
     paths: Array<Path>,
 }
 
-type Dungeons = typeof DUNGEONS;
+type Dungeons = typeof FOREST_LOCATION;
 
 function getDungeon(dungeons: Dungeons, dungeonKey: string | null): Dungeon | undefined {
     if (!dungeonKey) return undefined;
