@@ -33,7 +33,7 @@ export const useGameStore = create<GameStore>()(
             isLoading: false,
             error: null,
 
-            startGame: async () => {
+            startGame: async () => { 
                 set({
                     isLoading: true,
                     currentDungeon: 'wind_gorge',
