@@ -1,7 +1,7 @@
-import type { AddItemToInventory } from "../types/dto/AddItemToInventoryDto";
-import type { CreateCharacterDto } from "../types/dto/createCharacterDto";
-import type { EquipItemDto } from "../types/dto/equipItemDto";
-import type { MoveItemDto } from "../types/dto/moveItemDto";
+import type { AddItemToInventory } from "../types/dto/character/AddItemToInventoryDto";
+import type { CreateCharacterDto } from "../types/dto/character/createCharacterDto";
+import type { EquipItemDto } from "../types/dto/character/equipItemDto";
+import type { MoveItemDto } from "../types/dto/character/moveItemDto";
 import type { SwapEquipmentDto } from "../types/dto/swapEquipmentDto";
 import type { UnequipItemDto } from "../types/dto/unquipItemDto";
 
