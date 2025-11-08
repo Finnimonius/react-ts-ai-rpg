@@ -1,17 +1,16 @@
+import { config } from "../config/env";
 import type { AddItemToInventory } from "../types/dto/character/AddItemToInventoryDto";
 import type { CreateCharacterDto } from "../types/dto/character/createCharacterDto";
 import type { EquipItemDto } from "../types/dto/character/equipItemDto";
 import type { MoveItemDto } from "../types/dto/character/moveItemDto";
-import type { SwapEquipmentDto } from "../types/dto/swapEquipmentDto";
-import type { UnequipItemDto } from "../types/dto/unquipItemDto";
-
-const SERVER_URL = 'http://localhost:3001';
+import type { SwapEquipmentDto } from "../types/dto/character/swapEquipmentDto";
+import type { UnequipItemDto } from "../types/dto/character/unquipItemDto";
 
 export const characterApi = {
     async create(createData: CreateCharacterDto) {
         try {
             await new Promise(resolve => setTimeout(resolve, 3000));
-            const response = await fetch(`${SERVER_URL}/api/character/`, {
+            const response = await fetch(`${config.apiUrl}/character/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -33,7 +32,7 @@ export const characterApi = {
 
     async get() {
         try {
-            const response = await fetch(`${SERVER_URL}/api/character`, {
+            const response = await fetch(`${config.apiUrl}/character`, {
                 credentials: 'include'
             });
 
@@ -53,7 +52,7 @@ export const characterApi = {
 
     async delete() {
         try {
-            const response = await fetch(`${SERVER_URL}/api/character`, {
+            const response = await fetch(`${config.apiUrl}/character`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -73,7 +72,7 @@ export const characterApi = {
 
     async equip(equipData: EquipItemDto) {
         try {
-            const response = await fetch(`${SERVER_URL}/api/character/equip`, {
+            const response = await fetch(`${config.apiUrl}/character/equip`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -95,7 +94,7 @@ export const characterApi = {
 
     async unequip(uneqipData: UnequipItemDto) {
         try {
-            const response = await fetch(`${SERVER_URL}/api/character/unequip`, {
+            const response = await fetch(`${config.apiUrl}/character/unequip`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -117,7 +116,7 @@ export const characterApi = {
 
     async moveInventory(moveData: MoveItemDto) {
         try {
-            const response = await fetch(`${SERVER_URL}/api/character/move-inventory`, {
+            const response = await fetch(`${config.apiUrl}/character/move-inventory`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -139,7 +138,7 @@ export const characterApi = {
 
     async addItemToInventory(itemData: AddItemToInventory) {
         try {
-            const response = await fetch(`${SERVER_URL}/api/character/add-to-inventory`, {
+            const response = await fetch(`${config.apiUrl}/character/add-to-inventory`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -161,7 +160,7 @@ export const characterApi = {
 
     async swapEquipment(swapData: SwapEquipmentDto) {
         try {
-            const response = await fetch(`${SERVER_URL}/api/character/swap-equipment`, {
+            const response = await fetch(`${config.apiUrl}/character/swap-equipment`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

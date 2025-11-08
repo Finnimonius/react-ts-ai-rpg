@@ -1,11 +1,10 @@
+import { config } from "../config/env";
 import type { CreateGameDto } from "../types/dto/game/createGameDto";
 
-const SERVER_URL = 'http://localhost:3001';
-
 export const gameApi = {
-    async create(createData: CreateGameDto) {
+    async createGame(createData: CreateGameDto) {
         try {
-            const response = await fetch(`${SERVER_URL}/api/game`, {
+            const response = await fetch(`${config.apiUrl}/game`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

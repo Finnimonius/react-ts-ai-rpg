@@ -1,8 +1,8 @@
-const SERVER_URL = 'http://localhost:3001';
+import { config } from "../config/env";
 
 export async function loginQuery(email: string, password: string) {
     try {
-        const response = await fetch(`${SERVER_URL}/api/auth/login`, {
+        const response = await fetch(`${config.apiUrl}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ export async function loginQuery(email: string, password: string) {
 
 export async function logoutQuery() {
     try {
-        const response = await fetch(`${SERVER_URL}/api/auth/logout`, {
+        const response = await fetch(`${config.apiUrl}/auth/logout`, {
             method: 'POST',
             credentials: 'include'
         });
@@ -46,7 +46,7 @@ export async function logoutQuery() {
 
 export async function registerQuery(nickName: string, email: string, password: string, confirmPassword: string) {
     try {
-        const response = await fetch(`${SERVER_URL}/api/auth/register`, {
+        const response = await fetch(`${config.apiUrl}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -70,7 +70,7 @@ export async function registerQuery(nickName: string, email: string, password: s
 
 export async function profileQuery() {
     try {
-        const response = await fetch(`${SERVER_URL}/api/auth/profile`, {
+        const response = await fetch(`${config.apiUrl}/auth/profile`, {
             credentials: 'include'
         })
 
