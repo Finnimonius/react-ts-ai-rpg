@@ -13,9 +13,9 @@ export const gameApi = {
                 credentials: 'include'
             });
 
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
-
             const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
             return data
         } catch (error) {

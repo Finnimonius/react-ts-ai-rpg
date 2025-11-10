@@ -19,9 +19,9 @@ export const characterApi = {
                 credentials: 'include'
             });
 
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
+            const data = await response.json();
 
-            const data = await response.json()
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
             return data
         } catch (error) {
@@ -39,10 +39,10 @@ export const characterApi = {
             if (response.status === 404) {
                 return { character: null };
             }
+            const data = await response.json();
 
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
-            const data = await response.json()
             return data
         } catch (error) {
             console.error('Ошибка запроса', error)
@@ -59,10 +59,10 @@ export const characterApi = {
                 },
                 credentials: 'include'
             });
-
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
-
             const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
+
             return data
         } catch (error) {
             console.error('Ошибка запроса', error)
@@ -80,10 +80,9 @@ export const characterApi = {
                 body: JSON.stringify(equipData),
                 credentials: 'include'
             });
-
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
-
             const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
             return data
         } catch (error) {
@@ -102,10 +101,9 @@ export const characterApi = {
                 body: JSON.stringify(uneqipData),
                 credentials: 'include'
             });
-
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
-
             const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
             return data
         } catch (error) {
@@ -124,10 +122,9 @@ export const characterApi = {
                 body: JSON.stringify(moveData),
                 credentials: 'include'
             });
+            const data = await response.json();
 
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
-
-            const data = await response.json()
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
             return data
         } catch (error) {
@@ -146,10 +143,9 @@ export const characterApi = {
                 body: JSON.stringify(itemData),
                 credentials: 'include'
             });
-
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
-
             const data = await response.json();
+
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
             return data
         } catch (error) {
@@ -168,10 +164,9 @@ export const characterApi = {
                 body: JSON.stringify(swapData),
                 credentials: 'include'
             });
+            const data = await response.json();
 
-            if (!response.ok) throw new Error(`Ошибка сервера: ${response.status}`);
-
-            const data = await response.json()
+            if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
             return data
         } catch (error) {

@@ -10,12 +10,9 @@ export async function loginQuery(email: string, password: string) {
             body: JSON.stringify({ email, password }),
             credentials: 'include'
         });
+        const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status}`)
-        }
-
-        const data = await response.json()
+        if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
         return data
     } catch (error) {
@@ -30,12 +27,9 @@ export async function logoutQuery() {
             method: 'POST',
             credentials: 'include'
         });
-
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status}`)
-        }
-
         const data = await response.json();
+
+        if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
         return data
     } catch (error) {
@@ -54,12 +48,9 @@ export async function registerQuery(nickName: string, email: string, password: s
             body: JSON.stringify({ nickName, email, password, confirmPassword }),
             credentials: 'include'
         });
+        const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status}`);
-        }
-
-        const data = await response.json()
+        if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
         return data
     } catch (error) {
@@ -73,12 +64,9 @@ export async function profileQuery() {
         const response = await fetch(`${config.apiUrl}/auth/profile`, {
             credentials: 'include'
         })
+        const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error(`Ошибка сервера: ${response.status}`);
-        }
-
-        const data = await response.json()
+        if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
 
         return data
     } catch (error) {
