@@ -1,76 +1,25 @@
-import { config } from "../config/env";
+import { apiClient } from "../utils/api/apiClient";
 
 export async function loginQuery(email: string, password: string) {
-    try {
-        const response = await fetch(`${config.apiUrl}/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password }),
-            credentials: 'include'
-        });
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
-
-        return data
-    } catch (error) {
-        console.error('Ошибка запроса', error)
-        throw error
-    }
+    return apiClient<{ email: string, password: string }>('/auth/login', {
+        method: 'POST',
+        body: { email, password }
+    })
 }
 
 export async function logoutQuery() {
-    try {
-        const response = await fetch(`${config.apiUrl}/auth/logout`, {
-            method: 'POST',
-            credentials: 'include'
-        });
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
-
-        return data
-    } catch (error) {
-        console.error('Ошибка запроса', error)
-        throw error
-    }
+    return apiClient('/auth/logout', {
+        method: 'POST'
+    })
 }
 
 export async function registerQuery(nickName: string, email: string, password: string, confirmPassword: string) {
-    try {
-        const response = await fetch(`${config.apiUrl}/auth/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nickName, email, password, confirmPassword }),
-            credentials: 'include'
-        });
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
-
-        return data
-    } catch (error) {
-        console.error('Ошибка запроса', error)
-        throw error
-    }
+    return apiClient<{nickName: string, email: string, password: string, confirmPassword: string}>('/auth/register', {
+        method: 'POST',
+        body: {nickName, email, password, confirmPassword}
+    })
 }
 
 export async function profileQuery() {
-    try {
-        const response = await fetch(`${config.apiUrl}/auth/profile`, {
-            credentials: 'include'
-        })
-        const data = await response.json();
-
-        if (!response.ok) throw new Error(data.error || `Ошибка сервера: ${response.status}`);
-
-        return data
-    } catch (error) {
-        console.error('Ошибка запроса', error)
-        throw error
-    }
+    return apiClient('/auth/profile')
 }
