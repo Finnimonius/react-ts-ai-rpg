@@ -14,6 +14,7 @@ interface AuthStore {
     isAuthenticated: boolean,
     user: User | null,
     error: string | null,
+    authError: string | null,
     isLoading: boolean,
     login: (email: string, password: string) => Promise<void>,
     logout: () => Promise<void>,
@@ -26,6 +27,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
     isAuthenticated: false,
     user: null,
     error: null,
+    authError: null,
     isLoading: true,
 
     login: async (email, password) => {
@@ -104,6 +106,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
                 isAuthenticated: true,
                 user: data.user,
                 error: null,
+                authError: null,
                 isLoading: false
             });
         } catch (error) {
@@ -111,7 +114,8 @@ export const useAuthStore = create<AuthStore>()((set) => ({
             set({
                 isAuthenticated: false,
                 user: null,
-                error: errorMessage,
+                authError: errorMessage,
+                error: null,
                 isLoading: false
             });
         }

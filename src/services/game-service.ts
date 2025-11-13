@@ -7,5 +7,9 @@ export const gameApi = {
             method: 'POST',
             body: createData
         })
+    },
+
+    async getGame() {
+        return apiClient('/game')
     }
 }

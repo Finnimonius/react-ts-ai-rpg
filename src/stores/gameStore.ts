@@ -8,7 +8,6 @@ import type { DirectionName, EventType, GameHistory, Path, TargetLocation } from
 const EVENTS: EventType[] = ['treasure']
 
 interface GameStore {
-    // currentLocation: CurrentLocation,
     currentDungeon: string | null,
     targetLocation: string,
     currentStep: number,
@@ -25,7 +24,6 @@ interface GameStore {
 export const useGameStore = create<GameStore>()(
     persist(
         (set, get) => ({
-            // currentLocation: 'city',
             currentDungeon: null,
             targetLocation: '',
             currentStep: 0,
