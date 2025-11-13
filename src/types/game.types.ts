@@ -3,13 +3,6 @@ import type { AnyItem, InventoryItemType } from "./inventory.types";
 export type Directions = 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast';
 export type DirectionName = 'Юг' | 'Юго-восток' | 'Юго-запад' |
     'Запад' | 'Север' | 'Северо-запад' | 'Северо-восток';
-export type TargetLocation = string;
-
-export type Path = {
-    direction: Directions,
-    directionName: DirectionName,
-    targetLocationId: TargetLocation,
-}
 
 export type TreasureType = 'chest' | 'large_chest' | 'gemstones' | 'bag';
 
@@ -38,6 +31,7 @@ export type CurrentEvent = {
     description: string,
     container: TreasureType[],
     img: string,
+    rewardBox: TreasureType,
     reward: AnyItem,
     isOpened: boolean,
     isTaken: boolean,
@@ -46,8 +40,8 @@ export type CurrentEvent = {
 export type GameHistory = {
     type: 'location' | 'travel_event',
     aiText: string,
-    currentEvent?: CurrentEvent,
-    directions?: string[],
+    currentEvent: CurrentEvent,
+    directions?: Directions[],
 }
 
 export interface Game {

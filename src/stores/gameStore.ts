@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import type { Game } from "../types/game.types";
-import type { ALL_LOCATIONS } from "../utils/data/locations/all-locations";
+import type { Directions, Game } from "../types/game.types";
+import { DIRECTION_NAMES, type ALL_LOCATIONS } from "../utils/data/locations/all-locations";
 import { gameApi } from "../services/game-service";
 
 interface GameStore {
@@ -15,7 +15,7 @@ interface GameStore {
     startGame: (currentDungeon: keyof typeof ALL_LOCATIONS) => Promise<void>,
     loadGame: () => Promise<void>,
     deleteGame: () => Promise<void>,
-    // movingToLocation: (targetLocation: TargetLocation, directionName: DirectionName) => void,
+    movingToLocation: (directionId: Directions) => Promise<void>,
     // updateEventOpenedStatus: () => void,
     // updateEventTakenStatus: () => void,
     // backToCity: () => void,
@@ -76,44 +76,29 @@ export const useGameStore = create<GameStore>()(
             } catch {
                 set({ isInitialLoading: false })
             }
-        }
+        },
 
-        // movingToLocation: async (targetLocationId, directionName) => {
-        //     const { currentStep } = get();
-        //     set({
-        //         isLoading: true,
-        //         targetLocation: targetLocationId,
-        //         currentStep: currentStep + 1
-        //     })
+        movingToLocation: async (directionId) => {
+            set({ isLoading: true });
+            try {
+                const response = await gameApi.moveToLocation({
+                    directionId: directionId,
+                    directionName: DIRECTION_NAMES[directionId]
+                })
 
-        //     const randomEvent = getRandomEvent(EVENTS);
-        //     const currentEvent = generateEvent(randomEvent)
-        //     if (!currentEvent) {
-        //         set({ error: "Событие не найдено", isLoading: false });
-        //         return;
-        //     }
+                const game = response.game;
+                console.log(game)
 
-        //     try {
-        //         const { gameHistory } = get()
-        //         const data = await queryAI(`Игрок направляется на ${directionName}. 
-        //                 На пути у нас событие ${currentEvent.title}. Описание события: ${currentEvent.description}. 
-        //                 Напиши описание в стиле RPG`);
-
-        //         const historyEntry: GameHistory = {
-        //             type: 'travel_event',
-        //             aiText: data,
-        //             currentEvent: currentEvent,
-        //         }
-
-        //         set({
-        //             isLoading: false,
-        //             gameHistory: [...gameHistory, historyEntry]
-        //         })
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-
-        // },
+                set({
+                    isLoading: false,
+                    game: game
+                })
+            } catch {
+                set({
+                    isLoading: false
+                })
+            }
+        },
 
         // updateEventOpenedStatus: () => {
         //     const { gameHistory } = get();

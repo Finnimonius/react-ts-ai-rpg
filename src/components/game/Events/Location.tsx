@@ -1,5 +1,6 @@
 import { useGameStore } from '../../../stores/gameStore'
-import type { DirectionName, GameHistory, TargetLocation } from '../../../types/game.types'
+import type { Directions, GameHistory } from '../../../types/game.types'
+import { DIRECTION_NAMES } from '../../../utils/data/locations/all-locations'
 import { NavigationButton } from '../Game-UI/ActionButtons'
 import './Location.css'
 
@@ -10,8 +11,8 @@ interface LocationProp {
 export default function Location({ history }: LocationProp) {
     const { movingToLocation } = useGameStore()
 
-    const handleClick = (direction: TargetLocation, directionName: DirectionName) => {
-        movingToLocation(direction, directionName)
+    const handleClick = (directionId: Directions) => {
+        movingToLocation(directionId)
     }
 
     return (
@@ -24,8 +25,8 @@ export default function Location({ history }: LocationProp) {
                     return (
                         <NavigationButton
                             key={index}
-                            descr={direction}
-                            onClick={() => handleClick(direction.targetLocationId, direction.directionName)}
+                            descr={DIRECTION_NAMES[direction]}
+                            onClick={() => handleClick(direction)}
                         />
                     )
                 })}

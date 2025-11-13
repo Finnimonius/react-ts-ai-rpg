@@ -21,7 +21,7 @@ export const gameApi = {
     },
 
     async moveToLocation(moveData: MoveToLocationDto) {
-        return apiClient('/move', {
+        return apiClient('/game/move', {
             method: 'POST',
             body: moveData
         })
