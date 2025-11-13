@@ -22,7 +22,7 @@ interface GameStore {
 }
 
 export const useGameStore = create<GameStore>()(
-    (set, get) => ({
+    (set) => ({
         game: null,
         isLoading: false,
         isInitialLoading: false,
@@ -57,21 +57,24 @@ export const useGameStore = create<GameStore>()(
                     game: game
                 })
             } catch {
-                set({ isInitialLoading: false })
+                set({
+                    isInitialLoading: false,
+                    game: null
+                })
             }
         },
 
         deleteGame: async () => {
-            set({ isLoading: true});
+            set({ isInitialLoading: true });
             try {
                 await gameApi.deleteGame();
 
                 set({
-                    isLoading: false,
+                    isInitialLoading: false,
                     game: null
                 })
             } catch {
-                set({ isLoading: false})
+                set({ isInitialLoading: false })
             }
         }
 

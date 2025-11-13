@@ -1,7 +1,6 @@
-import { Spin } from "antd"
+import { Button, Spin } from "antd"
 import { useGameStore } from "../../../../stores/gameStore"
 import TravelEvent from "../../Events/EventDispather"
-import { NavigationButton } from "../../Game-UI/ActionButtons"
 import { LoadingOutlined } from '@ant-design/icons';
 import Location from "../../Events/Location";
 import './DungeonView.css'
@@ -16,18 +15,19 @@ export default function DungeonView() {
     const gameHisories = useMemo(() => (game?.gameHistories || []), [game]);
     return (
         <div className="forest-container">
-            <NavigationButton
+            <Button
                 onClick={() => startGame(dungeonId as keyof typeof ALL_LOCATIONS)}
-                descr={'Изучить локацию'}
-                disabled={gameHisories.length > 0}
-            />
+                className={gameHisories.length > 0 ? 'dungeon__button-disabled' : ''}
+            >
+                Изучить локацию
+            </Button>
             <div style={{ width: '100%' }} className="forest-messages-container">
                 <button onClick={deleteGame} className="reset-test-btn">Сбросить</button>
 
                 {gameHisories.map((history, index) => (
                     <div key={index} className="forest-message-block">
-                        {history.type === 'location' && <Location history={history}/>}
-                        {history.type === 'travel_event' && <TravelEvent history={history}/>}
+                        {history.type === 'location' && <Location history={history} />}
+                        {history.type === 'travel_event' && <TravelEvent history={history} />}
                     </div>
                 ))}
 
