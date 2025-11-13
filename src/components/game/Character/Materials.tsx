@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 import './Materials.css'
 import { CrystalsIcon, HerbsIcon, LeatherIcon, OreIcon, RelicsIcon, WoodIcon } from "./icons/MaterialIcons";
 import { MaterialItem } from "./MaterialItem";
+import { useGameStore } from "../../../stores/gameStore";
 
 export default function Materials() {
-    const { character, reset } = useCharacterStore()
+    const { character, reset } = useCharacterStore();
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const navigate = useNavigate();
+    const { deleteGame } = useGameStore()
 
     const craftingMaterials = useMemo(() => character?.craftingMaterials || {
         wood: 0, ore: 0, leather: 0, herbs: 0, crystals: 0, relics: 0
@@ -23,6 +25,7 @@ export default function Materials() {
     const handleReset = () => {
         reset()
         navigate('/play')
+        deleteGame()
     };
 
     const materialsList = useMemo(() => [

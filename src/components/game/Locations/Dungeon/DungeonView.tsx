@@ -5,23 +5,26 @@ import { NavigationButton } from "../../Game-UI/ActionButtons"
 import { LoadingOutlined } from '@ant-design/icons';
 import Location from "../../Events/Location";
 import './DungeonView.css'
-// import { useParams } from "react-router-dom";
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
+import type { ALL_LOCATIONS } from "../../../../utils/data/locations/all-locations";
 
 export default function DungeonView() {
-    const { isLoading, startGame, gameHistory, backToCity } = useGameStore()
-    // const { dungeonId } = useParams()
+    const { isLoading, startGame, game, deleteGame } = useGameStore();
+    const { dungeonId } = useParams();
 
+    const gameHisories = useMemo(() => (game?.gameHistories || []), [game]);
     return (
         <div className="forest-container">
             <NavigationButton
-                onClick={startGame}
+                onClick={() => startGame(dungeonId as keyof typeof ALL_LOCATIONS)}
                 descr={'Изучить локацию'}
-                disabled={gameHistory.length > 0}
+                disabled={gameHisories.length > 0}
             />
             <div style={{ width: '100%' }} className="forest-messages-container">
-                <button onClick={backToCity} className="reset-test-btn">Сбросить</button>
+                <button onClick={deleteGame} className="reset-test-btn">Сбросить</button>
 
-                {gameHistory.map((history, index) => (
+                {gameHisories.map((history, index) => (
                     <div key={index} className="forest-message-block">
                         {history.type === 'location' && <Location history={history}/>}
                         {history.type === 'travel_event' && <TravelEvent history={history}/>}

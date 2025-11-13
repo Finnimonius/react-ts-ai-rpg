@@ -24,7 +24,7 @@ export default function Location({ history }: LocationProp) {
                     return (
                         <NavigationButton
                             key={index}
-                            descr={direction.directionName}
+                            descr={direction}
                             onClick={() => handleClick(direction.targetLocationId, direction.directionName)}
                         />
                     )

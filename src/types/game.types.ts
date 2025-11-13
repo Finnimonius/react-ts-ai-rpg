@@ -1,6 +1,6 @@
 import type { AnyItem, InventoryItemType } from "./inventory.types";
 
-type Directions = 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast';
+export type Directions = 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast';
 export type DirectionName = 'Юг' | 'Юго-восток' | 'Юго-запад' |
     'Запад' | 'Север' | 'Северо-запад' | 'Северо-восток';
 export type TargetLocation = string;
@@ -46,10 +46,20 @@ export type CurrentEvent = {
 export type GameHistory = {
     type: 'location' | 'travel_event',
     aiText: string,
-    directions?: Path[],
     currentEvent?: CurrentEvent,
+    directions?: string[],
 }
 
-export type CurrentLocation = 'forest' | 'desert';
+export interface Game {
+    _id?: string,
+    userId: string,
+    currentDungeon: string,
+    currentLocation: string,
+    currentLocationName: string,
+    targetLocation: string | null,
+    currentSteps: number,
+    gameHistories: GameHistory[]
+}
+
 export type EventType = 'combat' | 'treasure';
 

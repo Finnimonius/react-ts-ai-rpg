@@ -1,5 +1,6 @@
-import type { CurrentLocation } from "../../game.types";
+import type { ALL_LOCATIONS } from "../../../utils/data/locations/all-locations";
+
 
 export interface CreateGameDto {
-    currentDungeon: CurrentLocation
+    currentDungeon: keyof typeof ALL_LOCATIONS;
 }

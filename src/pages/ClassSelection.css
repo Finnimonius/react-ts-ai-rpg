@@ -12,8 +12,13 @@
 }
 
 @keyframes microFade {
-    from { opacity: 0.95; }
-    to { opacity: 1; }
+    from {
+        opacity: 0.95;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .class-list {
@@ -67,6 +72,13 @@
 .class-img {
     height: 300px;
     margin-bottom: 20px;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .class-title {
@@ -129,13 +141,13 @@
         padding: 50px 50px 100px 50px;
     }
 
-        .class-list-item {
+    .class-list-item {
         width: calc((100% / 2) - (10px * 1 / 2));
     }
 }
 
 @media (max-width: 500px) {
-            .class-list-item {
+    .class-list-item {
         width: 100%;
     }
 

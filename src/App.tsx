@@ -9,6 +9,7 @@ import Login from './components/auth/Login';
 import { useAuthStore } from './stores/authStore';
 import { motion } from 'framer-motion';
 import { useCharacterStore } from './stores/characterStore';
+import { useGameStore } from './stores/gameStore';
 
 const Home = lazy(() => import('./pages/Home'));
 const CharacterCreator = lazy(() => import('./pages/CharacterCreator'));
@@ -21,6 +22,7 @@ export default function App() {
   const location = useLocation();
   const { checkAuth, isLoading: isAuthLoading, user } = useAuthStore();
   const { loadCharacter, isLoading: isCharLoading } = useCharacterStore();
+  const { loadGame, isInitialLoading: isGameLoading } = useGameStore();
 
   useEffect(() => {
     checkAuth();
@@ -29,10 +31,11 @@ export default function App() {
   useEffect(() => {
     if (user) {
       loadCharacter();
+      loadGame();
     }
-  }, [user, loadCharacter]);
+  }, [user, loadCharacter, loadGame]);
 
-  const isLoading = isAuthLoading || (user && isCharLoading);
+  const isLoading = isAuthLoading || (user && (isCharLoading || isGameLoading));
 
   if (isLoading) {
     return <PageLoader />

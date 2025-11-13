@@ -57,8 +57,3 @@
 .background-list-item:hover {
     transform: translateY(-20px) scale(1.03);
 }
-
-.background-img {
-    height: 300px;
-    margin-bottom: 20px;
-}

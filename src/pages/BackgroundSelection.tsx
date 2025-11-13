@@ -29,7 +29,7 @@ export default function BackgroundSelection({ onNext }: BackgroundSelectionProps
             <ul className='background-list'>
                 {BACKGROUNDS.map(background => {
                     return <li onClick={() => handleSelectRace(background)} key={background.id} className='background-list-item'>
-                        <img src={background.img} alt="Изображение класса" className='background-img'/>
+                        <img src={background.img} alt="Изображение класса" className='class-img'/>
                         <h3 className='class-title'>{background.name}</h3>
                         <p className='class-descr'>{background.description}</p>
                     </li>

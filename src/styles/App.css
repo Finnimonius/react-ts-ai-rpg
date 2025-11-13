@@ -35,7 +35,7 @@ button {
 
 /* Скролл */
 *::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
   height: 5px;
 }
 
