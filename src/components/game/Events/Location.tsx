@@ -1,7 +1,7 @@
-import { useGameStore } from '../../../stores/gameStore'
-import type { Directions, GameHistory } from '../../../types/game.types'
-import { DIRECTION_NAMES } from '../../../utils/data/locations/all-locations'
-import { NavigationButton } from '../Game-UI/ActionButtons'
+import { useGameStore } from '../../../stores/gameStore';
+import type { Directions, GameHistory } from '../../../types/game.types';
+import { DIRECTION_NAMES } from '../../../utils/data/locations/all-locations';
+import DirectionsButton from '../Game-UI/DirectionsButton';
 import './Location.css'
 
 interface LocationProp {
@@ -24,7 +24,7 @@ export default function Location({ history }: LocationProp) {
                 <div className='location-button-wrapper'>
                     {history.directions?.map((direction, index) => {
                         return (
-                            <NavigationButton
+                            <DirectionsButton
                                 key={index}
                                 descr={DIRECTION_NAMES[direction]}
                                 onClick={() => handleClick(direction)}

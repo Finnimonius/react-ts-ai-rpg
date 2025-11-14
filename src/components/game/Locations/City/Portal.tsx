@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { NavigationButton } from "../../Game-UI/ActionButtons";
 import LocationHeader from "../../Game-UI/LocationHeader";
-import './Portal.css'
-import type { CurrentLocation } from "../../../../types/game.types";
+import './Portal.css';
+import type { ALL_LOCATIONS } from "../../../../utils/data/locations/all-locations";
 
 export default function Portal() {
     const navigate = useNavigate()
 
-    const handleDungeon = (dungeonId: CurrentLocation) => {
+    const handleDungeon = (dungeonId: keyof typeof ALL_LOCATIONS) => {
         navigate(`/play/game/dungeon/${dungeonId}`)
     }
 

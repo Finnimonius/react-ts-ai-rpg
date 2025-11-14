@@ -31,7 +31,7 @@ export default function DungeonView() {
             >
                 Изучить локацию
             </button>
-            <div style={{ width: '100%' }} className="forest-messages-container">
+            <div className="forest-messages-container">
                 <button onClick={deleteGame} className="reset-test-btn">Сбросить</button>
 
                 {gameHisories.map((history, index) => (

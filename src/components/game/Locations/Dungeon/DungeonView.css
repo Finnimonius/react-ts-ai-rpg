@@ -88,14 +88,14 @@
     width: 90vh;
     justify-content: center;
     flex-direction: column;
-    padding: 20px 20px;
-    font-size: 1.2rem;
+    padding: 20px;
+    font-size: 1.3rem;
     text-align: center;
     font-weight: 600;
     background-color: var(--primary-dark1);
     border: 0.2vh solid var(--brown-dark);
     border-radius: 20px;
-    min-height: 300px;
+    min-height: 200px;
 }
 
 .forest-message-descr {

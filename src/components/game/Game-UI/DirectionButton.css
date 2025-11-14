@@ -1,0 +1,20 @@
+.directions__button {
+    background: var(--text-light);
+    font-family: inherit;
+    padding: 6px 15px;
+    font-family: 'Cormorant', cursive;
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--primary-dark1);
+    border: 0.2rem solid var(--primary-black);
+    border-radius: 0.4em;
+    cursor: pointer;
+}
+
+.directions__button:hover {
+    transform: translate(-0.05em, -0.05em);
+}
+
+.directions__button:active {
+    transform: translate(0.05em, 0.05em);
+}

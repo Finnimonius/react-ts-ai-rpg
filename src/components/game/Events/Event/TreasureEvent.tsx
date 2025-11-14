@@ -2,12 +2,12 @@ import type { GameHistory } from "../../../../types/game.types";
 import './TreasureEvent.css'
 import DraggableItem from "../../Character/DraggableItem";
 import { useCharacterStore } from "../../../../stores/characterStore";
-import { NavigationButton } from "../../Game-UI/ActionButtons";
 import { treasures } from "../../../../utils/data/treasures/treasures";
 import { useGameStore } from "../../../../stores/gameStore";
 import { ALL_ITEMS } from "../../../../utils/data/items/items";
 import useNotification from "antd/es/notification/useNotification";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import DirectionsButton from "../../Game-UI/DirectionsButton";
 
 interface LocationProp {
     history: GameHistory
@@ -42,8 +42,11 @@ export default function TreasureEvent({ history }: LocationProp) {
                 icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
                 closeIcon: null,
             });
-
         }
+    }
+
+    const handleMove = () => {
+        movingToLocation(history.currentDirection)
     }
 
 
@@ -67,7 +70,7 @@ export default function TreasureEvent({ history }: LocationProp) {
                             </div>
                         )}
                         {currentEvent?.isTaken && <p className="treasure-message-descr treasure-message-descr-find">Вы получили награду !</p>}
-                        <NavigationButton descr={'Отправиться дальше'} onClick={() => movingToLocation(history.currentDirection)} />
+                        <DirectionsButton descr={'Отправиться дальше'} onClick={handleMove} />
                     </div>
                 )
                 }
