@@ -41,6 +41,9 @@ export type GameHistory = {
     aiText: string,
     currentEvent: CurrentEvent,
     directions?: Directions[],
+    currentDirection: Directions,
+    isDirectionUsed?: boolean,
+
 }
 
 export interface Game {

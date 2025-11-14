@@ -20,17 +20,19 @@ export default function Location({ history }: LocationProp) {
             <p className='location-message-descr'>
                 {history.aiText}
             </p>
-            <div className='location-button-wrapper'>
-                {history.directions?.map((direction, index) => {
-                    return (
-                        <NavigationButton
-                            key={index}
-                            descr={DIRECTION_NAMES[direction]}
-                            onClick={() => handleClick(direction)}
-                        />
-                    )
-                })}
-            </div>
+            {!history.isDirectionUsed && (
+                <div className='location-button-wrapper'>
+                    {history.directions?.map((direction, index) => {
+                        return (
+                            <NavigationButton
+                                key={index}
+                                descr={DIRECTION_NAMES[direction]}
+                                onClick={() => handleClick(direction)}
+                            />
+                        )
+                    })}
+                </div>
+            )}
         </div>
     )
 }

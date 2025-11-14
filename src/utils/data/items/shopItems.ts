@@ -1,9 +1,9 @@
 import ruby from '../../../assets/images/items/shop-items/ruby.png';
 import sapphire from '../../../assets/images/items/shop-items/sapphire.png';
 import emerald from '../../../assets/images/items/shop-items/emerald.png';
-import gold_ore from '../../../assets/images/items/shop-items/gold_ore.png';
-import gold_coins from '../../../assets/images/items/shop-items/gold_coins.png';
-import gold_bars from '../../../assets/images/items/shop-items/gold_bars.png';
+import gold_ore from '../../../assets/images/items/shop-items/gold-ore.webp';
+import gold_coins from '../../../assets/images/items/shop-items/gold-coins.webp';
+import gold_bars from '../../../assets/images/items/shop-items/gold-bars.webp';
 import rare_coin from '../../../assets/images/items/shop-items/rare_coin.png';
 
 export const SHOP_ITEMS = {

@@ -6,6 +6,8 @@ import { NavigationButton } from "../../Game-UI/ActionButtons";
 import { treasures } from "../../../../utils/data/treasures/treasures";
 import { useGameStore } from "../../../../stores/gameStore";
 import { ALL_ITEMS } from "../../../../utils/data/items/items";
+import useNotification from "antd/es/notification/useNotification";
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 
 interface LocationProp {
     history: GameHistory
@@ -15,7 +17,8 @@ interface LocationProp {
 export default function TreasureEvent({ history }: LocationProp) {
     const { aiText, currentEvent } = history;
     const { addItemToInventory } = useCharacterStore();
-    const { updateEventTakenStatus, updateEventOpenedStatus } = useGameStore();
+    const { updateEventTakenStatus, updateEventOpenedStatus, movingToLocation } = useGameStore();
+    const [api, contextHolder] = useNotification();
 
     const handleClick = () => {
         updateEventOpenedStatus()
@@ -24,14 +27,29 @@ export default function TreasureEvent({ history }: LocationProp) {
     const reward = ALL_ITEMS.find(item => item.id === currentEvent?.reward.id);
     if (!reward) throw new Error("Предмет не найден");
 
-    const handleTakeItem = () => {
-        addItemToInventory(reward.id, 1);
-        updateEventTakenStatus()
+
+    const handleTakeItem = async () => {
+        try {
+            await addItemToInventory(reward.id, 1);
+            updateEventTakenStatus();
+        } catch {
+            api.info({
+                message: 'Инвентарь полон',
+                description: 'Освободите место в инвентаре чтобы взять награду!',
+                placement: 'topRight',
+                duration: 2,
+                className: 'custom-notification',
+                icon: <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />,
+                closeIcon: null,
+            });
+
+        }
     }
 
 
     return (
         <div>
+            {contextHolder}
             <p className="treasure-message-descr">{aiText}</p>
             <p className="treasure-message-descr treasure-message-descr-find">Вы находите:</p>
             <div className="treasure-buttons-wrapper">
@@ -49,7 +67,7 @@ export default function TreasureEvent({ history }: LocationProp) {
                             </div>
                         )}
                         {currentEvent?.isTaken && <p className="treasure-message-descr treasure-message-descr-find">Вы получили награду !</p>}
-                        <NavigationButton descr={'Отправиться дальше'} onClick={() => ''} />
+                        <NavigationButton descr={'Отправиться дальше'} onClick={() => movingToLocation(history.currentDirection)} />
                     </div>
                 )
                 }
