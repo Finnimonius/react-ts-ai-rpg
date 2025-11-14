@@ -4,7 +4,8 @@ import DraggableItem from "../../Character/DraggableItem";
 import { useCharacterStore } from "../../../../stores/characterStore";
 import { NavigationButton } from "../../Game-UI/ActionButtons";
 import { treasures } from "../../../../utils/data/treasures/treasures";
-// import { useGameStore } from "../../../../stores/gameStore";
+import { useGameStore } from "../../../../stores/gameStore";
+import { ALL_ITEMS } from "../../../../utils/data/items/items";
 
 interface LocationProp {
     history: GameHistory
@@ -14,18 +15,20 @@ interface LocationProp {
 export default function TreasureEvent({ history }: LocationProp) {
     const { aiText, currentEvent } = history;
     const { addItemToInventory } = useCharacterStore();
-    // const { updateEventTakenStatus, updateEventOpenedStatus } = useGameStore();
+    const { updateEventTakenStatus, updateEventOpenedStatus } = useGameStore();
 
     const handleClick = () => {
-        // updateEventOpenedStatus()
+        updateEventOpenedStatus()
     }
 
+    const reward = ALL_ITEMS.find(item => item.id === currentEvent?.reward.id);
+    if (!reward) throw new Error("Предмет не найден");
+
     const handleTakeItem = () => {
-        if (currentEvent?.reward && currentEvent.id) {
-            addItemToInventory(currentEvent.reward);
-            // updateEventTakenStatus()
-        }
+        addItemToInventory(reward.id, 1);
+        updateEventTakenStatus()
     }
+
 
     return (
         <div>
@@ -35,19 +38,21 @@ export default function TreasureEvent({ history }: LocationProp) {
                 <button className="treasure-reward-btn" onClick={handleClick} disabled={currentEvent?.isTaken}>
                     <img className="treasure-reward-img" src={treasures[currentEvent?.rewardBox].img} alt={currentEvent?.eventType} />
                 </button>
-                {currentEvent?.isOpened && currentEvent?.reward && (
+                {currentEvent?.isOpened && (
                     <div className="treasure-reward-wrapper">
-                        <div onClick={handleTakeItem}>
-                            <DraggableItem
-                                item={currentEvent?.reward}
-                                location="treasure-reward"
-                            />
-                        </div>
+                        {!currentEvent?.isTaken && (
+                            <div onClick={handleTakeItem}>
+                                <DraggableItem
+                                    item={reward}
+                                    location="treasure-reward"
+                                />
+                            </div>
+                        )}
+                        {currentEvent?.isTaken && <p className="treasure-message-descr treasure-message-descr-find">Вы получили награду !</p>}
                         <NavigationButton descr={'Отправиться дальше'} onClick={() => ''} />
                     </div>
                 )
                 }
-                {currentEvent?.isTaken && <p className="treasure-message-descr treasure-message-descr-find">Вы получили награду !</p>}
             </div>
         </div>
     )

@@ -2,6 +2,7 @@ import { create } from "zustand";
 import type { Directions, Game } from "../types/game.types";
 import { DIRECTION_NAMES, type ALL_LOCATIONS } from "../utils/data/locations/all-locations";
 import { gameApi } from "../services/game-service";
+import { treasureApi } from "../services/treasure-service";
 
 interface GameStore {
     game: Game | null,
@@ -16,8 +17,8 @@ interface GameStore {
     loadGame: () => Promise<void>,
     deleteGame: () => Promise<void>,
     movingToLocation: (directionId: Directions) => Promise<void>,
-    // updateEventOpenedStatus: () => void,
-    // updateEventTakenStatus: () => void,
+    updateEventOpenedStatus: () => Promise<void>,
+    updateEventTakenStatus: () => Promise<void>,
     // backToCity: () => void,
 }
 
@@ -100,42 +101,33 @@ export const useGameStore = create<GameStore>()(
             }
         },
 
-        // updateEventOpenedStatus: () => {
-        //     const { gameHistory } = get();
-        //     const lastEntry = gameHistory[gameHistory.length - 1]
+        updateEventOpenedStatus: async () => {
+            try {
+                const response = await treasureApi.updateEventOpenedStatus();
 
-        //     if (!lastEntry.currentEvent) return
-        //     let newCurrentEvent = { ...lastEntry.currentEvent };
+                const game = response.game;
+                set({
 
-        //     newCurrentEvent = { ...newCurrentEvent, isOpened: true };
-        //     const newHistory = [...gameHistory]
-        //     newHistory[newHistory.length - 1].currentEvent = newCurrentEvent;
+                    game: game
+                })
+            } catch {
+                throw new Error('');
 
-        //     set({
-        //         gameHistory: newHistory
-        //     })
-        // },
+            }
+        },
 
-        // updateEventTakenStatus: () => {
-        //     const { gameHistory } = get();
-        //     const lastEntry = gameHistory[gameHistory.length - 1]
+        updateEventTakenStatus: async () => {
+            try {
+                const response = await treasureApi.updateEventTakenStatus();
 
-        //     if (!lastEntry.currentEvent) return
-        //     let newCurrentEvent = { ...lastEntry.currentEvent };
-
-        //     newCurrentEvent = {
-        //         ...newCurrentEvent,
-        //         isTaken: true,
-        //         isOpened: false
-        //     };
-
-        //     const newHistory = [...gameHistory]
-        //     newHistory[newHistory.length - 1].currentEvent = newCurrentEvent;
-
-        //     set({
-        //         gameHistory: newHistory
-        //     })
-        // },
+                const game = response.game;
+                set({
+                    game: game
+                })
+            } catch {
+                throw new Error('');
+            }
+        },
 
         // backToCity: () => {
         //     set({

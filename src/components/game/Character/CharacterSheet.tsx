@@ -13,7 +13,7 @@ import StatusBars from "./StatusBars";
 import Materials from "./Materials";
 import useNotification from "antd/es/notification/useNotification";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { itemsService } from "../../../utils/data/items/items-service";
+import { ALL_ITEMS } from "../../../utils/data/items/items";
 
 export default function CharacterSheet() {
     const {
@@ -44,14 +44,14 @@ export default function CharacterSheet() {
             const index = parseInt(source.replace('inventory-', ''));
             const slot = inventory[index];
             if (index >= 0 && index < inventory.length && slot?.itemId === itemId) {
-                const item = itemsService.getItemById(slot.itemId);
+                const item = ALL_ITEMS.find(item => item.id === slot.itemId);
                 return item ? { item, source } : null;
             }
         } else if (source.startsWith('equipment-')) {
             const slot = source.replace('equipment-', '') as keyof Equipment;
             const itemIdInSlot = equipment[slot];
             if (itemIdInSlot === itemId) {
-                const item = itemsService.getItemById(itemIdInSlot);
+                const item = ALL_ITEMS.find(item => item.id === itemIdInSlot);
                 return item ? { item, source } : null;
             }
         }
@@ -118,7 +118,7 @@ export default function CharacterSheet() {
                     const targetItemId = equipment[equipmentSlot];
 
                     if (targetItemId) {
-                        const targetItem = itemsService.getItemById(targetItemId);
+                        const targetItem = ALL_ITEMS.find(item => item.id === targetItemId);
                         if (targetItem) {
                             const targetEquipResult = canEquipItem(targetItem, fromSlot, level);
                             if (!targetEquipResult.canEquip) {
@@ -220,7 +220,7 @@ export default function CharacterSheet() {
                             <img className="character-sheet-img" src={selectedClass?.img} alt="" draggable={false} />
                             {(Object.keys(equipment) as (keyof Equipment)[]).map((slot) => {
                                 const itemId = equipment[slot];
-                                const item = itemId ? itemsService.getItemById(itemId) : null;
+                                const item = itemId ? ALL_ITEMS.find(item => item.id === itemId) : null;
 
                                 return (
                                     <EquipmentSlot key={slot} slotType={slot} data-slot={slot}>

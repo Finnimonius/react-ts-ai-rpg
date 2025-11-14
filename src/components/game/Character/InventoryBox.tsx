@@ -1,12 +1,12 @@
 import { useDroppable } from "@dnd-kit/core";
 import type { InventorySlot } from "../../../types/inventory.types";
 import DraggableItem from "./DraggableItem";
-import { itemsService } from "../../../utils/data/items/items-service";
+import { ALL_ITEMS } from "../../../utils/data/items/items";
 
 export default function InventoryBox({ slot, index }: { slot: InventorySlot, index: number }) {
     const { setNodeRef } = useDroppable({ id: `inventory-${index}` });
 
-    const item = slot.itemId ? itemsService.getItemById(slot.itemId) : null;
+    const item = slot.itemId ? ALL_ITEMS.find(item => item.id === slot.itemId) : null;
 
     return (
         <div ref={setNodeRef} className="inventory-box">

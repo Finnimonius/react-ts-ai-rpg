@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { Character, CharacterClass } from '../types/character.types';
 import type { Background } from '../types/character.types';
-import type { AnyItem, Equipment } from '../types/inventory.types';
+import type { Equipment } from '../types/inventory.types';
 import { characterApi } from '../services/character-service';
 import { CLASSES } from '../utils/characterData/classes';
 import { BACKGROUNDS } from '../utils/characterData/backgrounds';
@@ -14,7 +14,7 @@ interface CharacterStore {
   loadCharacter: () => Promise<void>;
   selectClass: (classData: CharacterClass) => void;
   selectBackground: (backgroundData: Background) => Promise<void>;
-  addItemToInventory: (item: AnyItem) => void;
+  addItemToInventory: (itemId: string, quantity?: number) => Promise<void>;
   equipItem: (inventoryIndex: number, equipmentSlot: keyof Equipment) => Promise<void>;
   unequipItem: (equipmentSlot: keyof Equipment, inventoryIndex: number) => Promise<void>;
   moveInventoryItem: (fromIndex: number, toIndex: number) => Promise<void>;
@@ -98,33 +98,21 @@ export const useCharacterStore = create<CharacterStore>()(
       }
     },
 
-    addItemToInventory: (item: AnyItem) => {
-      const { character } = get();
-      if (!character) return;
+    addItemToInventory: async (itemId, quantity) => {
+      try {
+        const response = await characterApi.addItemToInventory({
+          itemId: itemId,
+          quantity: quantity
+        })
 
-      const updatedInventory = [...character.inventory];
+        const character = response.character;
 
-      const existingSlotIndex = updatedInventory.findIndex(slot => {
-        return slot.itemId === item.id && item.type === 'consumable'
-      });
-
-      if (existingSlotIndex !== -1) {
-        updatedInventory[existingSlotIndex].quantity += 1;
-      } else {
-        const emptySlotIndex = updatedInventory.findIndex(slot => !slot.itemId);
-        if (emptySlotIndex !== -1) {
-          updatedInventory[emptySlotIndex] = { itemId: item.id, quantity: 1 };
-        } else {
-          return;
-        }
+        set({
+          character: character
+        })
+      } catch {
+        throw new Error("");
       }
-
-      set({
-        character: {
-          ...character,
-          inventory: updatedInventory
-        }
-      });
     },
 
     hasCharacter: () => {
