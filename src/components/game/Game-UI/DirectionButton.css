@@ -1,7 +1,7 @@
 .directions__button {
     background: var(--text-light);
     font-family: inherit;
-    padding: 6px 15px;
+    padding: 0.6vh 1.5vh;
     font-family: 'Cormorant', cursive;
     font-weight: 700;
     font-size: 1.3rem;

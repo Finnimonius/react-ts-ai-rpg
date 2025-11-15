@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useGameStore } from '../../../stores/gameStore';
 import type { Directions, GameHistory } from '../../../types/game.types';
 import { DIRECTION_NAMES } from '../../../utils/data/locations/all-locations';
@@ -10,9 +11,15 @@ interface LocationProp {
 
 export default function Location({ history }: LocationProp) {
     const { movingToLocation } = useGameStore()
+    const [isMoving, setIsMoving] = useState(false);
 
-    const handleClick = (directionId: Directions) => {
-        movingToLocation(directionId)
+    const handleClick = async (directionId: Directions) => {
+        setIsMoving(true);
+        try {
+            await movingToLocation(directionId);
+        } finally {
+            setIsMoving(false);
+        }
     }
 
     return (
@@ -28,6 +35,7 @@ export default function Location({ history }: LocationProp) {
                                 key={index}
                                 descr={DIRECTION_NAMES[direction]}
                                 onClick={() => handleClick(direction)}
+                                disabled={isMoving}
                             />
                         )
                     })}

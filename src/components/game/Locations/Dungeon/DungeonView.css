@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     min-height: 100%;
-    padding: 8vh 0;
+    padding: 8vh 0 30vh 0;
     gap: 20px;
     background-image: url('../../../../assets/images/backgrounds/forest-back.jpg');
     background-size: contain;

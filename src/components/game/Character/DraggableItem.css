@@ -58,21 +58,17 @@
 }
 
 .draggable-tooltip-title {
-    font-size: 20px;
-    color: white;
-    font-family: 'Cormorant', cursive;
-}
-
-.draggable-tooltip-title {
-    font-family: 'Cormorant', cursive;
     font-size: 1.6vh;
     line-height: 1;
+    font-family: 'Cormorant', cursive;
+    text-align: center;
     color: var(--text-light);
 }
 
 .draggable-tooltip-descr {
     font-size: 1.4vh;
     line-height: 1;
+    text-align: center;
 }
 
 .draggable-tooltip-stats {

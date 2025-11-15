@@ -88,7 +88,6 @@ export const useGameStore = create<GameStore>()(
                 })
 
                 const game = response.game;
-                console.log(game)
 
                 set({
                     isLoading: false,

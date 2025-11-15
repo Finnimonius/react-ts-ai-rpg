@@ -8,6 +8,7 @@ import { ALL_ITEMS } from "../../../../utils/data/items/items";
 import useNotification from "antd/es/notification/useNotification";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import DirectionsButton from "../../Game-UI/DirectionsButton";
+import { useState } from "react";
 
 interface LocationProp {
     history: GameHistory
@@ -19,6 +20,7 @@ export default function TreasureEvent({ history }: LocationProp) {
     const { addItemToInventory } = useCharacterStore();
     const { updateEventTakenStatus, updateEventOpenedStatus, movingToLocation } = useGameStore();
     const [api, contextHolder] = useNotification();
+    const [isMoving, setIsMoving] = useState(false);
 
     const handleClick = () => {
         updateEventOpenedStatus()
@@ -45,8 +47,13 @@ export default function TreasureEvent({ history }: LocationProp) {
         }
     }
 
-    const handleMove = () => {
-        movingToLocation(history.currentDirection)
+    const handleMove = async () => {
+        setIsMoving(true);
+        try {
+            await movingToLocation(history.currentDirection);
+        } finally {
+            setIsMoving(false);
+        }
     }
 
 
@@ -56,7 +63,7 @@ export default function TreasureEvent({ history }: LocationProp) {
             <p className="treasure-message-descr">{aiText}</p>
             <p className="treasure-message-descr treasure-message-descr-find">Вы находите:</p>
             <div className="treasure-buttons-wrapper">
-                <button className="treasure-reward-btn" onClick={handleClick} disabled={currentEvent?.isTaken}>
+                <button className="treasure-reward-btn" onClick={handleClick} disabled={currentEvent?.isOpened}>
                     <img className="treasure-reward-img" src={treasures[currentEvent?.rewardBox].img} alt={currentEvent?.eventType} />
                 </button>
                 {currentEvent?.isOpened && (
@@ -70,7 +77,7 @@ export default function TreasureEvent({ history }: LocationProp) {
                             </div>
                         )}
                         {currentEvent?.isTaken && <p className="treasure-message-descr treasure-message-descr-find">Вы получили награду !</p>}
-                        <DirectionsButton descr={'Отправиться дальше'} onClick={handleMove} />
+                        {!history.isDirectionUsed && <DirectionsButton descr={'Отправиться дальше'} onClick={handleMove} disabled={isMoving}/>}
                     </div>
                 )
                 }
