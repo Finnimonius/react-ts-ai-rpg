@@ -34,6 +34,7 @@ export type CurrentEvent = {
     reward: AnyItem,
     isOpened: boolean,
     isTaken: boolean,
+    isSkipped: boolean,
 }
 
 export type GameHistory = {

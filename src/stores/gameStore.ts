@@ -15,6 +15,7 @@ interface GameStore {
     movingToLocation: (directionId: Directions) => Promise<void>,
     updateEventOpenedStatus: () => Promise<void>,
     updateEventTakenStatus: () => Promise<void>,
+    updateEventSkippedStatus: () => Promise<void>,
 }
 
 export const useGameStore = create<GameStore>()(
@@ -113,6 +114,19 @@ export const useGameStore = create<GameStore>()(
         updateEventTakenStatus: async () => {
             try {
                 const response = await treasureApi.updateEventTakenStatus();
+
+                const game = response.game;
+                set({
+                    game: game
+                })
+            } catch {
+                throw new Error('');
+            }
+        },
+
+        updateEventSkippedStatus: async () => {
+            try {
+                const response = await treasureApi.updateEventSkippedStatus();
 
                 const game = response.game;
                 set({

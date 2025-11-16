@@ -17,11 +17,10 @@ interface LocationProp {
 
 function TreasureEvent({ history }: LocationProp) {
     const { aiText, currentEvent } = history;
-    // const { addItemToInventory } = useCharacterStore();
-    // const { updateEventTakenStatus, updateEventOpenedStatus, movingToLocation } = useGameStore();
     const addItemToInventory = useCharacterStore(state => state.addItemToInventory);
     const updateEventTakenStatus = useGameStore(state => state.updateEventTakenStatus);
     const updateEventOpenedStatus = useGameStore(state => state.updateEventOpenedStatus);
+    const updateEventSkippedStatus = useGameStore(state => state.updateEventSkippedStatus);
     const movingToLocation = useGameStore(state => state.movingToLocation);
 
     const [api, contextHolder] = useNotification();
@@ -38,7 +37,7 @@ function TreasureEvent({ history }: LocationProp) {
     const handleTakeItem = async () => {
         try {
             await addItemToInventory(reward.id, 1);
-            updateEventTakenStatus();
+            await updateEventTakenStatus();
         } catch {
             api.info({
                 message: 'Инвентарь полон',
@@ -55,6 +54,7 @@ function TreasureEvent({ history }: LocationProp) {
     const handleMove = async () => {
         setIsMoving(true);
         try {
+            await updateEventSkippedStatus()
             await movingToLocation(history.currentDirection);
         } finally {
             setIsMoving(false);
@@ -73,16 +73,16 @@ function TreasureEvent({ history }: LocationProp) {
                 </button>
                 {currentEvent?.isOpened && (
                     <div className="treasure-reward-wrapper">
-                        {!currentEvent?.isTaken && (
-                            <div onClick={handleTakeItem}>
-                                <DraggableItem
-                                    item={reward}
-                                    location="treasure-reward"
-                                />
-                            </div>
-                        )}
+                        <div onClick={(!currentEvent?.isTaken && !currentEvent?.isSkipped) ? handleTakeItem : undefined}
+                            className={(!currentEvent?.isTaken && !currentEvent?.isSkipped) ? '' : 'treasure-reward-visibility'}
+                        >
+                            <DraggableItem
+                                item={reward}
+                                location="treasure-reward"
+                            />
+                        </div>
                         {currentEvent?.isTaken && <p className="treasure-message-descr treasure-message-descr-find">Вы получили награду !</p>}
-                        {!history.isDirectionUsed && <DirectionsButton descr={'Отправиться дальше'} onClick={handleMove} disabled={isMoving}/>}
+                        {!history.isDirectionUsed && <DirectionsButton descr={'Отправиться дальше'} onClick={handleMove} disabled={isMoving} />}
                     </div>
                 )
                 }

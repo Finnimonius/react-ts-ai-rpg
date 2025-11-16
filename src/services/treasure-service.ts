@@ -11,5 +11,11 @@ export const treasureApi = {
         return apiClient('/event/treasure/take', {
             method: 'POST'
         })
-    }
+    },
+
+    async updateEventSkippedStatus() {
+        return apiClient('/event/treasure/skip', {
+            method: 'POST'
+        })
+    },
 }
