@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { useGameStore } from '../../../stores/gameStore';
 import type { Directions, GameHistory } from '../../../types/game.types';
 import { DIRECTION_NAMES } from '../../../utils/data/locations/all-locations';
@@ -9,8 +9,10 @@ interface LocationProp {
     history: GameHistory
 }
 
-export default function Location({ history }: LocationProp) {
-    const { movingToLocation } = useGameStore()
+function Location({ history }: LocationProp) {
+    // const { movingToLocation } = useGameStore()
+    const movingToLocation = useGameStore(state => state.movingToLocation);
+
     const [isMoving, setIsMoving] = useState(false);
 
     const handleClick = async (directionId: Directions) => {
@@ -44,3 +46,5 @@ export default function Location({ history }: LocationProp) {
         </div>
     )
 }
+
+export default memo(Location);

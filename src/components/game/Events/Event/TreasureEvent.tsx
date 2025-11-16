@@ -8,17 +8,22 @@ import { ALL_ITEMS } from "../../../../utils/data/items/items";
 import useNotification from "antd/es/notification/useNotification";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import DirectionsButton from "../../Game-UI/DirectionsButton";
-import { useState } from "react";
+import { memo, useState } from "react";
 
 interface LocationProp {
     history: GameHistory
 }
 
 
-export default function TreasureEvent({ history }: LocationProp) {
+function TreasureEvent({ history }: LocationProp) {
     const { aiText, currentEvent } = history;
-    const { addItemToInventory } = useCharacterStore();
-    const { updateEventTakenStatus, updateEventOpenedStatus, movingToLocation } = useGameStore();
+    // const { addItemToInventory } = useCharacterStore();
+    // const { updateEventTakenStatus, updateEventOpenedStatus, movingToLocation } = useGameStore();
+    const addItemToInventory = useCharacterStore(state => state.addItemToInventory);
+    const updateEventTakenStatus = useGameStore(state => state.updateEventTakenStatus);
+    const updateEventOpenedStatus = useGameStore(state => state.updateEventOpenedStatus);
+    const movingToLocation = useGameStore(state => state.movingToLocation);
+
     const [api, contextHolder] = useNotification();
     const [isMoving, setIsMoving] = useState(false);
 
@@ -85,3 +90,5 @@ export default function TreasureEvent({ history }: LocationProp) {
         </div>
     )
 }
+
+export default memo(TreasureEvent);

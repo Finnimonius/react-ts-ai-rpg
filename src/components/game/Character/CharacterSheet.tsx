@@ -1,7 +1,7 @@
 import { useCharacterStore } from "../../../stores/characterStore"
 import './CharacterSheet.css'
 import DraggableItem from "./DraggableItem"
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useMemo, memo } from "react";
 import { closestCenter, DndContext, DragOverlay, PointerSensor, useSensor, useSensors, type DragStartEvent, type DragEndEvent, } from "@dnd-kit/core";
 import type { AnyItem, Equipment } from "../../../types/inventory.types";
 import EquipmentSlot from "./EquipmentSlot";
@@ -15,15 +15,14 @@ import useNotification from "antd/es/notification/useNotification";
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { ALL_ITEMS } from "../../../utils/data/items/items";
 
-export default function CharacterSheet() {
-    const {
-        character,
-        equipItem,
-        swapEquipment,
-        unequipItem,
-        moveInventoryItem,
-        selectedClass,
-    } = useCharacterStore();
+function CharacterSheet() {
+    const character = useCharacterStore(state => state.character);
+    const equipItem = useCharacterStore(state => state.equipItem);
+    const swapEquipment = useCharacterStore(state => state.swapEquipment);
+    const unequipItem = useCharacterStore(state => state.unequipItem);
+    const moveInventoryItem = useCharacterStore(state => state.moveInventoryItem);
+    const selectedClass = useCharacterStore(state => state.selectedClass);
+
     const [activeId, setActiveId] = useState<string | null>(null);
     const [api, contextHolder] = useNotification();
     const sensors = useSensors(useSensor(PointerSensor));
@@ -187,74 +186,76 @@ export default function CharacterSheet() {
     }, [findItemWithSource, handleItemMove]);
 
     return (
-            <div className="characterSheet-container">
-                {contextHolder}
-                <div className="ui-element1"></div>
-                <div className="ui-element2"></div>
-                <div className="ui-element3"></div>
-                <div className="ui-element4"></div>
-                <div className="ui-element5"></div>
-                <DndContext
-                    sensors={sensors}
-                    collisionDetection={closestCenter}
-                    onDragStart={handleDragStart}
-                    onDragEnd={handleDragEnd}
-                >
-                    <div className="divider-wrapper">
-                        <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: '2.2vh' }}>{selectedClass?.name}</Divider>
-                        <div className="character-sheet-currency-wrapper">
-                            <Tooltip placement="bottom" title={'Золото'}>
-                                <p className="character-sheet-currency-gold">{currency.gold}</p>
-                            </Tooltip>
-                            <Tooltip placement="bottom" title={'Души'}>
-                                <p className="character-sheet-currency-souls">{currency.souls}</p>
-                            </Tooltip>
-                            <Tooltip placement="bottom" title={'Честь'}>
-                                <p className="character-sheet-currency-fame">{currency.fame}</p>
-                            </Tooltip>
-                        </div>
+        <div className="characterSheet-container">
+            {contextHolder}
+            <div className="ui-element1"></div>
+            <div className="ui-element2"></div>
+            <div className="ui-element3"></div>
+            <div className="ui-element4"></div>
+            <div className="ui-element5"></div>
+            <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+            >
+                <div className="divider-wrapper">
+                    <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: '2.2vh' }}>{selectedClass?.name}</Divider>
+                    <div className="character-sheet-currency-wrapper">
+                        <Tooltip placement="bottom" title={'Золото'}>
+                            <p className="character-sheet-currency-gold">{currency.gold}</p>
+                        </Tooltip>
+                        <Tooltip placement="bottom" title={'Души'}>
+                            <p className="character-sheet-currency-souls">{currency.souls}</p>
+                        </Tooltip>
+                        <Tooltip placement="bottom" title={'Честь'}>
+                            <p className="character-sheet-currency-fame">{currency.fame}</p>
+                        </Tooltip>
                     </div>
+                </div>
 
-                    <div className="equipment-section">
-                        <div className="equipment-grid">
-                            <img className="character-sheet-img" src={selectedClass?.img} alt="" draggable={false} />
-                            {(Object.keys(equipment) as (keyof Equipment)[]).map((slot) => {
-                                const itemId = equipment[slot];
-                                const item = itemId ? ALL_ITEMS.find(item => item.id === itemId) : null;
+                <div className="equipment-section">
+                    <div className="equipment-grid">
+                        <img className="character-sheet-img" src={selectedClass?.img} alt="" draggable={false} />
+                        {(Object.keys(equipment) as (keyof Equipment)[]).map((slot) => {
+                            const itemId = equipment[slot];
+                            const item = itemId ? ALL_ITEMS.find(item => item.id === itemId) : null;
 
-                                return (
-                                    <EquipmentSlot key={slot} slotType={slot} data-slot={slot}>
-                                        {item && (
-                                            <DraggableItem item={item} location={`equipment-${slot}`} />
-                                        )}
-                                    </EquipmentSlot>
-                                );
-                            })}
-                        </div>
+                            return (
+                                <EquipmentSlot key={slot} slotType={slot} data-slot={slot}>
+                                    {item && (
+                                        <DraggableItem item={item} location={`equipment-${slot}`} />
+                                    )}
+                                </EquipmentSlot>
+                            );
+                        })}
                     </div>
+                </div>
 
-                    <StatusBars />
-                    <Stats />
-                    <Inventory />
-                    <Materials />
+                <StatusBars />
+                <Stats />
+                <Inventory />
+                <Materials />
 
-                    <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: 23 }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="M42.65 34.75v-21.5L24 2.5L5.35 13.25v21.5L24 45.5z" /><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="m36.31 32.45l6.34-19.2L24 10.59L5.35 13.25l6.34 19.2L24 45.5z" /><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="M36.31 32.45H11.69L24 10.59zM24 10.59V2.5m12.31 29.95l6.34 2.3m-30.96-2.3l-6.34 2.3" /></svg>
-                    </Divider>
+                <Divider style={{ borderColor: 'white', color: 'white', margin: 0, fontFamily: 'Cormorant', fontSize: 23 }}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 48 48"><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="M42.65 34.75v-21.5L24 2.5L5.35 13.25v21.5L24 45.5z" /><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="m36.31 32.45l6.34-19.2L24 10.59L5.35 13.25l6.34 19.2L24 45.5z" /><path fill="none" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" d="M36.31 32.45H11.69L24 10.59zM24 10.59V2.5m12.31 29.95l6.34 2.3m-30.96-2.3l-6.34 2.3" /></svg>
+                </Divider>
 
-                    <DragOverlay>
-                        {activeItemData ? (
-                            <div className="draggableItem overlay">
-                                <img
-                                    src={activeItemData.item.img}
-                                    alt={activeItemData.item.name}
-                                    className="draggableItem-img"
-                                />
-                            </div>
-                        ) : null}
-                    </DragOverlay>
+                <DragOverlay>
+                    {activeItemData ? (
+                        <div className="draggableItem overlay">
+                            <img
+                                src={activeItemData.item.img}
+                                alt={activeItemData.item.name}
+                                className="draggableItem-img"
+                            />
+                        </div>
+                    ) : null}
+                </DragOverlay>
 
-                </DndContext>
-            </div>
+            </DndContext>
+        </div>
     )
 }
+
+export default memo(CharacterSheet);

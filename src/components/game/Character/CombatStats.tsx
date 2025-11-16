@@ -4,7 +4,8 @@ import './CombatStats.css'
 import MainStats from './MainStats'
 
 export default function Stats() {
-    const { character } = useCharacterStore();
+    // const { character } = useCharacterStore();
+        const character = useCharacterStore(state => state.character);
     
     const derivedStats = useMemo(() => character?.derivedStats || {
         health: 0, maxHealth: 0, mana: 0, maxMana: 0,

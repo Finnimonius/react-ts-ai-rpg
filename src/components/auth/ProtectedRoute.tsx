@@ -6,17 +6,18 @@ type Props = {
     children: React.ReactNode
 }
 
-export default function ProtectedRoute({children}: Props) {
-    const { isAuthenticated, isLoading } = useAuthStore();
+export default function ProtectedRoute({ children }: Props) {
+    const isAuthenticated = useAuthStore(state => state.isAuthenticated);
+    const isLoading = useAuthStore(state => state.isLoading);
     const location = useLocation()
 
-    if(isLoading) {
+    if (isLoading) {
         return <PageLoader />
     }
 
-    if(!isAuthenticated) {
-        return <Navigate to='/login' replace state={{ from: location}}/>
+    if (!isAuthenticated) {
+        return <Navigate to='/login' replace state={{ from: location }} />
     }
 
-    return children  
+    return children
 }

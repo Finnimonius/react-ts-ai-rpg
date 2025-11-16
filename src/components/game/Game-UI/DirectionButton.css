@@ -7,7 +7,7 @@
     font-size: 1.3rem;
     color: var(--primary-dark1);
     border: 0.2rem solid var(--primary-black);
-    border-radius: 0.4em;
+    border-radius: 6px;
     cursor: pointer;
 }
 

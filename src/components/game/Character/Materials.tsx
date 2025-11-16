@@ -9,7 +9,10 @@ import { MaterialItem } from "./MaterialItem";
 import { useGameStore } from "../../../stores/gameStore";
 
 export default function Materials() {
-    const { character, reset } = useCharacterStore();
+    // const { character, reset } = useCharacterStore();
+    const character = useCharacterStore(state => state.character);
+    const reset = useCharacterStore(state => state.reset);
+    
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const navigate = useNavigate();
     const { deleteGame } = useGameStore()

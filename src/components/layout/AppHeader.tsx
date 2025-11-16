@@ -14,7 +14,8 @@ type IsActive = {
 const setActive = ({ isActive }: IsActive) => isActive ? 'active-link' : 'nav-link';
 
 export default function AppHeader() {
-    const { hasCharacter } = useCharacterStore()
+    const hasCharacter = useCharacterStore(state => state.hasCharacter());
+
     const { isAuthenticated, logout, user } = useAuthStore()
     const navigate = useNavigate()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -93,7 +94,7 @@ export default function AppHeader() {
                     <NavLink to='/rules' className={setActive}>Правила</NavLink>
                     <NavLink to='/charactercreato' className={setActive}>Создание персонажа</NavLink>
 
-                    {hasCharacter() ? (
+                    {hasCharacter ? (
                         <NavLink to="/play/game" className={setActivePlay}
                             onClick={(e) => {
                                 if (!isAuthenticated) {
@@ -127,7 +128,7 @@ export default function AppHeader() {
                     style={{ backgroundColor: 'var(--primary-black)' }}
                 >
                     <nav className='header-nav-drawer'>
-                        {hasCharacter() ? (
+                        {hasCharacter ? (
                             <NavLink to="/play/game" className={setActivePlay}
                                 onClick={(e) => {
                                     if (!isAuthenticated) {

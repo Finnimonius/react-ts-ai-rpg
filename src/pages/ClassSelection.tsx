@@ -8,7 +8,7 @@ type ClassSelectionProps = {
 }
 
 export default function ClassSelection({ onNext }: ClassSelectionProps) {
-    const { selectClass } = useCharacterStore()
+    const selectClass = useCharacterStore(state => state.selectClass);
 
     const handleSelectClass = (classData: CharacterClass) => {
         selectClass(classData)
@@ -20,7 +20,7 @@ export default function ClassSelection({ onNext }: ClassSelectionProps) {
             <ul className='class-list'>
                 {CLASSES.map(cls => {
                     return <li onClick={() => handleSelectClass(cls)} key={cls.id} className='class-list-item'>
-                        <img src={cls.img} alt="Изображение класса" className='class-img'/>
+                        <img src={cls.img} alt="Изображение класса" className='class-img' />
                         <h3 className='class-title'>{cls.name}</h3>
                         <p className='class-descr'>{cls.description}</p>
                     </li>

@@ -6,10 +6,6 @@ import { treasureApi } from "../services/treasure-service";
 
 interface GameStore {
     game: Game | null,
-    // currentDungeon: string | null,
-    // targetLocation: string,
-    // currentStep: number,
-    // gameHistory: Array<GameHistory>,
     isLoading: boolean,
     isInitialLoading: boolean,
     error: string | null,
@@ -19,7 +15,6 @@ interface GameStore {
     movingToLocation: (directionId: Directions) => Promise<void>,
     updateEventOpenedStatus: () => Promise<void>,
     updateEventTakenStatus: () => Promise<void>,
-    // backToCity: () => void,
 }
 
 export const useGameStore = create<GameStore>()(
@@ -127,15 +122,6 @@ export const useGameStore = create<GameStore>()(
                 throw new Error('');
             }
         },
-
-        // backToCity: () => {
-        //     set({
-        //         // currentLocation: 'city',
-        //         currentDungeon: null,
-        //         gameHistory: [],
-        //     })
-        // }
-
     }),
 )
 

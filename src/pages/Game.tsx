@@ -10,7 +10,7 @@ import BackgroundSelection from './BackgroundSelection'
 export default function Game() {
     const navigate = useNavigate();
     const { step } = useParams();
-    const { hasCharacter } = useCharacterStore();
+    const hasCharacter = useCharacterStore(state => state.hasCharacter());
 
     const goToStep = (stepName: string) => {
         navigate(`/play/${stepName}`)
@@ -27,15 +27,15 @@ export default function Game() {
 
     const currentScreen = getCurrentScreen();
 
-    if (hasCharacter() && step !== 'game') {
+    if (hasCharacter && step !== 'game') {
         return <Navigate to="/play/game" replace />
     }
 
-    if (!step && hasCharacter()) {
+    if (!step && hasCharacter) {
         return <Navigate to="/play/game" replace />
     }
 
-    if (step === 'game' && !hasCharacter()) {
+    if (step === 'game' && !hasCharacter) {
         return <Navigate to="/play" replace />
     }
 

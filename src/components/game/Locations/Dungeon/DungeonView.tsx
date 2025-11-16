@@ -4,12 +4,16 @@ import TravelEvent from "../../Events/EventDispather"
 import { LoadingOutlined } from '@ant-design/icons';
 import Location from "../../Events/Location";
 import './DungeonView.css'
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { ALL_LOCATIONS } from "../../../../utils/data/locations/all-locations";
 
-export default function DungeonView() {
-    const { isLoading, startGame, game, deleteGame } = useGameStore();
+function DungeonView() {
+    const isLoading = useGameStore(state => state.isLoading);
+    const startGame = useGameStore(state => state.startGame);
+    const game = useGameStore(state => state.game);
+    const deleteGame = useGameStore(state => state.deleteGame);
+
     const { dungeonId } = useParams();
     const [visible, setVisible] = useState(game ? true : false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -64,3 +68,5 @@ export default function DungeonView() {
         </div>
     )
 }
+
+export default memo(DungeonView);

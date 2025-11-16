@@ -4,7 +4,8 @@ import { useCharacterStore } from "../../../stores/characterStore";
 import { useMemo } from "react";
 
 export default function StatusBars() {
-    const { character } = useCharacterStore();
+    // const { character } = useCharacterStore();
+    const character = useCharacterStore(state => state.character);
 
     const derivedStats = useMemo(() => character?.derivedStats || {
         health: 0, maxHealth: 0, mana: 0, maxMana: 0,

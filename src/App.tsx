@@ -20,9 +20,15 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 export default function App() {
   const location = useLocation();
-  const { checkAuth, isLoading: isAuthLoading, user } = useAuthStore();
-  const { loadCharacter, isLoading: isCharLoading } = useCharacterStore();
-  const { loadGame, isInitialLoading: isGameLoading } = useGameStore();
+
+  const user = useAuthStore(state => state.user);
+  const isAuthLoading = useAuthStore(state => state.isLoading);
+  const isCharLoading = useCharacterStore(state => state.isLoading);
+  const isGameLoading = useGameStore(state => state.isInitialLoading);
+  
+  const checkAuth = useAuthStore(state => state.checkAuth);
+  const loadCharacter = useCharacterStore(state => state.loadCharacter);
+  const loadGame = useGameStore(state => state.loadGame);
 
   useEffect(() => {
     checkAuth();

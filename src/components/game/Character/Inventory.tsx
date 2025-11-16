@@ -4,7 +4,8 @@ import './Inventory.css'
 import { useMemo } from "react";
 
 export default function Inventory() {
-    const { character } = useCharacterStore();
+    // const { character } = useCharacterStore();
+    const character = useCharacterStore(state => state.character);
 
     const inventory = useMemo(() => character?.inventory || [], [character]);
 

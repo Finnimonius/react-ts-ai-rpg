@@ -5,7 +5,9 @@ import { useCharacterStore } from "../../../stores/characterStore";
 export default function MainStats() {
     const [isOpen, setIsOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
-    const { character } = useCharacterStore();
+    // const { character } = useCharacterStore();
+    const character = useCharacterStore(state => state.character);
+
     const popoverRef = useRef<HTMLDivElement>(null);
 
     const avaliableStatsPoints = useMemo(() => character?.avaliableStatsPoints || 0, [character]);
