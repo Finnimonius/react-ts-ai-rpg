@@ -59,7 +59,7 @@ function DungeonView() {
 
                 {isLoading && (
                     <div className="forest-message-block">
-                        <Spin indicator={<LoadingOutlined spin />} />
+                        <Spin style={{ color: '#e6d6b2' }} indicator={<LoadingOutlined spin />} />
                         <p className="forest-message-descr">Мастер рассказывает историю...</p>
                     </div>
                 )}

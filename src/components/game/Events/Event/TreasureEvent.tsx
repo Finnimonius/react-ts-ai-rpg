@@ -67,7 +67,7 @@ function TreasureEvent({ history }: LocationProp) {
         <div>
             {contextHolder}
             <p className="treasure-message-descr">{!history.isDirectionUsed ? print : aiText}</p>
-            {!isPrinting && (
+            {(!isPrinting || history.isDirectionUsed) && (
                 <>
                     <p className="treasure-message-descr treasure-message-descr-find">Вы находите:</p>
                     <div className="treasure-buttons-wrapper">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const usePrintText = (text: string, speed: number = 30) => {
+export const usePrintText = (text: string, speed: number = 20) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPrinting, setIsPrinting] = useState(false);
 
