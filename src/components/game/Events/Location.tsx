@@ -4,15 +4,15 @@ import type { Directions, GameHistory } from '../../../types/game.types';
 import { DIRECTION_NAMES } from '../../../utils/data/locations/all-locations';
 import DirectionsButton from '../Game-UI/DirectionsButton';
 import './Location.css'
+import { usePrintText } from '../../../hooks/usePrintText';
 
 interface LocationProp {
     history: GameHistory
 }
 
 function Location({ history }: LocationProp) {
-    // const { movingToLocation } = useGameStore()
     const movingToLocation = useGameStore(state => state.movingToLocation);
-
+    const [print, isPrinting] = usePrintText(history.aiText)
     const [isMoving, setIsMoving] = useState(false);
 
     const handleClick = async (directionId: Directions) => {
@@ -25,11 +25,11 @@ function Location({ history }: LocationProp) {
     }
 
     return (
-        <div>
+        <div className='location-container'>
             <p className='location-message-descr'>
-                {history.aiText}
+                {!history.isDirectionUsed ? print : history.aiText}
             </p>
-            {!history.isDirectionUsed && (
+            {(!history.isDirectionUsed && !isPrinting) && (
                 <div className='location-button-wrapper'>
                     {history.directions?.map((direction, index) => {
                         return (

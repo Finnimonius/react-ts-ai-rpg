@@ -13,7 +13,7 @@
     position: relative;
 }
 
-.dungeon__button {
+/* .dungeon__button {
     padding: 10px 35px;
     font-size: 1.1rem;
     font-weight: 800;
@@ -68,7 +68,7 @@
         inset 0 0 25px rgba(139, 90, 43, 0.6),
         0 8px 20px rgba(0, 0, 0, 0.6),
         0 0 30px rgba(212, 188, 135, 0.4);
-}
+} */
 
 .dungeon__button-disabled {
     display: none;
@@ -84,13 +84,12 @@
 
 .forest-message-block {
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     width: 90vh;
     justify-content: center;
     flex-direction: column;
     padding: 20px;
     font-size: 1.3rem;
-    text-align: center;
     font-weight: 600;
     background-color: var(--primary-dark1);
     border: 0.2vh solid var(--brown-dark);
@@ -99,10 +98,8 @@
 }
 
 .forest-message-descr {
-    font-size: 21px;
-    font-weight: 600;
+    width: 100%;
     text-align: center;
-    margin-bottom: 30px;
 }
 
 .reset-test-btn {

@@ -1,9 +1,11 @@
 .treasure-message-descr {
+    width: 100%;
     margin-bottom: 1vh;
 }
 
 .treasure-message-descr-find {
     color: var(--text-light);
+    text-align: center;
     font-size: 1.4rem;
 }
 

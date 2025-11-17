@@ -7,6 +7,7 @@ import './DungeonView.css'
 import { memo, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { ALL_LOCATIONS } from "../../../../utils/data/locations/all-locations";
+import DirectionsButton from "../../Game-UI/DirectionsButton";
 
 function DungeonView() {
     const isLoading = useGameStore(state => state.isLoading);
@@ -41,12 +42,11 @@ function DungeonView() {
 
     return (
         <div className="forest-container">
-            <button
+            <DirectionsButton
                 onClick={handleStart}
-                className={`dungeon__button ${visible ? 'dungeon__button-disabled' : ''}`}
-            >
-                Изучить локацию
-            </button>
+                descr={'Изучить локацию'}
+                className={visible ? 'dungeon__button-disabled' : ''}
+            />
             <div className="forest-messages-container" ref={containerRef}>
                 <button onClick={deleteGame} className="reset-test-btn">Сбросить</button>
 
@@ -60,7 +60,7 @@ function DungeonView() {
                 {isLoading && (
                     <div className="forest-message-block">
                         <Spin indicator={<LoadingOutlined spin />} />
-                        <p>Мастер рассказывает историю...</p>
+                        <p className="forest-message-descr">Мастер рассказывает историю...</p>
                     </div>
                 )}
 
