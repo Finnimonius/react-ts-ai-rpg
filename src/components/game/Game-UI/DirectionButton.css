@@ -4,10 +4,11 @@
     padding: 0.6vh 1.5vh;
     font-family: 'Cormorant', cursive;
     font-weight: 700;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: var(--primary-dark1);
-    border: 0.2rem solid var(--primary-black);
+    border: 0.23vh solid var(--primary-black);
     border-radius: 6px;
+    box-shadow: 0.1vh 0.1vh;
     cursor: pointer;
 }
 
