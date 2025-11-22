@@ -1,3 +1,5 @@
+import type { CombatState } from "./combat.types";
+import type { EnemyInstance } from "./enemies.types";
 import type { AnyItem } from "./inventory.types";
 
 export type Directions = 'south' | 'southeast' | 'southwest' | 'west' | 'north' | 'northwest' | 'northeast';
@@ -28,10 +30,12 @@ export type CurrentEvent = {
     id: string,
     title: string,
     description: string,
-    container: TreasureType[],
-    img: string,
-    rewardBox: TreasureType,
-    reward: AnyItem,
+    container?: TreasureType[],
+    rewardBox?: TreasureType,
+    reward?: AnyItem,
+
+    enemy?: EnemyInstance,
+    combatState?: CombatState,
     isOpened: boolean,
     isTaken: boolean,
     isSkipped: boolean,
