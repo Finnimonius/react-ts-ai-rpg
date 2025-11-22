@@ -31,7 +31,7 @@ function TreasureEvent({ history }: LocationProp) {
         updateEventOpenedStatus()
     }
 
-    const reward = ALL_ITEMS.find(item => item.id === currentEvent?.reward.id);
+    const reward = ALL_ITEMS.find(item => item.id === currentEvent?.reward?.id);
     if (!reward) throw new Error("Предмет не найден");
 
 

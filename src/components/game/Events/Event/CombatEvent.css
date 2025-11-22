@@ -1,0 +1,44 @@
+.combat-message-descr {
+    margin-bottom: 2vh;
+}
+
+.combat-enemy-wrapper {
+    display: flex;
+    gap: 5vh;
+}
+
+.combat-img-enemy {
+    width: 20vh;
+    height: 20vh;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.combat-enemy-info-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 40vh;
+}
+
+.combat-enemy-title {
+    color: var(--text-light);
+}
+
+.combat-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    list-style: none;
+    line-height: 1;
+    gap: 0.5vh;
+}
+
+.combat-item-span {
+    color: var(--text-light);
+}
+
+.combat-character-wrapper {
+    display: flex;
+    gap: 5vh;
+}
